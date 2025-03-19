@@ -1,0 +1,21 @@
+{
+    "@context": "https://schema.org/",
+    "@type": "Recipe",
+    "name": "Quick Pasta Dish",
+    "image": "https://example.com/photos/pasta.jpg",
+    "description": "A quick and easy pasta recipe",
+    "prepTime": "15 minutes",
+    "cookTime": "20 minutes",
+    "totalTime": "35 minutes",
+    "recipeIngredient": [
+        "500g pasta",
+        "2 cups sauce",
+        "Fresh herbs"
+    ],
+    "recipeInstructions": [
+        {
+            "@type": "HowToStep",
+            "text": "Cook pasta according to package instructions"
+        }
+    ]
+} 

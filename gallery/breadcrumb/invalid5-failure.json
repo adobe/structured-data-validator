@@ -1,0 +1,21 @@
+{
+    "richResultsResult": {
+        "verdict": "FAIL",
+        "detectedItems": [
+            {
+                "richResultType": "Breadcrumbs",
+                "items": [
+                    {
+                        "name": "Unnamed item",
+                        "issues": [
+                            {
+                                "issueMessage": "Invalid object type for field \"itemListElement\"",
+                                "severity": "ERROR"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+}

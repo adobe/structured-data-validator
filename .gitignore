@@ -1,0 +1,11 @@
+node_modules/
+.DS_Store
+.env
+dist/
+.vscode/
+*.log
+auth.json
+client_secret_*.json
+Downloads/
+fixtures/
+prompts/

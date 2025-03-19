@@ -1,0 +1,17 @@
+{
+    "@context": "https://schema.org/",
+    "@type": "Recipe",
+    "name": "Classic Chocolate Cake",
+    "description": "A moist and delicious chocolate cake recipe",
+    "recipeIngredient": [
+        "2 cups flour",
+        "1 cup sugar",
+        "1/2 cup cocoa powder"
+    ],
+    "recipeInstructions": [
+        {
+            "@type": "HowToStep",
+            "text": "Mix dry ingredients together"
+        }
+    ]
+} 
