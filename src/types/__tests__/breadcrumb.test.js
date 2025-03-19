@@ -123,6 +123,26 @@ describe('BreadcrumbValidator', () => {
                 expect(issues).toHaveLength(0);
             }
         });
+
+        it('should detect missing required attributes in microdata-invalid1.html', async () => {
+            const data = await loadTestData('microdata-invalid1.html', 'microdata');
+            const issues = validator.validate(data);
+            expect(issues).toHaveLength(1);
+            expect(issues[0]).toStrictEqual({
+                issueMessage: 'One of the following conditions needs to be met: Required attribute \"name\" is missing or Required attribute \"item.name\" is missing',
+                severity: 'ERROR'
+            });
+        });
+
+        it('should detect invalid URL in microdata-invalid2.html', async () => {
+            const data = await loadTestData('microdata-invalid2.html', 'microdata');
+            const issues = validator.validate(data);
+            expect(issues).toHaveLength(1);
+            expect(issues[0]).toStrictEqual({
+                issueMessage: 'Invalid URL in field "item"',
+                severity: 'WARNING'
+            });
+        });
     });
 
     describe('RDFa', () => {
@@ -145,6 +165,26 @@ describe('BreadcrumbValidator', () => {
                 const issues = validator.validate(item);
                 expect(issues).toHaveLength(0);
             }
+        });
+
+        it('should detect missing required attributes in rdfa-invalid1.html', async () => {
+            const data = await loadTestData('rdfa-invalid1.html', 'rdfa');
+            const issues = validator.validate(data);
+            expect(issues).toHaveLength(1);
+            expect(issues[0]).toStrictEqual({
+                issueMessage: 'One of the following conditions needs to be met: Required attribute \"name\" is missing or Required attribute \"item.name\" is missing',
+                severity: 'ERROR'
+            });
+        });
+
+        it('should detect invalid URL in rdfa-invalid2.html', async () => {
+            const data = await loadTestData('rdfa-invalid2.html', 'rdfa');
+            const issues = validator.validate(data);
+            expect(issues).toHaveLength(1);
+            expect(issues[0]).toStrictEqual({
+                issueMessage: 'Invalid URL in field "item.@id"',
+                severity: 'WARNING'
+            });
         });
     });
 });
