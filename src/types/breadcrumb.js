@@ -24,7 +24,7 @@ export default class BreadcrumbValidator extends BaseValidator {
     }
 
     atLeastTwoItems(data) {
-        if (data['itemListElement'].length < 2) {
+        if (data['itemListElement'] && Array.isArray(data['itemListElement']) &&data['itemListElement'].length < 2) {
             return {
                 issueMessage: 'At least two ListItems are required',
                 severity: 'WARNING',
@@ -34,31 +34,57 @@ export default class BreadcrumbValidator extends BaseValidator {
     }
 
     validateItemUrl(element, index, data) {
-        // Special case for last element, as it does not need a ref
         const isLast = index === data['itemListElement'].length - 1;
 
+        let urlToCheck;
+        let urlPath;
+
         if (this.checkType(element.item, 'object')) {
-            // @id for LD-JSON
-            // TODO: href or itemid for Microdata
-            // TODO: about, href, resource for RDFa
-            if (!this.checkType(element.item['@id'], 'url')) {
-                return {
-                    issueMessage: `Invalid URL in field "item.@id"`,
-                    severity: 'WARNING',
+            urlToCheck = element.item['@id'];
+            urlPath = 'item.@id';
+        } else {
+            urlToCheck = element.item;
+            urlPath = 'item';
+        }
+
+        // Last element does not need a URL, but if it has one, it should be valid
+        if (isLast && !urlToCheck) {
+            return null;
+        }
+
+        try {
+            if (!urlToCheck) {
+                throw 'URL is missing';
+            }
+
+            // Handle absolute URLs
+            if (urlToCheck.startsWith('http://') || urlToCheck.startsWith('https://') || this.dataFormat === 'jsonld') {
+                new URL(urlToCheck);
+                return null;
+            }
+
+            // Handle relative URLs
+            // Special case for microdata: / is allowed
+            if (urlToCheck === '/' && this.dataFormat === 'microdata') {
+                return null;
+            }
+
+            if (this.dataFormat === 'rdfa' || this.dataFormat === 'microdata') {
+                // Remove any query parameters and hash fragments for validation
+                const urlWithoutParams = urlToCheck.split('?')[0].split('#')[0];
+                
+                // Check if valid relative path
+                if (!urlWithoutParams.match(/^\/[a-z0-9\-/]+$/)) {
+                    throw 'Invalid URL';
                 }
             }
-        } else {
-            if (
-                (!isLast && !this.checkType(element.item, 'url'))
-                // But if it has one, it should be valid
-                || (isLast && element.item && !this.checkType(element.item, 'url'))
-            ) {
-                return {
-                    issueMessage: `Invalid URL in field "item"`,
-                    severity: 'WARNING',
-                }
+        } catch(e) {
+            return {
+                issueMessage: `Invalid URL in field "${urlPath}"`,
+                severity: 'WARNING',
             }
         }
+
         return null;
     }
 

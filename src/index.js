@@ -1,10 +1,7 @@
 import { Validator } from './validator.js';
-import WAE from 'web-auto-extractor'
+import WAE from '@marbec/web-auto-extractor'
 import { readFile } from 'fs/promises';
 import { join } from 'path';
-
-
-
 
 (async () => {
     const __dirname = import.meta.dirname;

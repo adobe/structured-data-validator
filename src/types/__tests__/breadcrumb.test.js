@@ -1,6 +1,6 @@
 import { readFile } from 'fs/promises';
 import { join } from 'path';
-import WAE from 'web-auto-extractor';
+import WAE from '@marbec/web-auto-extractor';
 
 import BreadcrumbValidator from '../breadcrumb.js';
 
@@ -80,7 +80,7 @@ describe('BreadcrumbValidator', () => {
         it('should detect invalid URLs in invalid4.json', async () => {
             const data = await loadTestData('invalid4.json', 'jsonld');
             const issues = validator.validate(data);
-    
+
             expect(issues).toHaveLength(2);
             const error = {
                 issueMessage: 'Invalid URL in field "item"',
@@ -89,11 +89,11 @@ describe('BreadcrumbValidator', () => {
             expect(issues[0]).toStrictEqual(error);
             expect(issues[1]).toStrictEqual(error);
         });
-    
+
         it('should detect missing required attributes in invalid5.json', async () => {
             const data = await loadTestData('invalid5.json', 'jsonld');
             const issues = validator.validate(data);
-    
+
             expect(issues).toHaveLength(1);
             expect(issues[0]).toStrictEqual({
                 issueMessage: 'Invalid type for attribute "itemListElement"',
@@ -143,6 +143,33 @@ describe('BreadcrumbValidator', () => {
                 severity: 'WARNING'
             });
         });
+
+        it('should detect missing required attributes in microdata-invalid3.html', async () => {
+            const data = await loadTestData('microdata-invalid3.html', 'microdata');
+            const issues = validator.validate(data);
+            expect(issues).toHaveLength(1);
+            expect(issues[0]).toStrictEqual({
+                issueMessage: 'One of the following conditions needs to be met: Required attribute \"name\" is missing or Required attribute \"item.name\" is missing', 
+                severity: 'ERROR'
+            });
+        });
+
+        it('should not detect relative URLs as issues in microdata-invalid4.html', async () => {
+            // This is different behavior than JSON-LD and RDFa
+            const data = await loadTestData('microdata-invalid4.html', 'microdata');
+            const issues = validator.validate(data);
+            expect(issues).toHaveLength(0);
+        });
+
+        it('should detect missing field in microdata-invalid5.html', async () => {
+            const data = await loadTestData('microdata-invalid5.html', 'microdata');
+            const issues = validator.validate(data);
+            expect(issues).toHaveLength(1);
+            expect(issues[0]).toStrictEqual({
+                issueMessage: 'Required attribute \"itemListElement\" is missing',
+                severity: 'ERROR'
+            });
+        });
     });
 
     describe('RDFa', () => {
@@ -184,6 +211,37 @@ describe('BreadcrumbValidator', () => {
             expect(issues[0]).toStrictEqual({
                 issueMessage: 'Invalid URL in field "item.@id"',
                 severity: 'WARNING'
+            });
+        });
+
+        it('should detect required attributes in rdfa-invalid3.html', async () => {
+            const data = await loadTestData('rdfa-invalid3.html', 'rdfa');
+            const issues = validator.validate(data);
+            expect(issues).toHaveLength(1);
+            expect(issues[0]).toStrictEqual({
+                issueMessage: 'One of the following conditions needs to be met: Required attribute \"name\" is missing or Required attribute \"item.name\" is missing',
+                severity: 'ERROR'
+            });
+        });
+
+        it('should detect invalid URLs in rdfa-invalid4.html', async () => {
+            // This behaviour is unique to RDFa.
+            const data = await loadTestData('rdfa-invalid4.html', 'rdfa');
+            const issues = validator.validate(data);
+            expect(issues).toHaveLength(1);
+            expect(issues[0]).toStrictEqual({
+                issueMessage: 'Invalid URL in field "item.@id"',
+                severity: 'WARNING'
+            });
+        });
+
+        it('should detect missing field in rdfa-invalid5.html', async () => {
+            const data = await loadTestData('rdfa-invalid5.html', 'rdfa');
+            const issues = validator.validate(data);
+            expect(issues).toHaveLength(1);
+            expect(issues[0]).toStrictEqual({
+                issueMessage: 'Required attribute \"itemListElement\" is missing',
+                severity: 'ERROR'
             });
         });
     });
