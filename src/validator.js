@@ -5,13 +5,15 @@ export class Validator {
     constructor() {
         this.supportedTypes = [
             'BreadcrumbList',
-            'Recipe',
+            // 'Recipe',
         ]
+
+        // TODO: ProductGroup
 
         this.registeredHandlers = {
             'BreadcrumbList': [() => import('./types/breadcrumb.js')],
-            'Recipe': [() => import('./types/recipe.js')],
-            'Product': [() => import('./types/product.js'), () => import('./types/merchant.js')],
+            // 'Recipe': [() => import('./types/recipe.js')],
+            'Product': [() => import('./types/product.js')], // () => import('./types/merchant.js')
         }
     }
 

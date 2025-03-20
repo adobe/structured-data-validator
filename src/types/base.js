@@ -3,6 +3,21 @@ export default class BaseValidator {
         return [];
     }
 
+    validate(data) {
+        const issues = [];
+        
+        for (const condition of this.getConditions()) {
+            const issue = condition(data);
+            if (Array.isArray(issue)) {
+                issues.push(...issue);
+            } else if (issue) {
+                issues.push(issue);
+            }
+        }
+
+        return issues;
+    }
+
     #valueByPath(data, path) {
         const parts = path.split('.');
         let value = data;
@@ -79,7 +94,9 @@ export default class BaseValidator {
             for (const [index, item] of data[name].entries()) {
                 for (const condition of conditions) {
                     const issue = condition(item, index, data);
-                    if (issue) {
+                    if (Array.isArray(issue)) {
+                        issues.push(...issue);
+                    } else if (issue) {
                         issues.push(issue);
                     }
                 }
@@ -105,12 +122,17 @@ export default class BaseValidator {
                 return !isNaN(num);
             }
             return false;
+        } else if (type === 'date') {
+            const date = new Date(data);
+            return !isNaN(date.getTime());
         } else if (type === 'url') {
             try {
                 new URL(data);
             } catch (e) {
                 return false;
             }
+        } else if (type === 'currency') {
+            return typeof data === 'string' && /^[A-Z]{3}$/.test(data);
         } else if (type === 'enum' && !value.includes(data)) {
             return false;
         } else if (type === 'regex' && !value.test(data)) {

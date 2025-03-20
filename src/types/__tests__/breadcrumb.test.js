@@ -1,27 +1,7 @@
-import { readFile } from 'fs/promises';
-import { join } from 'path';
-import WAE from '@marbec/web-auto-extractor';
-
 import BreadcrumbValidator from '../breadcrumb.js';
+import { loadTestData } from './utils.js';
 
 describe('BreadcrumbValidator', () => {
-
-    const loadTestData = async (filename, type) => {
-        const filePath = join(process.cwd(), 'gallery/breadcrumb', filename);
-        let content = await readFile(filePath, 'utf8');
-        if (type === 'jsonld') {
-            content = `<script type="application/ld+json">${content}</script>`;
-        }
-
-        const result = WAE().parse(content);
-
-        const data = result[type];
-        if (data.BreadcrumbList.length === 1) {
-            return data.BreadcrumbList[0];
-        }
-        return data.BreadcrumbList;
-    };
-
     describe('JSON-LD', () => {
         let validator;
 
@@ -30,13 +10,13 @@ describe('BreadcrumbValidator', () => {
         });
 
         it('should validate a correct breadcrumb structure in valid1.json', async () => {
-            const data = await loadTestData('valid1.json', 'jsonld');
+            const data = await loadTestData('breadcrumb/valid1.json', 'jsonld', 'BreadcrumbList');
             const issues = validator.validate(data);
             expect(issues).toHaveLength(0);
         });
     
         it('should validate multiple breadcrumb lists in valid2.json', async () => {
-            const data = await loadTestData('valid2.json', 'jsonld');
+            const data = await loadTestData('breadcrumb/valid2.json', 'jsonld', 'BreadcrumbList');
             expect(data).toHaveLength(2);
             for (const item of data) {
                 const issues = validator.validate(item);
@@ -45,7 +25,7 @@ describe('BreadcrumbValidator', () => {
         });
     
         it('should detect missing required attributes in invalid1.json', async () => {
-            const data = await loadTestData('invalid1.json', 'jsonld');
+            const data = await loadTestData('breadcrumb/invalid1.json', 'jsonld', 'BreadcrumbList');
             const issues = validator.validate(data);
     
             expect(issues).toHaveLength(1);
@@ -56,7 +36,7 @@ describe('BreadcrumbValidator', () => {
         });
     
         it('should detect invalid URL in invalid2.json', async () => {
-            const data = await loadTestData('invalid2.json', 'jsonld');
+            const data = await loadTestData('breadcrumb/invalid2.json', 'jsonld', 'BreadcrumbList');
             const issues = validator.validate(data);
     
             expect(issues).toHaveLength(1);
@@ -67,7 +47,7 @@ describe('BreadcrumbValidator', () => {
         });
     
         it('should detect missing required attributes in invalid3.json', async () => {
-            const data = await loadTestData('invalid3.json', 'jsonld');
+            const data = await loadTestData('breadcrumb/invalid3.json', 'jsonld', 'BreadcrumbList');
             const issues = validator.validate(data);
     
             expect(issues).toHaveLength(1);
@@ -78,7 +58,7 @@ describe('BreadcrumbValidator', () => {
         });
     
         it('should detect invalid URLs in invalid4.json', async () => {
-            const data = await loadTestData('invalid4.json', 'jsonld');
+            const data = await loadTestData('breadcrumb/invalid4.json', 'jsonld', 'BreadcrumbList');
             const issues = validator.validate(data);
 
             expect(issues).toHaveLength(2);
@@ -91,7 +71,7 @@ describe('BreadcrumbValidator', () => {
         });
 
         it('should detect missing required attributes in invalid5.json', async () => {
-            const data = await loadTestData('invalid5.json', 'jsonld');
+            const data = await loadTestData('breadcrumb/invalid5.json', 'jsonld', 'BreadcrumbList');
             const issues = validator.validate(data);
 
             expect(issues).toHaveLength(1);
@@ -110,13 +90,13 @@ describe('BreadcrumbValidator', () => {
         });
 
         it('should validate a correct breadcrumb structure in microdata-valid1.html', async () => {
-            const data = await loadTestData('microdata-valid1.html', 'microdata');
+            const data = await loadTestData('breadcrumb/microdata-valid1.html', 'microdata', 'BreadcrumbList');
             const issues = validator.validate(data);
             expect(issues).toHaveLength(0);
         });
 
         it('should validate multiple breadcrumb lists in microdata-valid1.html', async () => {
-            const data = await loadTestData('microdata-valid2.html', 'microdata');
+            const data = await loadTestData('breadcrumb/microdata-valid2.html', 'microdata', 'BreadcrumbList');
             expect(data).toHaveLength(2);
             for (const item of data) {
                 const issues = validator.validate(item);
@@ -125,7 +105,7 @@ describe('BreadcrumbValidator', () => {
         });
 
         it('should detect missing required attributes in microdata-invalid1.html', async () => {
-            const data = await loadTestData('microdata-invalid1.html', 'microdata');
+            const data = await loadTestData('breadcrumb/microdata-invalid1.html', 'microdata', 'BreadcrumbList');
             const issues = validator.validate(data);
             expect(issues).toHaveLength(1);
             expect(issues[0]).toStrictEqual({
@@ -135,7 +115,7 @@ describe('BreadcrumbValidator', () => {
         });
 
         it('should detect invalid URL in microdata-invalid2.html', async () => {
-            const data = await loadTestData('microdata-invalid2.html', 'microdata');
+            const data = await loadTestData('breadcrumb/microdata-invalid2.html', 'microdata', 'BreadcrumbList');
             const issues = validator.validate(data);
             expect(issues).toHaveLength(1);
             expect(issues[0]).toStrictEqual({
@@ -145,7 +125,7 @@ describe('BreadcrumbValidator', () => {
         });
 
         it('should detect missing required attributes in microdata-invalid3.html', async () => {
-            const data = await loadTestData('microdata-invalid3.html', 'microdata');
+            const data = await loadTestData('breadcrumb/microdata-invalid3.html', 'microdata', 'BreadcrumbList');
             const issues = validator.validate(data);
             expect(issues).toHaveLength(1);
             expect(issues[0]).toStrictEqual({
@@ -156,13 +136,13 @@ describe('BreadcrumbValidator', () => {
 
         it('should not detect relative URLs as issues in microdata-invalid4.html', async () => {
             // This is different behavior than JSON-LD and RDFa
-            const data = await loadTestData('microdata-invalid4.html', 'microdata');
+            const data = await loadTestData('breadcrumb/microdata-invalid4.html', 'microdata', 'BreadcrumbList');
             const issues = validator.validate(data);
             expect(issues).toHaveLength(0);
         });
 
         it('should detect missing field in microdata-invalid5.html', async () => {
-            const data = await loadTestData('microdata-invalid5.html', 'microdata');
+            const data = await loadTestData('breadcrumb/microdata-invalid5.html', 'microdata', 'BreadcrumbList');
             const issues = validator.validate(data);
             expect(issues).toHaveLength(1);
             expect(issues[0]).toStrictEqual({
@@ -180,13 +160,13 @@ describe('BreadcrumbValidator', () => {
         });
 
         it('should validate a correct breadcrumb structure in rdfa-valid1.html', async () => {
-            const data = await loadTestData('rdfa-valid1.html', 'rdfa');
+            const data = await loadTestData('breadcrumb/rdfa-valid1.html', 'rdfa', 'BreadcrumbList');
             const issues = validator.validate(data);
             expect(issues).toHaveLength(0);
         });
     
         it('should validate multiple breadcrumb lists in rdfa-valid1.html', async () => {
-            const data = await loadTestData('rdfa-valid2.html', 'rdfa');
+            const data = await loadTestData('breadcrumb/rdfa-valid2.html', 'rdfa', 'BreadcrumbList');
             expect(data).toHaveLength(2);
             for (const item of data) {
                 const issues = validator.validate(item);
@@ -195,7 +175,7 @@ describe('BreadcrumbValidator', () => {
         });
 
         it('should detect missing required attributes in rdfa-invalid1.html', async () => {
-            const data = await loadTestData('rdfa-invalid1.html', 'rdfa');
+            const data = await loadTestData('breadcrumb/rdfa-invalid1.html', 'rdfa', 'BreadcrumbList');
             const issues = validator.validate(data);
             expect(issues).toHaveLength(1);
             expect(issues[0]).toStrictEqual({
@@ -205,7 +185,7 @@ describe('BreadcrumbValidator', () => {
         });
 
         it('should detect invalid URL in rdfa-invalid2.html', async () => {
-            const data = await loadTestData('rdfa-invalid2.html', 'rdfa');
+            const data = await loadTestData('breadcrumb/rdfa-invalid2.html', 'rdfa', 'BreadcrumbList');
             const issues = validator.validate(data);
             expect(issues).toHaveLength(1);
             expect(issues[0]).toStrictEqual({
@@ -215,7 +195,7 @@ describe('BreadcrumbValidator', () => {
         });
 
         it('should detect required attributes in rdfa-invalid3.html', async () => {
-            const data = await loadTestData('rdfa-invalid3.html', 'rdfa');
+            const data = await loadTestData('breadcrumb/rdfa-invalid3.html', 'rdfa', 'BreadcrumbList');
             const issues = validator.validate(data);
             expect(issues).toHaveLength(1);
             expect(issues[0]).toStrictEqual({
@@ -226,7 +206,7 @@ describe('BreadcrumbValidator', () => {
 
         it('should detect invalid URLs in rdfa-invalid4.html', async () => {
             // This behaviour is unique to RDFa.
-            const data = await loadTestData('rdfa-invalid4.html', 'rdfa');
+            const data = await loadTestData('breadcrumb/rdfa-invalid4.html', 'rdfa', 'BreadcrumbList');
             const issues = validator.validate(data);
             expect(issues).toHaveLength(1);
             expect(issues[0]).toStrictEqual({
@@ -236,7 +216,7 @@ describe('BreadcrumbValidator', () => {
         });
 
         it('should detect missing field in rdfa-invalid5.html', async () => {
-            const data = await loadTestData('rdfa-invalid5.html', 'rdfa');
+            const data = await loadTestData('breadcrumb/rdfa-invalid5.html', 'rdfa', 'BreadcrumbList');
             const issues = validator.validate(data);
             expect(issues).toHaveLength(1);
             expect(issues[0]).toStrictEqual({

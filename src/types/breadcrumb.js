@@ -87,19 +87,4 @@ export default class BreadcrumbValidator extends BaseValidator {
 
         return null;
     }
-
-    validate(data) {
-        const issues = [];
-
-        for (const condition of this.getConditions()) {
-            const issue = condition(data);
-            if (Array.isArray(issue)) {
-                issues.push(...issue);
-            } else if (issue) {
-                issues.push(issue);
-            }
-        }
-
-        return issues;
-    }
 }
