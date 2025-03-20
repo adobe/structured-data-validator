@@ -1,21 +1,21 @@
 {
-    "richResultsResult": {
-        "verdict": "FAIL",
-        "detectedItems": [
-            {
-                "richResultType": "Breadcrumbs",
-                "items": [
-                    {
-                        "name": "Unnamed item",
-                        "issues": [
-                            {
-                                "issueMessage": "Either \"name\" or \"item.name\" should be specified",
-                                "severity": "ERROR"
-                            }
-                        ]
-                    }
-                ]
-            }
+  "richResultsResult": {
+    "verdict": "FAIL",
+    "detectedItems": [
+      {
+        "richResultType": "Breadcrumbs",
+        "items": [
+          {
+            "name": "Unnamed item",
+            "issues": [
+              {
+                "issueMessage": "Either \"name\" or \"item.name\" should be specified",
+                "severity": "ERROR"
+              }
+            ]
+          }
         ]
-    }
+      }
+    ]
+  }
 }

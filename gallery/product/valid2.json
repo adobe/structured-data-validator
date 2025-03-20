@@ -1,43 +1,43 @@
 {
-    "@context": "https://schema.org",
-    "@type": "Product",
-    "name": "Cheese Grater Pro",
-    "review": {
-        "@type": "Review",
-        "name": "Cheese Knife Pro review",
-        "author": {
-            "@type": "Person",
-            "name": "Pascal Van Cleeff"
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "name": "Cheese Grater Pro",
+  "review": {
+    "@type": "Review",
+    "name": "Cheese Knife Pro review",
+    "author": {
+      "@type": "Person",
+      "name": "Pascal Van Cleeff"
+    },
+    "positiveNotes": {
+      "@type": "ItemList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Consistent results"
         },
-        "positiveNotes": {
-            "@type": "ItemList",
-            "itemListElement": [
-                {
-                    "@type": "ListItem",
-                    "position": 1,
-                    "name": "Consistent results"
-                },
-                {
-                    "@type": "ListItem",
-                    "position": 2,
-                    "name": "Still sharp after many uses"
-                }
-            ]
-        },
-        "negativeNotes": {
-            "@type": "ItemList",
-            "itemListElement": [
-                {
-                    "@type": "ListItem",
-                    "position": 1,
-                    "name": "No child protection"
-                },
-                {
-                    "@type": "ListItem",
-                    "position": 2,
-                    "name": "Lacking advanced features"
-                }
-            ]
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Still sharp after many uses"
         }
+      ]
+    },
+    "negativeNotes": {
+      "@type": "ItemList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "No child protection"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Lacking advanced features"
+        }
+      ]
     }
+  }
 }

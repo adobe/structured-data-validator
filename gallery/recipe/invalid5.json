@@ -1,26 +1,22 @@
 {
-    "@context": "https://schema.org/",
-    "@type": "Recipe",
-    "name": "Simple Salad",
-    "image": "https://example.com/photos/salad.jpg",
-    "description": "A simple green salad",
-    "recipeIngredient": [
-        "Mixed greens",
-        "Cucumber",
-        "Tomato"
-    ],
-    "recipeInstructions": [
-        {
-            "@type": "HowToStep",
-            "name": "Prepare vegetables"
-        },
-        {
-            "@type": "HowToStep",
-            "image": "https://example.com/photos/step1.jpg"
-        },
-        {
-            "@type": "HowToStep",
-            "url": "https://example.com/recipe#step3"
-        }
-    ]
-} 
+  "@context": "https://schema.org/",
+  "@type": "Recipe",
+  "name": "Simple Salad",
+  "image": "https://example.com/photos/salad.jpg",
+  "description": "A simple green salad",
+  "recipeIngredient": ["Mixed greens", "Cucumber", "Tomato"],
+  "recipeInstructions": [
+    {
+      "@type": "HowToStep",
+      "name": "Prepare vegetables"
+    },
+    {
+      "@type": "HowToStep",
+      "image": "https://example.com/photos/step1.jpg"
+    },
+    {
+      "@type": "HowToStep",
+      "url": "https://example.com/recipe#step3"
+    }
+  ]
+}

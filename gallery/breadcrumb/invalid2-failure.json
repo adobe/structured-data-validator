@@ -1,21 +1,21 @@
 {
-    "richResultsResult": {
-        "verdict": "PASS",
-        "detectedItems": [
-            {
-                "richResultType": "Breadcrumbs",
-                "items": [
-                    {
-                        "name": "Unnamed item",
-                        "issues": [
-                            {
-                                "issueMessage": "Invalid URL in field \"id\"",
-                                "severity": "WARNING"
-                            }
-                        ]
-                    }
-                ]
-            }
+  "richResultsResult": {
+    "verdict": "PASS",
+    "detectedItems": [
+      {
+        "richResultType": "Breadcrumbs",
+        "items": [
+          {
+            "name": "Unnamed item",
+            "issues": [
+              {
+                "issueMessage": "Invalid URL in field \"id\"",
+                "severity": "WARNING"
+              }
+            ]
+          }
         ]
-    }
+      }
+    ]
+  }
 }

@@ -10,20 +10,20 @@ import WAE from '@marbec/web-auto-extractor';
  * @returns {Promise<Object|Array>} The parsed structured data
  */
 export const loadTestData = async (filepath, dataType, entity) => {
-    const filePath = join(process.cwd(), 'gallery', filepath);
-    let content = await readFile(filePath, 'utf8');
-    
-    // Wrap JSON-LD content in script tag if needed
-    if (dataType === 'jsonld') {
-        content = `<script type="application/ld+json">${content}</script>`;
-    }
+  const filePath = join(process.cwd(), 'gallery', filepath);
+  let content = await readFile(filePath, 'utf8');
 
-    const result = WAE().parse(content);
-    const data = result[dataType];
+  // Wrap JSON-LD content in script tag if needed
+  if (dataType === 'jsonld') {
+    content = `<script type="application/ld+json">${content}</script>`;
+  }
 
-    // Handle both single and multiple items
-    if (data[entity].length === 1) {
-        return data[entity][0];
-    }
-    return data[entity];
-}; 
+  const result = WAE().parse(content);
+  const data = result[dataType];
+
+  // Handle both single and multiple items
+  if (data[entity].length === 1) {
+    return data[entity][0];
+  }
+  return data[entity];
+};

@@ -1,14 +1,14 @@
 {
-    "@context": "https://schema.org",
-    "@type": "VideoObject",
-    "potentialAction": {
-        "@type": "SeekToAction",
-        "target": "https://video.example.com/watch/videoID?t={seek_to_second_number}",
-        "startOffset-input": "required name=seek_to_second_number"
-    },
-    "name": "My daily workout!",
-    "uploadDate": "2024-07-19T08:00:00+08:00",
-    "thumbnailUrl": "https://www.example.com/daily-workout.jpg",
-    "description": "My daily workout!",
-    "embedUrl": "https://example.com/daily-workout"
+  "@context": "https://schema.org",
+  "@type": "VideoObject",
+  "potentialAction": {
+    "@type": "SeekToAction",
+    "target": "https://video.example.com/watch/videoID?t={seek_to_second_number}",
+    "startOffset-input": "required name=seek_to_second_number"
+  },
+  "name": "My daily workout!",
+  "uploadDate": "2024-07-19T08:00:00+08:00",
+  "thumbnailUrl": "https://www.example.com/daily-workout.jpg",
+  "description": "My daily workout!",
+  "embedUrl": "https://example.com/daily-workout"
 }

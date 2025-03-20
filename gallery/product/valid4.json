@@ -1,56 +1,56 @@
 {
-    "@context": "https://schema.org/",
-    "@type": "Product",
-    "brand": {
-        "@type": "Brand",
-        "name": "Penguin Books"
+  "@context": "https://schema.org/",
+  "@type": "Product",
+  "brand": {
+    "@type": "Brand",
+    "name": "Penguin Books"
+  },
+  "description": "The Catcher in the Rye is a classic coming-of-age story: an story of teenage alienation, capturing the human need for connection and the bewildering sense of loss as we leave childhood behind.",
+  "sku": "9780241984758",
+  "mpn": "925872",
+  "image": "https://www.example.com/catcher-in-the-rye-book-cover.jpg",
+  "name": "The Catcher in the Rye",
+  "review": [
+    {
+      "@type": "Review",
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": 5
+      },
+      "author": {
+        "@type": "Person",
+        "name": "John Doe"
+      }
     },
-    "description": "The Catcher in the Rye is a classic coming-of-age story: an story of teenage alienation, capturing the human need for connection and the bewildering sense of loss as we leave childhood behind.",
-    "sku": "9780241984758",
-    "mpn": "925872",
-    "image": "https://www.example.com/catcher-in-the-rye-book-cover.jpg",
-    "name": "The Catcher in the Rye",
-    "review": [
-        {
-            "@type": "Review",
-            "reviewRating": {
-                "@type": "Rating",
-                "ratingValue": 5
-            },
-            "author": {
-                "@type": "Person",
-                "name": "John Doe"
-            }
-        },
-        {
-            "@type": "Review",
-            "reviewRating": {
-                "@type": "Rating",
-                "ratingValue": 1
-            },
-            "author": {
-                "@type": "Person",
-                "name": "Jane Doe"
-            }
-        }
-    ],
-    "aggregateRating": {
-        "@type": "AggregateRating",
-        "ratingValue": 88,
-        "bestRating": 100,
-        "ratingCount": 20
-    },
-    "offers": {
-        "@type": "Offer",
-        "url": "https://example.com/offers/catcher-in-the-rye",
-        "priceCurrency": "USD",
-        "price": 5.99,
-        "priceValidUntil": "2024-11-05",
-        "itemCondition": "https://schema.org/UsedCondition",
-        "availability": "https://schema.org/InStock",
-        "seller": {
-            "@type": "Organization",
-            "name": "eBay"
-        }
+    {
+      "@type": "Review",
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": 1
+      },
+      "author": {
+        "@type": "Person",
+        "name": "Jane Doe"
+      }
     }
+  ],
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": 88,
+    "bestRating": 100,
+    "ratingCount": 20
+  },
+  "offers": {
+    "@type": "Offer",
+    "url": "https://example.com/offers/catcher-in-the-rye",
+    "priceCurrency": "USD",
+    "price": 5.99,
+    "priceValidUntil": "2024-11-05",
+    "itemCondition": "https://schema.org/UsedCondition",
+    "availability": "https://schema.org/InStock",
+    "seller": {
+      "@type": "Organization",
+      "name": "eBay"
+    }
+  }
 }

@@ -1,25 +1,21 @@
 {
-    "@context": "https://schema.org/",
-    "@type": "Recipe",
-    "name": "Healthy Smoothie Bowl",
-    "image": "https://example.com/photos/smoothie-bowl.jpg",
-    "description": "A nutritious breakfast smoothie bowl",
-    "recipeIngredient": [
-        "1 banana",
-        "1 cup spinach",
-        "1 cup almond milk"
-    ],
-    "recipeInstructions": [
-        {
-            "@type": "HowToStep",
-            "text": "Blend all ingredients until smooth"
-        }
-    ],
-    "nutrition": {
-        "@type": "NutritionInformation",
-        "calories": "250 calories",
-        "proteinContent": "5g",
-        "fatContent": "3g",
-        "carbohydrateContent": "45g"
+  "@context": "https://schema.org/",
+  "@type": "Recipe",
+  "name": "Healthy Smoothie Bowl",
+  "image": "https://example.com/photos/smoothie-bowl.jpg",
+  "description": "A nutritious breakfast smoothie bowl",
+  "recipeIngredient": ["1 banana", "1 cup spinach", "1 cup almond milk"],
+  "recipeInstructions": [
+    {
+      "@type": "HowToStep",
+      "text": "Blend all ingredients until smooth"
     }
-} 
+  ],
+  "nutrition": {
+    "@type": "NutritionInformation",
+    "calories": "250 calories",
+    "proteinContent": "5g",
+    "fatContent": "3g",
+    "carbohydrateContent": "45g"
+  }
+}

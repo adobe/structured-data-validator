@@ -1,22 +1,18 @@
 {
-    "@context": "https://schema.org/",
-    "@type": "Recipe",
-    "name": "Classic Chocolate Cake",
-    "image": [
-        "data:image/jpeg;base64,/9j/4AAQSkZJRg...",
-        "javascript:void(0)",
-        "about:blank"
-    ],
-    "description": "A moist and delicious chocolate cake recipe",
-    "recipeIngredient": [
-        "2 cups flour",
-        "1 cup sugar",
-        "1/2 cup cocoa powder"
-    ],
-    "recipeInstructions": [
-        {
-            "@type": "HowToStep",
-            "text": "Mix dry ingredients together"
-        }
-    ]
+  "@context": "https://schema.org/",
+  "@type": "Recipe",
+  "name": "Classic Chocolate Cake",
+  "image": [
+    "data:image/jpeg;base64,/9j/4AAQSkZJRg...",
+    "javascript:void(0)",
+    "about:blank"
+  ],
+  "description": "A moist and delicious chocolate cake recipe",
+  "recipeIngredient": ["2 cups flour", "1 cup sugar", "1/2 cup cocoa powder"],
+  "recipeInstructions": [
+    {
+      "@type": "HowToStep",
+      "text": "Mix dry ingredients together"
+    }
+  ]
 }

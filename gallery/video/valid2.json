@@ -1,34 +1,34 @@
 {
-    "@context": "https://schema.org",
-    "@type": "VideoObject",
-    "contentURL": "https://example.com/bald-eagle-at-the-park.mp4",
-    "description": "Bald eagle at the park livestream.",
-    "duration": "PT37M14S",
-    "embedUrl": "https://example.com/bald-eagle-at-the-park",
-    "expires": "2024-10-30T14:37:14+00:00",
-    "regionsAllowed": "US",
-    "interactionStatistic": {
-        "@type": "InteractionCounter",
-        "interactionType": {
-            "@type": "WatchAction"
-        },
-        "userInteractionCount": 4756
+  "@context": "https://schema.org",
+  "@type": "VideoObject",
+  "contentURL": "https://example.com/bald-eagle-at-the-park.mp4",
+  "description": "Bald eagle at the park livestream.",
+  "duration": "PT37M14S",
+  "embedUrl": "https://example.com/bald-eagle-at-the-park",
+  "expires": "2024-10-30T14:37:14+00:00",
+  "regionsAllowed": "US",
+  "interactionStatistic": {
+    "@type": "InteractionCounter",
+    "interactionType": {
+      "@type": "WatchAction"
     },
-    "name": "Bald eagle nest livestream!",
-    "thumbnailUrl": "https://example.com/bald-eagle-at-the-park",
-    "uploadDate": "2024-10-27T14:00:00+00:00",
-    "publication": [
-        {
-            "@type": "BroadcastEvent",
-            "isLiveBroadcast": true,
-            "startDate": "2024-10-27T14:00:00+00:00",
-            "endDate": "2024-10-27T14:37:14+00:00"
-        },
-        {
-            "@type": "BroadcastEvent",
-            "isLiveBroadcast": true,
-            "startDate": "2024-10-27T18:00:00+00:00",
-            "endDate": "2024-10-27T18:37:14+00:00"
-        }
-    ]
+    "userInteractionCount": 4756
+  },
+  "name": "Bald eagle nest livestream!",
+  "thumbnailUrl": "https://example.com/bald-eagle-at-the-park",
+  "uploadDate": "2024-10-27T14:00:00+00:00",
+  "publication": [
+    {
+      "@type": "BroadcastEvent",
+      "isLiveBroadcast": true,
+      "startDate": "2024-10-27T14:00:00+00:00",
+      "endDate": "2024-10-27T14:37:14+00:00"
+    },
+    {
+      "@type": "BroadcastEvent",
+      "isLiveBroadcast": true,
+      "startDate": "2024-10-27T18:00:00+00:00",
+      "endDate": "2024-10-27T18:37:14+00:00"
+    }
+  ]
 }
