@@ -13,7 +13,7 @@ export default class BreadcrumbValidator extends BaseValidator {
       this.atLeastTwoItems,
       this.children(
         'itemListElement',
-        this.or(this.required('name'), this.required('item.name')),
+        this.or(this.required('name', 'string'), this.required('item.name', 'string')),
         this.required('position', 'number'),
         this.validateItemUrl,
       ),
@@ -43,7 +43,7 @@ export default class BreadcrumbValidator extends BaseValidator {
     if (this.checkType(element.item, 'object')) {
       urlToCheck = element.item['@id'];
       urlPath = 'item.@id';
-    } else {
+    } else if (element.item) {
       urlToCheck = element.item;
       urlPath = 'item';
     }

@@ -16,9 +16,10 @@ export default class AggregateRatingValidator extends BaseValidator {
       this.required('ratingValue'),
       this.validateRange,
 
-      // Those fields are listed as recommended, but don't trigger warnings as Google assumes default values 0 and 5.
-      // this.recommended('bestRating', 'number'),
-      // this.recommended('worstRating', 'number'),
+      // Those fields are listed as recommended in documentation
+      // BUT: Google validator does not show warnings and assumes default values 0 and 5.
+      this.recommended('bestRating', 'number'),
+      this.recommended('worstRating', 'number'),
     ];
 
     // If not embedded into other type, itemReviewed is required

@@ -38,6 +38,7 @@
     "@type": "AggregateRating",
     "ratingValue": 88,
     "bestRating": 100,
+    "worstRating": 0,
     "ratingCount": 20
   },
   "offers": {

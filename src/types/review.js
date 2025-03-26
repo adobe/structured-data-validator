@@ -11,9 +11,14 @@ export default class ReviewValidator extends BaseValidator {
     const conditions = [
       this.required('author'),
       this.required('author.name'),
-      // While docs say reviewRating is required, validator allows it to be missing
-      // this.required('reviewRating'),
-      // positiveNotes and negativeNotes are optional, but if they are present, they must be correct
+
+      // Documentation states reviewRating as required
+      // Validator allows it to be missing
+      this.required('reviewRating'),
+      this.recommended('reviewRating.bestRating', 'number'),
+      this.recommended('reviewRating.worstRating', 'number'),
+
+      this.recommended('datePublished', 'date'),
     ];
 
     if (!this.nested) {
