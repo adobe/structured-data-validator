@@ -11,7 +11,8 @@ export class Validator {
     // TODO: ProductGroup
 
     this.registeredHandlers = {
-      BreadcrumbList: [() => import('./types/breadcrumb.js')],
+      // TODO: Separate schema.org and Google requirements
+      BreadcrumbList: [/* () => import('./types/breadcrumb.js'), */ () => import('./schema-org/breadcrumb.js')],
       // 'Recipe': [() => import('./types/recipe.js')],
       Product: [() => import('./types/product.js')], // () => import('./types/merchant.js')
     };

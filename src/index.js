@@ -17,8 +17,6 @@ import { join } from 'path';
     jsonld,
   } = WAE().parse(ldjsonExample);
 
-  console.log(JSON.stringify(jsonld, null, 2));
-
   const validator = new Validator();
 
   // const data = await validator.parse('gallery/breadcrumb/invalid1.json');
