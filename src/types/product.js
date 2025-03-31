@@ -106,22 +106,34 @@ export default class ProductValidator extends BaseValidator {
     const issues = [];
 
     // positiveNotes and negativeNotes are optional, but if they are present, they must be correct
-    if ((data.review.positiveNotes && data.review.positiveNotes.itemListElement)
-    || (data.review.negativeNotes && data.review.negativeNotes.itemListElement)) {
-      if (data.review.positiveNotes?.itemListElement?.length + data.review.negativeNotes?.itemListElement?.length < 2) {
+    if (
+      (data.review.positiveNotes &&
+        data.review.positiveNotes.itemListElement) ||
+      (data.review.negativeNotes && data.review.negativeNotes.itemListElement)
+    ) {
+      if (
+        data.review.positiveNotes?.itemListElement?.length +
+          data.review.negativeNotes?.itemListElement?.length <
+        2
+      ) {
         issues.push({
-          issueMessage: 'At least 2 notes, either positive or negative, are required',
+          issueMessage:
+            'At least 2 notes, either positive or negative, are required',
           severity: 'WARNING',
         });
       }
     }
 
     if (Array.isArray(data.review)) {
-      issues.push(...data.review
-        .map((r) => new ReviewValidator(this.dataFormat, true).validate(r))
-        .flat());
+      issues.push(
+        ...data.review
+          .map((r) => new ReviewValidator(this.dataFormat, true).validate(r))
+          .flat(),
+      );
     }
-    issues.push(...new ReviewValidator(this.dataFormat, true).validate(data.review));
+    issues.push(
+      ...new ReviewValidator(this.dataFormat, true).validate(data.review),
+    );
 
     return issues;
   }

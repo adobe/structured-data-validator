@@ -72,7 +72,11 @@ export default class BaseValidator {
 
   recommended(name, type, ...opts) {
     return (data) => {
-      if (data[name] === undefined || data[name] === null || data[name] === '') {
+      if (
+        data[name] === undefined ||
+        data[name] === null ||
+        data[name] === ''
+      ) {
         return {
           issueMessage: `Missing field "${name}" (optional)`,
           severity: 'WARNING',

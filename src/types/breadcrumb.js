@@ -13,7 +13,10 @@ export default class BreadcrumbValidator extends BaseValidator {
       this.atLeastTwoItems,
       this.children(
         'itemListElement',
-        this.or(this.required('name', 'string'), this.required('item.name', 'string')),
+        this.or(
+          this.required('name', 'string'),
+          this.required('item.name', 'string'),
+        ),
         this.required('position', 'number'),
         this.validateItemUrl,
       ),
