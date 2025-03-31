@@ -21,9 +21,12 @@ export const loadTestData = async (filepath, dataType, entity) => {
   const result = WAE().parse(content);
   const data = result[dataType];
 
-  // Handle both single and multiple items
-  if (data[entity].length === 1) {
-    return data[entity][0];
+  if (entity) {
+    // Handle both single and multiple items
+    if (data[entity].length === 1) {
+      return data[entity][0];
+    }
+    return data[entity];
   }
-  return data[entity];
+  return data;
 };

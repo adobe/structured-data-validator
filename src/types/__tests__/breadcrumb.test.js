@@ -1,10 +1,7 @@
 import { expect } from 'chai';
-import { readFile } from 'fs/promises';
-import { join } from 'path';
 
 import BreadcrumbValidator from '../breadcrumb.js';
 import { loadTestData } from './utils.js';
-import { Validator } from '../../validator.js';
 
 describe('BreadcrumbValidator', () => {
   describe('JSON-LD', () => {
@@ -12,16 +9,6 @@ describe('BreadcrumbValidator', () => {
 
     beforeEach(() => {
       validator = new BreadcrumbValidator('jsonld');
-    });
-
-    it.only('should do a schema.org validation', async () => {
-        const val = new Validator();
-        const filePath = join(process.cwd(), 'gallery/breadcrumb/valid1.json');
-        let ldJson = await readFile(filePath, 'utf8');
-        ldJson = { 'BreadcrumbList': [JSON.parse(ldJson)] };
-
-        const issues = await val.validate(ldJson, 'jsonld');
-        console.log(JSON.stringify(issues, null, 2));
     });
 
     it('should validate a correct breadcrumb structure in valid1.json', async () => {

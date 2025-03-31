@@ -12,9 +12,9 @@ export class Validator {
 
     this.registeredHandlers = {
       // TODO: Separate schema.org and Google requirements
-      BreadcrumbList: [/* () => import('./types/breadcrumb.js'), */ () => import('./schema-org/breadcrumb.js')],
+      BreadcrumbList: [() => import('./types/breadcrumb.js'), () => import('./types/schemaOrg.js')],
       // 'Recipe': [() => import('./types/recipe.js')],
-      Product: [() => import('./types/product.js')], // () => import('./types/merchant.js')
+      Product: [() => import('./types/product.js'), () => import('./types/schemaOrg.js')], // () => import('./types/merchant.js')
     };
   }
 
