@@ -23,7 +23,6 @@ export default class AggregateRatingValidator extends BaseValidator {
     ];
 
     // If not embedded into other type, itemReviewed is required
-    // TODO: Write test for this
     if (!this.nested) {
       conditions.push(
         this.required('itemReviewed'),
@@ -34,7 +33,6 @@ export default class AggregateRatingValidator extends BaseValidator {
     return conditions.map((c) => c.bind(this));
   }
 
-  // TODO: Write test for this
   validateRange(data) {
     // If number or if it can be parsed as number
     // For % and / values, Google ignores the range

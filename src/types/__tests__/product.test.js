@@ -225,5 +225,20 @@ describe('ProductValidator', () => {
         severity: 'WARNING',
       });
     });
+
+    it('should detect missing rating count in rating_no_count.json', async () => {
+      const data = await loadTestData(
+        'product/rating_no_count.json',
+        'jsonld',
+        'Product',
+      );
+      const issues = validator.validate(data);
+      expect(issues).to.have.lengthOf(1);
+      expect(issues[0]).to.deep.equal({
+        issueMessage:
+          'One of the following conditions needs to be met: Required attribute "ratingCount" is missing or Required attribute "reviewCount" is missing',
+        severity: 'ERROR',
+      });
+    });
   });
 });

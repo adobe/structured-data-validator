@@ -1,0 +1,11 @@
+{
+  "@context": "https://schema.org/",
+  "@type": "AggregateRating",
+  "itemReviewed": {
+    "@type": "Restaurant",
+    "name": "Legal Seafood"
+  },
+  "ratingValue": 4.5,
+  "bestRating": 5,
+  "worstRating": 0
+}

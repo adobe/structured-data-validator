@@ -1,0 +1,23 @@
+{
+  "@context": "https://schema.org/",
+  "@type": "AggregateRating",
+  "itemReviewed": {
+    "@type": "Restaurant",
+    "image": "https://www.example.com/seafood-restaurant.jpg",
+    "name": "Legal Seafood",
+    "servesCuisine": "Seafood",
+    "telephone": "1234567",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "123 William St",
+      "addressLocality": "New York",
+      "addressRegion": "NY",
+      "postalCode": "10038",
+      "addressCountry": "US"
+    }
+  },
+  "ratingValue": 88,
+  "bestRating": 100,
+  "ratingCount": 20,
+  "worstRating": 0
+}
