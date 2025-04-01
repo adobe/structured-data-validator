@@ -8,24 +8,6 @@ export default class ProductValidator extends BaseValidator {
     this.dataFormat = dataFormat;
   }
 
-  /*
-  Test cases
-  
-  AggregateRating
-  * missing ratingCount
-  * missing reviewCount
-  * missing ratingValue
-  * ratingValue outside of range
-  * ratingValue outside of range
-  
-  Review
-  * missing author
-  * missing author name
-  * missing reviewRating and ratingValue
-  * invalid date
-  * missing reviewRating.worstRating
-  */
-
   getConditions() {
     return [
       this.required('name'),

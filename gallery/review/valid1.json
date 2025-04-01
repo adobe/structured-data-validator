@@ -1,0 +1,35 @@
+{
+  "@context": "https://schema.org/",
+  "@type": "Review",
+  "itemReviewed": {
+    "@type": "Restaurant",
+    "image": "https://www.example.com/seafood-restaurant.jpg",
+    "name": "Legal Seafood",
+    "servesCuisine": "Seafood",
+    "priceRange": "$$$",
+    "telephone": "1234567",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "123 William St",
+      "addressLocality": "New York",
+      "addressRegion": "NY",
+      "postalCode": "10038",
+      "addressCountry": "US"
+    }
+  },
+  "datePublished": "2024-03-31",
+  "reviewRating": {
+    "@type": "Rating",
+    "ratingValue": 4,
+    "bestRating": 5,
+    "worstRating": 1
+  },
+  "author": {
+    "@type": "Person",
+    "name": "Bob Smith"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Washington Times"
+  }
+}

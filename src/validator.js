@@ -10,6 +10,9 @@ export class Validator {
 
     // TODO: ProductGroup
 
+    // TODO: Register handlers by type, using hierarchy (e.g. Rating -> AggregateRating)
+    // Automatically check subtypes?
+
     this.registeredHandlers = {
       // TODO: Separate schema.org and Google requirements
       BreadcrumbList: [
