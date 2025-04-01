@@ -8,12 +8,31 @@ export default class ProductValidator extends BaseValidator {
     this.dataFormat = dataFormat;
   }
 
+  /*
+  Test cases
+  
+  AggregateRating
+  * missing ratingCount
+  * missing reviewCount
+  * missing ratingValue
+  * ratingValue outside of range
+  * ratingValue outside of range
+  
+  Review
+  * missing author
+  * missing author name
+  * missing reviewRating and ratingValue
+  * invalid date
+  * missing reviewRating.worstRating
+  */
+
   getConditions() {
     return [
       this.required('name'),
       this.ratingReviewOrOffers,
       this.aggregateRating,
       this.offers,
+      this.review,
     ].map((c) => c.bind(this));
   }
 
@@ -50,7 +69,7 @@ export default class ProductValidator extends BaseValidator {
       ),
       this.recommended('availability'),
       this.or(
-        this.required('priceCurrency', 'currency'),
+        this.recommended('priceCurrency', 'currency'),
         this.recommended('priceSpecification.priceCurrency', 'currency'),
       ),
       this.recommended('priceValidUntil', 'date'),
@@ -104,36 +123,32 @@ export default class ProductValidator extends BaseValidator {
     }
 
     const issues = [];
+    let notes = 0;
 
-    // positiveNotes and negativeNotes are optional, but if they are present, they must be correct
-    if (
-      (data.review.positiveNotes &&
-        data.review.positiveNotes.itemListElement) ||
-      (data.review.negativeNotes && data.review.negativeNotes.itemListElement)
-    ) {
+    const reviews = Array.isArray(data.review) ? data.review : [data.review];
+    for (const review of reviews) {
+      // positiveNotes and negativeNotes are optional, but if they are present, they must be correct
       if (
-        data.review.positiveNotes?.itemListElement?.length +
-          data.review.negativeNotes?.itemListElement?.length <
-        2
+        (review.positiveNotes && review.positiveNotes.itemListElement) ||
+        (review.negativeNotes && review.negativeNotes.itemListElement)
       ) {
-        issues.push({
-          issueMessage:
-            'At least 2 notes, either positive or negative, are required',
-          severity: 'WARNING',
-        });
+        notes += review.positiveNotes?.itemListElement?.length || 0;
+        notes += review.negativeNotes?.itemListElement?.length || 0;
       }
-    }
 
-    if (Array.isArray(data.review)) {
       issues.push(
-        ...data.review
-          .map((r) => new ReviewValidator(this.dataFormat, true).validate(r))
-          .flat(),
+        ...new ReviewValidator(this.dataFormat, true).validate(review),
       );
     }
-    issues.push(
-      ...new ReviewValidator(this.dataFormat, true).validate(data.review),
-    );
+
+    // Need to have at least 2 or zero notes
+    if (notes === 1) {
+      issues.push({
+        issueMessage:
+          'At least 2 notes, either positive or negative, are required',
+        severity: 'WARNING',
+      });
+    }
 
     return issues;
   }

@@ -23,7 +23,7 @@ export default class BaseValidator {
     let value = data;
 
     for (const part of parts) {
-      if (!value || typeof value !== 'object') {
+      if (value === undefined || typeof value !== 'object') {
         return undefined;
       }
       value = value[part];
@@ -72,17 +72,14 @@ export default class BaseValidator {
 
   recommended(name, type, ...opts) {
     return (data) => {
-      if (
-        data[name] === undefined ||
-        data[name] === null ||
-        data[name] === ''
-      ) {
+      const value = this.#valueByPath(data, name);
+      if (value === undefined || value === null || value === '') {
         return {
           issueMessage: `Missing field "${name}" (optional)`,
           severity: 'WARNING',
         };
       }
-      if (type && !this.checkType(data[name], type, ...opts)) {
+      if (type && !this.checkType(value, type, ...opts)) {
         return {
           issueMessage: `Invalid type for attribute "${name}"`,
           severity: 'WARNING',

@@ -8,12 +8,14 @@
     "reviewRating": {
       "@type": "Rating",
       "ratingValue": 4,
-      "bestRating": 5
+      "bestRating": 5,
+      "worstRating": 1
     },
     "author": {
       "@type": "Person",
       "name": "Fred Benson"
-    }
+    },
+    "datePublished": "2024-03-31"
   },
   "aggregateRating": {
     "@type": "AggregateRating",

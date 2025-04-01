@@ -15,23 +15,29 @@
       "@type": "Review",
       "reviewRating": {
         "@type": "Rating",
-        "ratingValue": 5
+        "ratingValue": 5,
+        "bestRating": 5,
+        "worstRating": 1
       },
       "author": {
         "@type": "Person",
         "name": "John Doe"
-      }
+      },
+      "datePublished": "2024-03-31"
     },
     {
       "@type": "Review",
       "reviewRating": {
         "@type": "Rating",
-        "ratingValue": 1
+        "ratingValue": 1,
+        "bestRating": 5,
+        "worstRating": 1
       },
       "author": {
         "@type": "Person",
         "name": "Jane Doe"
-      }
+      },
+      "datePublished": "2024-03-31"
     }
   ],
   "aggregateRating": {

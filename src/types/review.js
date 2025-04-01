@@ -15,6 +15,7 @@ export default class ReviewValidator extends BaseValidator {
       // Documentation states reviewRating as required
       // Validator allows it to be missing
       this.required('reviewRating'),
+      this.required('reviewRating.ratingValue'),
       this.recommended('reviewRating.bestRating', 'number'),
       this.recommended('reviewRating.worstRating', 'number'),
 

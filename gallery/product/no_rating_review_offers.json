@@ -1,0 +1,13 @@
+{
+  "@context": "https://schema.org/",
+  "@type": "Product",
+  "brand": {
+    "@type": "Brand",
+    "name": "ACME"
+  },
+  "description": "A product without any ratings, reviews, or offers",
+  "sku": "123456789",
+  "mpn": "925872",
+  "image": "https://www.example.com/product-image.jpg",
+  "name": "Basic Product"
+}

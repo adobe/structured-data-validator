@@ -9,6 +9,13 @@
       "@type": "Person",
       "name": "Pascal Van Cleeff"
     },
+    "reviewRating": {
+      "@type": "Rating",
+      "ratingValue": 4,
+      "bestRating": 5,
+      "worstRating": 1
+    },
+    "datePublished": "2024-03-31",
     "positiveNotes": {
       "@type": "ItemList",
       "itemListElement": [

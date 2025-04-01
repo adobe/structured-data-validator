@@ -1,0 +1,47 @@
+{
+  "@context": "https://schema.org/",
+  "@type": "Product",
+  "brand": {
+    "@type": "Brand",
+    "name": "ACME"
+  },
+  "description": "A product with an aggregate offer missing the low price",
+  "sku": "123456789",
+  "mpn": "925872",
+  "image": "https://www.example.com/product-image.jpg",
+  "name": "Product With Incomplete Aggregate Offer",
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": 4.5,
+    "bestRating": 5,
+    "worstRating": 1,
+    "ratingCount": 100
+  },
+  "review": {
+    "@type": "Review",
+    "reviewRating": {
+      "@type": "Rating",
+      "ratingValue": 5,
+      "bestRating": 5,
+      "worstRating": 1
+    },
+    "author": {
+      "@type": "Person",
+      "name": "John Doe"
+    },
+    "datePublished": "2024-03-31"
+  },
+  "offers": {
+    "@type": "AggregateOffer",
+    "url": "https://example.com/offers/product",
+    "highPrice": 199.99,
+    "priceCurrency": "USD",
+    "offerCount": 5,
+    "itemCondition": "https://schema.org/NewCondition",
+    "availability": "https://schema.org/InStock",
+    "seller": {
+      "@type": "Organization",
+      "name": "ACME Store"
+    }
+  }
+}
