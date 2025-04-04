@@ -46,6 +46,7 @@ describe('BreadcrumbValidator', () => {
       expect(issues[0]).to.deep.equal({
         issueMessage:
           'One of the following conditions needs to be met: Required attribute "name" is missing or Required attribute "item.name" is missing',
+        location: '35,312',
         severity: 'ERROR',
       });
     });
@@ -61,6 +62,7 @@ describe('BreadcrumbValidator', () => {
       expect(issues).to.have.lengthOf(1);
       expect(issues[0]).to.deep.equal({
         issueMessage: 'Invalid URL in field "item"',
+        location: '35,380',
         severity: 'WARNING',
       });
     });
@@ -77,6 +79,7 @@ describe('BreadcrumbValidator', () => {
       expect(issues[0]).to.deep.equal({
         issueMessage:
           'One of the following conditions needs to be met: Required attribute "name" is missing or Required attribute "item.name" is missing',
+        location: '35,376',
         severity: 'ERROR',
       });
     });
@@ -92,6 +95,7 @@ describe('BreadcrumbValidator', () => {
       expect(issues).to.have.lengthOf(2);
       const error = {
         issueMessage: 'Invalid URL in field "item"',
+        location: '35,343',
         severity: 'WARNING',
       };
       expect(issues[0]).to.deep.equal(error);
@@ -109,6 +113,7 @@ describe('BreadcrumbValidator', () => {
       expect(issues).to.have.lengthOf(1);
       expect(issues[0]).to.deep.equal({
         issueMessage: 'Invalid type for attribute "itemListElement"',
+        location: '35,139',
         severity: 'ERROR',
       });
     });
@@ -155,6 +160,7 @@ describe('BreadcrumbValidator', () => {
       expect(issues[0]).to.deep.equal({
         issueMessage:
           'One of the following conditions needs to be met: Required attribute "name" is missing or Required attribute "item.name" is missing',
+        location: '67,607',
         severity: 'ERROR',
       });
     });
@@ -169,6 +175,7 @@ describe('BreadcrumbValidator', () => {
       expect(issues).to.have.lengthOf(1);
       expect(issues[0]).to.deep.equal({
         issueMessage: 'Invalid URL in field "item"',
+        location: '67,834',
         severity: 'WARNING',
       });
     });
@@ -184,6 +191,7 @@ describe('BreadcrumbValidator', () => {
       expect(issues[0]).to.deep.equal({
         issueMessage:
           'One of the following conditions needs to be met: Required attribute "name" is missing or Required attribute "item.name" is missing',
+        location: '67,832',
         severity: 'ERROR',
       });
     });
@@ -209,6 +217,7 @@ describe('BreadcrumbValidator', () => {
       expect(issues).to.have.lengthOf(1);
       expect(issues[0]).to.deep.equal({
         issueMessage: 'Required attribute "itemListElement" is missing',
+        location: '67,131',
         severity: 'ERROR',
       });
     });
@@ -255,6 +264,7 @@ describe('BreadcrumbValidator', () => {
       expect(issues[0]).to.deep.equal({
         issueMessage:
           'One of the following conditions needs to be met: Required attribute "name" is missing or Required attribute "item.name" is missing',
+        location: '67,498',
         severity: 'ERROR',
       });
     });
@@ -269,6 +279,7 @@ describe('BreadcrumbValidator', () => {
       expect(issues).to.have.lengthOf(1);
       expect(issues[0]).to.deep.equal({
         issueMessage: 'Invalid URL in field "item.@id"',
+        location: '67,644',
         severity: 'WARNING',
       });
     });
@@ -284,6 +295,7 @@ describe('BreadcrumbValidator', () => {
       expect(issues[0]).to.deep.equal({
         issueMessage:
           'One of the following conditions needs to be met: Required attribute "name" is missing or Required attribute "item.name" is missing',
+        location: '67,642',
         severity: 'ERROR',
       });
     });
@@ -299,6 +311,7 @@ describe('BreadcrumbValidator', () => {
       expect(issues).to.have.lengthOf(1);
       expect(issues[0]).to.deep.equal({
         issueMessage: 'Invalid URL in field "item.@id"',
+        location: '67,622',
         severity: 'WARNING',
       });
     });
@@ -313,6 +326,7 @@ describe('BreadcrumbValidator', () => {
       expect(issues).to.have.lengthOf(1);
       expect(issues[0]).to.deep.equal({
         issueMessage: 'Required attribute "itemListElement" is missing',
+        location: '67,128',
         severity: 'ERROR',
       });
     });

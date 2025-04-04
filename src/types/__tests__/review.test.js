@@ -26,10 +26,12 @@ describe('ReviewValidator', () => {
       expect(issues).to.deep.equal([
         {
           severity: 'ERROR',
+          location: '35,402',
           issueMessage: 'Required attribute "author" is missing',
         },
         {
           severity: 'ERROR',
+          location: '35,402',
           issueMessage: 'Required attribute "author.name" is missing',
         },
       ]);
@@ -45,6 +47,7 @@ describe('ReviewValidator', () => {
       expect(issues).to.deep.equal([
         {
           severity: 'ERROR',
+          location: '35,446',
           issueMessage:
             'Required attribute "reviewRating.ratingValue" is missing',
         },
@@ -61,6 +64,7 @@ describe('ReviewValidator', () => {
       expect(issues).to.deep.equal([
         {
           severity: 'WARNING',
+          location: '35,435',
           issueMessage: 'Missing field "datePublished" (optional)',
         },
       ]);
@@ -76,6 +80,7 @@ describe('ReviewValidator', () => {
       expect(issues).to.deep.equal([
         {
           severity: 'WARNING',
+          location: '35,447',
           issueMessage: 'Missing field "reviewRating.bestRating" (optional)',
         },
       ]);
@@ -91,6 +96,7 @@ describe('ReviewValidator', () => {
       expect(issues).to.deep.equal([
         {
           severity: 'ERROR',
+          location: '35,468',
           issueMessage: 'Rating is outside the specified or default range',
         },
       ]);
@@ -106,10 +112,12 @@ describe('ReviewValidator', () => {
       expect(issues).to.deep.equal([
         {
           severity: 'ERROR',
+          location: '35,388',
           issueMessage: 'Required attribute "itemReviewed" is missing',
         },
         {
           severity: 'ERROR',
+          location: '35,388',
           issueMessage: 'Required attribute "itemReviewed.name" is missing',
         },
       ]);

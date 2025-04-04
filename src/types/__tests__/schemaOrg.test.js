@@ -76,6 +76,22 @@ describe('Schema.org Validator', () => {
       const issues = await validator.validate(data);
       expect(issues).to.have.lengthOf(0);
     });
+
+    it('should return an error if invalid attribute was detected', async () => {
+      const data = await loadTestData(
+        'product/invalid_attribute.json',
+        'jsonld',
+        'Product',
+      );
+
+      const issues = await validator.validate(data);
+      expect(issues[0]).to.deep.equal({
+        issueMessage:
+          'Property "my-custom-attribute" for type "Product" at "[0]" is not supported by the schema.org specification',
+        location: '35,491',
+        severity: 'WARNING',
+      });
+    });
   });
 
   describe('Microdata', () => {

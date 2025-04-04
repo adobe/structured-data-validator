@@ -3,9 +3,8 @@ import AggregateRatingValidator from './aggregateRating.js';
 import ReviewValidator from './review.js';
 
 export default class ProductValidator extends BaseValidator {
-  constructor(dataFormat) {
-    super();
-    this.dataFormat = dataFormat;
+  constructor(dataFormat, location) {
+    super(dataFormat, location);
   }
 
   getConditions() {
@@ -94,9 +93,11 @@ export default class ProductValidator extends BaseValidator {
     if (!data.aggregateRating) {
       return null;
     }
-    return new AggregateRatingValidator(this.dataFormat, true).validate(
-      data.aggregateRating,
-    );
+    return new AggregateRatingValidator(
+      this.dataFormat,
+      this.location,
+      true,
+    ).validate(data.aggregateRating);
   }
 
   review(data) {
@@ -119,7 +120,9 @@ export default class ProductValidator extends BaseValidator {
       }
 
       issues.push(
-        ...new ReviewValidator(this.dataFormat, true).validate(review),
+        ...new ReviewValidator(this.dataFormat, this.location, true).validate(
+          review,
+        ),
       );
     }
 
@@ -128,6 +131,7 @@ export default class ProductValidator extends BaseValidator {
       issues.push({
         issueMessage:
           'At least 2 notes, either positive or negative, are required',
+        location: this.location,
         severity: 'WARNING',
       });
     }
@@ -143,6 +147,7 @@ export default class ProductValidator extends BaseValidator {
       issues.push({
         issueMessage:
           'One of the following attributes is required: "aggregateRating", "offers" or "review"',
+        location: this.location,
         severity: 'ERROR',
       });
     }

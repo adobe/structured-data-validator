@@ -1,9 +1,8 @@
 import BaseValidator from './base.js';
 
 export default class BreadcrumbValidator extends BaseValidator {
-  constructor(dataFormat) {
-    super();
-    this.dataFormat = dataFormat;
+  constructor(dataFormat, location) {
+    super(dataFormat, location);
     this.validateItemUrl = this.validateItemUrl.bind(this);
   }
 
@@ -31,6 +30,7 @@ export default class BreadcrumbValidator extends BaseValidator {
     ) {
       return {
         issueMessage: 'At least two ListItems are required',
+        location: this.location,
         severity: 'WARNING',
       };
     }
@@ -89,6 +89,7 @@ export default class BreadcrumbValidator extends BaseValidator {
     } catch (e) {
       return {
         issueMessage: `Invalid URL in field "${urlPath}"`,
+        location: this.location,
         severity: 'WARNING',
       };
     }

@@ -60,10 +60,12 @@ describe('ProductValidator', () => {
       expect(issues).to.have.lengthOf(2);
       expect(issues[0]).to.deep.equal({
         issueMessage: 'Missing field "aggregateRating" (optional)',
+        location: '35,692',
         severity: 'WARNING',
       });
       expect(issues[1]).to.deep.equal({
         issueMessage: 'Missing field "review" (optional)',
+        location: '35,692',
         severity: 'WARNING',
       });
     });
@@ -78,6 +80,7 @@ describe('ProductValidator', () => {
       expect(issues).to.have.lengthOf(1);
       expect(issues[0]).to.deep.equal({
         issueMessage: 'Required attribute "name" is missing',
+        location: '35,1094',
         severity: 'ERROR',
       });
     });
@@ -93,6 +96,7 @@ describe('ProductValidator', () => {
       expect(issues[0]).to.deep.equal({
         issueMessage:
           'One of the following attributes is required: "aggregateRating", "offers" or "review"',
+        location: '35,349',
         severity: 'ERROR',
       });
     });
@@ -108,6 +112,7 @@ describe('ProductValidator', () => {
       expect(issues[0]).to.deep.equal({
         issueMessage:
           'At least 2 notes, either positive or negative, are required',
+        location: '35,1352',
         severity: 'WARNING',
       });
     });
@@ -123,6 +128,7 @@ describe('ProductValidator', () => {
       expect(issues[0]).to.deep.equal({
         issueMessage:
           'One of the following conditions needs to be met: Required attribute "price" is missing or Required attribute "priceSpecification.price" is missing',
+        location: '35,1120',
         severity: 'ERROR',
       });
     });
@@ -138,6 +144,7 @@ describe('ProductValidator', () => {
       expect(issues[0]).to.deep.equal({
         issueMessage:
           'One of the following conditions needs to be met: Missing field "priceCurrency" (optional) or Missing field "priceSpecification.priceCurrency" (optional)',
+        location: '35,1118',
         severity: 'ERROR',
       });
     });
@@ -152,6 +159,7 @@ describe('ProductValidator', () => {
       expect(issues).to.have.lengthOf(1);
       expect(issues[0]).to.deep.equal({
         issueMessage: 'Missing field "availability" (optional)',
+        location: '35,1104',
         severity: 'WARNING',
       });
     });
@@ -166,6 +174,7 @@ describe('ProductValidator', () => {
       expect(issues).to.have.lengthOf(1);
       expect(issues[0]).to.deep.equal({
         issueMessage: 'Invalid type for attribute "priceValidUntil"',
+        location: '35,1148',
         severity: 'WARNING',
       });
     });
@@ -180,6 +189,7 @@ describe('ProductValidator', () => {
       expect(issues).to.have.lengthOf(1);
       expect(issues[0]).to.deep.equal({
         issueMessage: 'Required attribute "lowPrice" is missing',
+        location: '35,1163',
         severity: 'ERROR',
       });
     });
@@ -194,6 +204,7 @@ describe('ProductValidator', () => {
       expect(issues).to.have.lengthOf(1);
       expect(issues[0]).to.deep.equal({
         issueMessage: 'Required attribute "priceCurrency" is missing',
+        location: '35,1158',
         severity: 'ERROR',
       });
     });
@@ -208,6 +219,7 @@ describe('ProductValidator', () => {
       expect(issues).to.have.lengthOf(1);
       expect(issues[0]).to.deep.equal({
         issueMessage: 'Missing field "highPrice" (optional)',
+        location: '35,1165',
         severity: 'WARNING',
       });
     });
@@ -222,6 +234,7 @@ describe('ProductValidator', () => {
       expect(issues).to.have.lengthOf(1);
       expect(issues[0]).to.deep.equal({
         issueMessage: 'Missing field "offerCount" (optional)',
+        location: '35,1165',
         severity: 'WARNING',
       });
     });
@@ -237,6 +250,7 @@ describe('ProductValidator', () => {
       expect(issues[0]).to.deep.equal({
         issueMessage:
           'One of the following conditions needs to be met: Required attribute "ratingCount" is missing or Required attribute "reviewCount" is missing',
+        location: '35,408',
         severity: 'ERROR',
       });
     });

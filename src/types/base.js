@@ -1,9 +1,20 @@
 export default class BaseValidator {
+  constructor(dataFormat, location) {
+    this.dataFormat = dataFormat;
+    if (location) {
+      this.location = location;
+    }
+  }
+
   getConditions() {
     return [];
   }
 
   validate(data) {
+    if (!this.location && data['@location']) {
+      this.location = data['@location'];
+    }
+
     const issues = [];
 
     for (const condition of this.getConditions()) {
@@ -38,12 +49,14 @@ export default class BaseValidator {
       if (!value) {
         return {
           issueMessage: `Required attribute "${name}" is missing`,
+          location: this.location,
           severity: 'ERROR',
         };
       }
       if (type && !this.checkType(value, type, ...opts)) {
         return {
           issueMessage: `Invalid type for attribute "${name}"`,
+          location: this.location,
           severity: 'ERROR',
         };
       }
@@ -52,8 +65,8 @@ export default class BaseValidator {
   }
 
   or(...conditions) {
-    return (data) => {
-      const issues = conditions.map((c) => c(data));
+    return (element, index, data) => {
+      const issues = conditions.map((c) => c(element, index, data));
       const pass = issues.some(
         (i) => i === null || (Array.isArray(i) && i.length === 0),
       );
@@ -65,6 +78,7 @@ export default class BaseValidator {
           .flat()
           .map((c) => c.issueMessage)
           .join(' or ')}`,
+        location: this.location,
         severity: 'ERROR',
       };
     };
@@ -76,12 +90,14 @@ export default class BaseValidator {
       if (value === undefined || value === null || value === '') {
         return {
           issueMessage: `Missing field "${name}" (optional)`,
+          location: this.location,
           severity: 'WARNING',
         };
       }
       if (type && !this.checkType(value, type, ...opts)) {
         return {
           issueMessage: `Invalid type for attribute "${name}"`,
+          location: this.location,
           severity: 'WARNING',
         };
       }

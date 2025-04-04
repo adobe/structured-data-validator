@@ -1,0 +1,21 @@
+{
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "name": "Cheese Grater Pro",
+  "my-custom-attribute": "my-custom-value",
+  "review": {
+    "@type": "Review",
+    "name": "Cheese Knife Pro review",
+    "author": {
+      "@type": "Person",
+      "name": "Pascal Van Cleeff"
+    },
+    "reviewRating": {
+      "@type": "Rating",
+      "ratingValue": 4,
+      "bestRating": 5,
+      "worstRating": 1
+    },
+    "datePublished": "2024-03-31"
+  }
+}

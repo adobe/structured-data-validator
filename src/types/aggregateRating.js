@@ -1,9 +1,8 @@
 import BaseValidator from './base.js';
 
 export default class AggregateRatingValidator extends BaseValidator {
-  constructor(dataFormat, nested = false) {
-    super();
-    this.dataFormat = dataFormat;
+  constructor(dataFormat, location, nested = false) {
+    super(dataFormat, location);
     this.nested = nested;
   }
 
@@ -51,6 +50,7 @@ export default class AggregateRatingValidator extends BaseValidator {
       if (value < from || value > to) {
         return {
           issueMessage: `Rating is outside the specified or default range`,
+          location: this.location,
           severity: 'ERROR',
         };
       }

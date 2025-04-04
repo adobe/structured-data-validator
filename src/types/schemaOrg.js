@@ -188,6 +188,7 @@ export default class SchemaOrgValidator {
     // console.debug('Called validateSchema at', path);
     const issues = [];
 
+    // TODO: Double check, data shouldn't be an array anymore
     if (Array.isArray(data)) {
       // if data is an array, iterate and call recursively
       for (const [index, item] of data.entries()) {
@@ -224,6 +225,7 @@ export default class SchemaOrgValidator {
           if (!isValid) {
             issues.push({
               issueMessage: `Property "${propertyId}" for type "${typeId}" at "${path}" is not supported by the schema.org specification`,
+              location: this.location,
               severity: 'WARNING',
             });
           }
@@ -260,7 +262,12 @@ export default class SchemaOrgValidator {
   }
 
   async validate(data) {
+    if (data['@location']) {
+      this.location = data['@location'];
+    }
+
     const expanded = await jsonld.expand(data);
+
     return this.validateSchema(expanded);
   }
 }

@@ -29,6 +29,7 @@ describe('AggregateRatingValidator', () => {
       const issues = validator.validate(data);
       expect(issues[0]).to.deep.equal({
         severity: 'ERROR',
+        location: '35,245',
         issueMessage:
           'One of the following conditions needs to be met: Required attribute "ratingCount" is missing or Required attribute "reviewCount" is missing',
       });
@@ -43,6 +44,7 @@ describe('AggregateRatingValidator', () => {
       const issues = validator.validate(data);
       expect(issues[0]).to.deep.equal({
         severity: 'ERROR',
+        location: '35,244',
         issueMessage: 'Required attribute "ratingValue" is missing',
       });
     });
@@ -56,6 +58,7 @@ describe('AggregateRatingValidator', () => {
       const issues = validator.validate(data);
       expect(issues[0]).to.deep.equal({
         severity: 'ERROR',
+        location: '35,266',
         issueMessage: 'Rating is outside the specified or default range',
       });
     });
@@ -70,10 +73,12 @@ describe('AggregateRatingValidator', () => {
       expect(issues).to.have.lengthOf(2);
       expect(issues[0]).to.deep.equal({
         severity: 'ERROR',
+        location: '35,186',
         issueMessage: 'Required attribute "itemReviewed" is missing',
       });
       expect(issues[1]).to.deep.equal({
         severity: 'ERROR',
+        location: '35,186',
         issueMessage: 'Required attribute "itemReviewed.name" is missing',
       });
     });
