@@ -123,4 +123,23 @@ describe('ReviewValidator', () => {
       ]);
     });
   });
+
+  describe('RDFa', () => {
+    let validator;
+
+    beforeEach(() => {
+      validator = new ReviewValidator('rdfa');
+    });
+
+    // TODO: Needs support for RDFa rel parsing in web-auto-extractor
+    it.skip('should validate a correct review structure in rdfa-valid1.html', async () => {
+      const data = await loadTestData(
+        'review/rdfa-valid1.html',
+        'rdfa',
+        'Review',
+      );
+      const issues = validator.validate(data);
+      expect(issues).to.deep.equal([]);
+    });
+  });
 });

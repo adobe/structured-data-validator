@@ -1,0 +1,36 @@
+<html>
+  <head>
+    <title>Executive Anvil</title>
+  </head>
+
+  <body>
+    <div typeof="schema:Product">
+      <div rel="schema:review">
+        <div typeof="schema:Review">
+          <div rel="schema:reviewRating">
+            <div typeof="schema:Rating">
+              <div property="schema:ratingValue" content="4"></div>
+              <div property="schema:bestRating" content="5"></div>
+            </div>
+          </div>
+          <div rel="schema:author">
+            <div typeof="schema:Person">
+              <div property="schema:name" content="Fred Benson"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div property="schema:name" content="Executive Anvil"></div>
+      <div
+        property="schema:description"
+        content="Sleeker than ACME's Classic Anvil, the Executive Anvil is perfect for the business traveler looking for something to drop from a height."
+      ></div>
+      <div rel="schema:aggregateRating">
+        <div typeof="schema:AggregateRating">
+          <div property="schema:reviewCount" content="89"></div>
+          <div property="schema:ratingValue" content="4.4"></div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
