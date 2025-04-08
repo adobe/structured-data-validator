@@ -1,6 +1,6 @@
 import { readFile } from 'fs/promises';
 import { join } from 'path';
-import WAE from '@marbec/web-auto-extractor';
+import WebAutoExtractor from '@marbec/web-auto-extractor';
 
 /**
  * Loads and parses test data from a file
@@ -18,7 +18,7 @@ export const loadTestData = async (filepath, dataType, entity) => {
     content = `<script type="application/ld+json">${content}</script>`;
   }
 
-  const result = WAE().parse(content);
+  const result = new WebAutoExtractor({ addLocation: true }).parse(content);
   const data = result[dataType];
 
   if (entity) {
