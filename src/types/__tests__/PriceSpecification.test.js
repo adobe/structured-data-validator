@@ -3,7 +3,7 @@ import { expect } from 'chai';
 import { loadTestData } from './utils.js';
 import { Validator } from '../../validator.js';
 
-describe.only('PriceSpecificationValidator', () => {
+describe('PriceSpecificationValidator', () => {
   describe('JSON-LD', () => {
     let validator;
 

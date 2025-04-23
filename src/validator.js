@@ -18,19 +18,12 @@ export class Validator {
     // TODO: ProductGroup
 
     this.registeredHandlers = {
-      // TODO: Check schema.org validations again
-      // TODO: Separate schema.org and Google requirements
-      BreadcrumbList: [
-        () => import('./types/BreadcrumbList.js'),
-        () => import('./types/schemaOrg.js'),
-      ],
+      _global: [() => import('./types/schemaOrg.js')],
+      BreadcrumbList: [() => import('./types/BreadcrumbList.js')],
       Person: [() => import('./types/Person.js')],
       Organization: [() => import('./types/Organization.js')],
       ListItem: [() => import('./types/ListItem.js')],
-      Product: [
-        () => import('./types/Product.js'),
-        () => import('./types/schemaOrg.js'),
-      ],
+      Product: [() => import('./types/Product.js')],
       Review: [() => import('./types/Review.js')],
       AggregateRating: [() => import('./types/AggregateRating.js')],
       Offer: [() => import('./types/Offer.js')],
@@ -82,17 +75,23 @@ export class Validator {
           // console.debug(`${spacing}VALIDATE TYPE:`, type, JSON.stringify(path));
 
           // Find supported handlers
-          const handlers = this.registeredHandlers[type];
+          const handlers = [...(this.registeredHandlers[type] || [])];
           if (!handlers || handlers.length === 0) {
             console.warn(
               `${spacing}  WARN: No handlers registered for type: ${type}`,
             );
             return [];
           }
+          handlers.push(...(this.registeredHandlers._global || []));
 
           const handlerPromises = handlers.map(async (handler) => {
             const handlerClass = (await handler()).default;
-            const handlerInstance = new handlerClass({ dataFormat, path });
+            const handlerInstance = new handlerClass({
+              dataFormat,
+              path,
+              // If an object has multiple types, we need to pass the current type for any global handlers
+              type,
+            });
             return handlerInstance.validate(data);
           });
 
