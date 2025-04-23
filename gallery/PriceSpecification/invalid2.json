@@ -1,0 +1,6 @@
+{
+  "@context": "https://schema.org",
+  "@type": "PriceSpecification",
+  "price": 99.99,
+  "priceCurrency": "INVALID"
+}

@@ -100,7 +100,7 @@ export default class BaseValidator {
   }
 
   checkType(data, type, ...value) {
-    // TODO: Test
+    // TODO: Write tests for all type checks
     if (type === 'string' && typeof data !== 'string') {
       return false;
     } else if (type === 'array' && !Array.isArray(data)) {

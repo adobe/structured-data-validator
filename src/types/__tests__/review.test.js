@@ -12,9 +12,9 @@ describe('ReviewValidator', () => {
       validator.registeredHandlers = {
         Review: [() => import('../Review.js')],
         Restaurant: [MockValidator],
-        Person: [MockValidator],
-        Rating: [MockValidator],
-        Organization: [MockValidator],
+        Person: [() => import('../Person.js')],
+        Rating: [() => import('../Rating.js')],
+        Organization: [() => import('../Organization.js')],
         PostalAddress: [MockValidator],
       };
     });
@@ -31,16 +31,11 @@ describe('ReviewValidator', () => {
         'jsonld',
       );
       const issues = await validator.validate(data);
-      expect(issues).to.have.lengthOf(2);
+      expect(issues).to.have.lengthOf(1);
       expect(issues[0]).to.deep.include({
         severity: 'ERROR',
         location: '35,403',
         issueMessage: 'Required attribute "author" is missing',
-      });
-      expect(issues[1]).to.deep.include({
-        severity: 'ERROR',
-        location: '35,403',
-        issueMessage: 'Required attribute "author.name" is missing',
       });
     });
 
@@ -54,8 +49,11 @@ describe('ReviewValidator', () => {
       expect(issues[0]).to.deep.include({
         severity: 'ERROR',
         location: '35,447',
-        issueMessage:
-          'Required attribute "reviewRating.ratingValue" is missing',
+        issueMessage: 'Required attribute "ratingValue" is missing',
+        path: [
+          { type: 'Review', index: 0 },
+          { property: 'reviewRating', type: 'Rating' },
+        ],
       });
     });
 
@@ -83,7 +81,11 @@ describe('ReviewValidator', () => {
       expect(issues[0]).to.deep.include({
         severity: 'WARNING',
         location: '35,448',
-        issueMessage: 'Missing field "reviewRating.bestRating" (optional)',
+        issueMessage: 'Missing field "bestRating" (optional)',
+        path: [
+          { type: 'Review', index: 0 },
+          { property: 'reviewRating', type: 'Rating' },
+        ],
       });
     });
 

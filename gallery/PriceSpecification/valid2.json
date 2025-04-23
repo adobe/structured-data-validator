@@ -1,0 +1,7 @@
+{
+  "@context": "https://schema.org",
+  "@type": "UnitPriceSpecification",
+  "price": 10.5,
+  "priceCurrency": "CHF",
+  "unitCode": "KGM"
+}

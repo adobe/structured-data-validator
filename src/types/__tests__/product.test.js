@@ -13,14 +13,16 @@ describe('ProductValidator', () => {
         Product: [() => import('../Product.js')],
         AggregateRating: [() => import('../AggregateRating.js')],
         Review: [() => import('../Review.js')],
-        Rating: [MockValidator],
-        Person: [MockValidator],
+        Rating: [() => import('../Rating.js')],
+        Person: [() => import('../Person.js')],
         ItemList: [MockValidator],
         Brand: [MockValidator],
-        Offer: [MockValidator],
-        Organization: [MockValidator],
+        Offer: [() => import('../Offer.js')],
+        Organization: [() => import('../Organization.js')],
         ListItem: [MockValidator],
-        AggregateOffer: [MockValidator],
+        AggregateOffer: [() => import('../AggregateOffer.js')],
+        PriceSpecification: [() => import('../PriceSpecification.js')],
+        UnitPriceSpecification: [() => import('../UnitPriceSpecification.js')],
       };
     });
 
@@ -114,6 +116,10 @@ describe('ProductValidator', () => {
           'One of the following conditions needs to be met: Required attribute "price" is missing or Required attribute "priceSpecification.price" is missing',
         location: '35,1121',
         severity: 'ERROR',
+        path: [
+          { type: 'Product', index: 0 },
+          { property: 'offers', type: 'Offer' },
+        ],
       });
     });
 
@@ -129,6 +135,10 @@ describe('ProductValidator', () => {
           'One of the following conditions needs to be met: Missing field "priceCurrency" (optional) or Missing field "priceSpecification.priceCurrency" (optional)',
         location: '35,1119',
         severity: 'ERROR',
+        path: [
+          { type: 'Product', index: 0 },
+          { property: 'offers', type: 'Offer' },
+        ],
       });
     });
 
@@ -143,6 +153,10 @@ describe('ProductValidator', () => {
         issueMessage: 'Missing field "availability" (optional)',
         location: '35,1105',
         severity: 'WARNING',
+        path: [
+          { type: 'Product', index: 0 },
+          { property: 'offers', type: 'Offer' },
+        ],
       });
     });
 
@@ -157,6 +171,10 @@ describe('ProductValidator', () => {
         issueMessage: 'Invalid type for attribute "priceValidUntil"',
         location: '35,1149',
         severity: 'WARNING',
+        path: [
+          { type: 'Product', index: 0 },
+          { property: 'offers', type: 'Offer' },
+        ],
       });
     });
 
@@ -171,6 +189,10 @@ describe('ProductValidator', () => {
         issueMessage: 'Required attribute "lowPrice" is missing',
         location: '35,1164',
         severity: 'ERROR',
+        path: [
+          { type: 'Product', index: 0 },
+          { property: 'offers', type: 'AggregateOffer' },
+        ],
       });
     });
 
@@ -185,6 +207,10 @@ describe('ProductValidator', () => {
         issueMessage: 'Required attribute "priceCurrency" is missing',
         location: '35,1159',
         severity: 'ERROR',
+        path: [
+          { type: 'Product', index: 0 },
+          { property: 'offers', type: 'AggregateOffer' },
+        ],
       });
     });
 
@@ -199,6 +225,10 @@ describe('ProductValidator', () => {
         issueMessage: 'Missing field "highPrice" (optional)',
         location: '35,1166',
         severity: 'WARNING',
+        path: [
+          { type: 'Product', index: 0 },
+          { property: 'offers', type: 'AggregateOffer' },
+        ],
       });
     });
 
@@ -213,6 +243,10 @@ describe('ProductValidator', () => {
         issueMessage: 'Missing field "offerCount" (optional)',
         location: '35,1166',
         severity: 'WARNING',
+        path: [
+          { type: 'Product', index: 0 },
+          { property: 'offers', type: 'AggregateOffer' },
+        ],
       });
     });
 

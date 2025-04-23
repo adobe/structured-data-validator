@@ -1,16 +1,18 @@
-import { readFile } from 'fs/promises';
-import { join } from 'path';
-
 export class Validator {
   constructor() {
-    // TODO: Reverse into ignore, so we can ignore structured data types which are not relevant for rich results or shopping
+    // TODO: Remove and derive from keys of this.registeredHandlers
     this.supportedTypes = [
       'BreadcrumbList',
       'ListItem',
       'Product',
       'Review',
       'AggregateRating',
-      // 'Recipe',
+      'Person',
+      'Organization',
+      'Offer',
+      'AggregateOffer',
+      'PriceSpecification',
+      'UnitPriceSpecification',
     ];
 
     // TODO: ProductGroup
@@ -22,52 +24,22 @@ export class Validator {
         () => import('./types/BreadcrumbList.js'),
         () => import('./types/schemaOrg.js'),
       ],
+      Person: [() => import('./types/Person.js')],
+      Organization: [() => import('./types/Organization.js')],
       ListItem: [() => import('./types/ListItem.js')],
-      // 'Recipe': [() => import('./types/recipe.js')],
       Product: [
         () => import('./types/Product.js'),
         () => import('./types/schemaOrg.js'),
-        // () => import('./types/merchant.js')
       ],
       Review: [() => import('./types/Review.js')],
       AggregateRating: [() => import('./types/AggregateRating.js')],
+      Offer: [() => import('./types/Offer.js')],
+      AggregateOffer: [() => import('./types/AggregateOffer.js')],
+      PriceSpecification: [() => import('./types/PriceSpecification.js')],
+      UnitPriceSpecification: [
+        () => import('./types/UnitPriceSpecification.js'),
+      ],
     };
-  }
-
-  async parse(url) {
-    // TODO: Mock for now, just return contents of ../gallery/breadcrumb/valid1.json
-    // TODO: Refine the format
-    // TODO: Handle @graph notation
-    try {
-      const fileContents = await readFile(join(process.cwd(), url), 'utf8');
-      const parsed = JSON.parse(fileContents);
-      // If object, wrap in array
-      if (!Array.isArray(parsed)) {
-        return [parsed];
-      }
-      return parsed;
-    } catch (error) {
-      throw new Error(`Failed to parse file ${url}: ${error.message}`);
-    }
-    /*
-
-
-        const structuredData = [];
-    const scriptTags = document.querySelectorAll('script[type="application/ld+json"]');
-    scriptTags.forEach((tag) => {
-      try {
-        const data = JSON.parse(tag.textContent);
-      
-        // Flatten if @graph notation is used
-        if (data['@graph']) {
-          data['@graph'].forEach((graph) => {
-            structuredData.push(graph);
-          });
-        } else {
-          structuredData.push(data);
-        }
-
-        */
   }
 
   // TODO: Combine with schema org validator? So that we have the traverse logic only once
@@ -173,6 +145,11 @@ export class Validator {
     return [];
   }
 
+  /**
+   * Validates structured data
+   * @param {object} waeData Data as parsed from Web Auto Extractor
+   * @returns {object[]} Array of validation issues
+   */
   async validate(waeData) {
     const dataFormats = ['jsonld', 'microdata', 'rdfa'];
 
@@ -219,48 +196,5 @@ export class Validator {
     }
 
     return results;
-  }
-
-  async validateOld(data, dataFormat) {
-    // TODO: Take input from WAE and act on it
-    // TODO: Keep track of hierarchy
-
-    // WAE uses an object with primary types as keys and arrays of items as values
-    const validationPromises = Object.keys(data).map(async (type) => {
-      if (!this.supportedTypes.includes(type)) {
-        throw new Error(`Unsupported type: ${type}`);
-      }
-
-      const handlers = this.registeredHandlers[type];
-      if (!handlers) {
-        throw new Error(`No handlers registered for type: ${type}`);
-      }
-
-      const issues = [];
-
-      for (const item of data[type]) {
-        // Create array of handler validation promises
-        const handlerPromises = handlers.map(async (handler) => {
-          const handlerClass = (await handler()).default;
-          const handlerInstance = new handlerClass(dataFormat);
-          return handlerInstance.validate(item);
-        });
-
-        // Wait for all handlers to complete
-        const handlerResults = await Promise.all(handlerPromises);
-
-        // Flatten all issues from handlers
-        issues.push(...handlerResults.flat());
-      }
-
-      return {
-        schemaType: type,
-        issues,
-        dataFormat,
-      };
-    });
-
-    // Wait for all item validations to complete
-    return Promise.all(validationPromises);
   }
 }

@@ -5,82 +5,8 @@ export default class ProductValidator extends BaseValidator {
     return [
       this.required('name'),
       this.ratingReviewOrOffers,
-      this.offers,
       this.notesCount,
     ].map((c) => c.bind(this));
-  }
-
-  // TODO: Move to Offer/AggregateOffer validator
-  offers(data) {
-    if (!data.offers) {
-      return null;
-    }
-    if (Array.isArray(data.offers)) {
-      return data.offers
-        .map((o) => {
-          if (o['@type'] === 'AggregateOffer') {
-            return this.aggregateOffer(o);
-          } else if (o['@type'] === 'Offer') {
-            return this.offer(o);
-          }
-          return [];
-        })
-        .flat();
-    }
-    if (data.offers['@type'] === 'AggregateOffer') {
-      return this.aggregateOffer(data.offers);
-    } else if (data.offers['@type'] === 'Offer') {
-      return this.offer(data.offers);
-    }
-    return [];
-  }
-
-  offer(offer) {
-    const issues = [];
-    const conditions = [
-      this.or(
-        this.required('price', 'number'),
-        this.required('priceSpecification.price', 'number'),
-      ),
-      this.recommended('availability'),
-      this.or(
-        this.recommended('priceCurrency', 'currency'),
-        this.recommended('priceSpecification.priceCurrency', 'currency'),
-      ),
-      this.recommended('priceValidUntil', 'date'),
-    ];
-
-    for (const condition of conditions) {
-      const issue = condition(offer);
-      if (Array.isArray(issue)) {
-        issues.push(...issue);
-      } else if (issue) {
-        issues.push(issue);
-      }
-    }
-
-    return issues;
-  }
-
-  aggregateOffer(offer) {
-    const issues = [];
-    const conditions = [
-      this.required('lowPrice', 'number'),
-      this.required('priceCurrency', 'currency'),
-      this.recommended('highPrice', 'number'),
-      this.recommended('offerCount', 'number'),
-    ];
-
-    for (const condition of conditions) {
-      const issue = condition(offer);
-      if (Array.isArray(issue)) {
-        issues.push(...issue);
-      } else if (issue) {
-        issues.push(issue);
-      }
-    }
-
-    return issues;
   }
 
   notesCount(data) {
