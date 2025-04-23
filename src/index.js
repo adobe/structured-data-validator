@@ -1,5 +1,4 @@
 import { Validator } from './validator.js';
-import WebAutoExtractor from '@marbec/web-auto-extractor';
 import { readFile } from 'fs/promises';
 import { join } from 'path';
 
@@ -7,20 +6,20 @@ import { join } from 'path';
   const __dirname = import.meta.dirname;
   // const rdfaExample = await readFile(join(__dirname, '../gallery/breadcrumb/rdfa-valid1.html'), 'utf8');
   //const microdataExample = await readFile(join(__dirname, '../gallery/breadcrumb/microdata-valid1.html'), 'utf8');
-  const ldjsonExample = `<script type="application/ld+json">
+  /* const ldjsonExample = `<script type="application/ld+json">
         ${await readFile(join(__dirname, '../gallery/breadcrumb/invalid1.json'), 'utf8')}
-    </script>`;
+    </script>`; */
 
-  const {
-    //microdata,
-    // rdfa,
-    jsonld,
-  } = new WebAutoExtractor({ addLocation: true }).parse(ldjsonExample);
+  const waeExample = await readFile(
+    join(__dirname, '../gallery/scrape-new1.json'),
+    'utf8',
+  );
 
   const validator = new Validator();
 
-  // const data = await validator.parse('gallery/breadcrumb/invalid1.json');
-  const issues = await validator.validate(jsonld, 'jsonld');
+  const results = await validator.validate(
+    JSON.parse(waeExample).scrapeResult.structuredData,
+  );
 
-  console.log(JSON.stringify(issues, null, 2));
+  console.log(JSON.stringify(results, null, 2));
 })();

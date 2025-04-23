@@ -5,11 +5,10 @@ import WebAutoExtractor from '@marbec/web-auto-extractor';
 /**
  * Loads and parses test data from a file
  * @param {string} filepath - The path to the file within the gallery directory (e.g. 'breadcrumb/valid1.json')
- * @param {string} dataType - The type of structured data (jsonld, microdata, rdfa)
- * @param {string} entity - The entity type to extract
+ * @param {string} dataType - (optional)The type of structured data (jsonld, microdata, rdfa)
  * @returns {Promise<Object|Array>} The parsed structured data
  */
-export const loadTestData = async (filepath, dataType, entity) => {
+export const loadTestData = async (filepath, dataType) => {
   const filePath = join(process.cwd(), 'gallery', filepath);
   let content = await readFile(filePath, 'utf8');
 
@@ -18,15 +17,28 @@ export const loadTestData = async (filepath, dataType, entity) => {
     content = `<script type="application/ld+json">${content}</script>`;
   }
 
-  const result = new WebAutoExtractor({ addLocation: true }).parse(content);
-  const data = result[dataType];
+  const result = new WebAutoExtractor({
+    addLocation: true,
+    embedSource: ['rdfa', 'microdata'],
+  }).parse(content);
 
-  if (entity) {
-    // Handle both single and multiple items
-    if (data[entity].length === 1) {
-      return data[entity][0];
-    }
-    return data[entity];
+  if (dataType) {
+    // Only return dataType and errors, delete all other data
+    Object.keys(result).forEach((key) => {
+      if (key !== dataType && key !== 'errors') {
+        delete result[key];
+      }
+    });
   }
-  return data;
+
+  return result;
 };
+
+export const MockValidator = () =>
+  Promise.resolve({
+    default: class MockValidator {
+      validate() {
+        return [];
+      }
+    },
+  });

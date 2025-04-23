@@ -1,18 +1,15 @@
 import BaseValidator from './base.js';
 
 export default class ReviewValidator extends BaseValidator {
-  constructor(dataFormat, location, nested = false) {
-    super(dataFormat, location);
-    this.nested = nested;
-  }
-
   getConditions() {
     const conditions = [
+      // TODO: Move to Author validator
       this.required('author'),
       this.required('author.name'),
 
       // Documentation states reviewRating as required
       // Validator allows it to be missing
+      // TODO: Move to Rating validator
       this.required('reviewRating'),
       this.required('reviewRating.ratingValue'),
       this.recommended('reviewRating.bestRating', 'number'),
@@ -22,7 +19,7 @@ export default class ReviewValidator extends BaseValidator {
       this.recommended('datePublished', 'date'),
     ];
 
-    if (!this.nested) {
+    if (this.path.length === 1) {
       conditions.push(
         this.required('itemReviewed'),
         this.required('itemReviewed.name'),
@@ -55,8 +52,8 @@ export default class ReviewValidator extends BaseValidator {
       if (value < from || value > to) {
         return {
           issueMessage: `Rating is outside the specified or default range`,
-          location: this.location,
           severity: 'ERROR',
+          path: this.path,
         };
       }
     }

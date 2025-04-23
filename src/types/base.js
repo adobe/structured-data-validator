@@ -1,9 +1,7 @@
 export default class BaseValidator {
-  constructor(dataFormat, location) {
+  constructor({ dataFormat, path }) {
     this.dataFormat = dataFormat;
-    if (location) {
-      this.location = location;
-    }
+    this.path = path;
   }
 
   getConditions() {
@@ -11,10 +9,6 @@ export default class BaseValidator {
   }
 
   validate(data) {
-    if (!this.location && data['@location']) {
-      this.location = data['@location'];
-    }
-
     const issues = [];
 
     for (const condition of this.getConditions()) {
@@ -49,15 +43,15 @@ export default class BaseValidator {
       if (!value) {
         return {
           issueMessage: `Required attribute "${name}" is missing`,
-          location: this.location,
           severity: 'ERROR',
+          path: this.path,
         };
       }
       if (type && !this.checkType(value, type, ...opts)) {
         return {
           issueMessage: `Invalid type for attribute "${name}"`,
-          location: this.location,
           severity: 'ERROR',
+          path: this.path,
         };
       }
       return null;
@@ -78,8 +72,8 @@ export default class BaseValidator {
           .flat()
           .map((c) => c.issueMessage)
           .join(' or ')}`,
-        location: this.location,
         severity: 'ERROR',
+        path: this.path,
       };
     };
   }
@@ -90,40 +84,18 @@ export default class BaseValidator {
       if (value === undefined || value === null || value === '') {
         return {
           issueMessage: `Missing field "${name}" (optional)`,
-          location: this.location,
           severity: 'WARNING',
+          path: this.path,
         };
       }
       if (type && !this.checkType(value, type, ...opts)) {
         return {
           issueMessage: `Invalid type for attribute "${name}"`,
-          location: this.location,
           severity: 'WARNING',
+          path: this.path,
         };
       }
       return null;
-    };
-  }
-
-  children(name, ...conditions) {
-    // TODO: Only works for first level currently
-    return (data) => {
-      if (!Array.isArray(data[name])) {
-        return null;
-      }
-      const issues = [];
-
-      for (const [index, item] of data[name].entries()) {
-        for (const condition of conditions) {
-          const issue = condition(item, index, data);
-          if (Array.isArray(issue)) {
-            issues.push(...issue);
-          } else if (issue) {
-            issues.push(issue);
-          }
-        }
-      }
-      return issues.length > 0 ? issues : null;
     };
   }
 

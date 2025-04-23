@@ -1,22 +1,24 @@
 import { expect } from 'chai';
-import AggregateRatingValidator from '../aggregateRating.js';
-import { loadTestData } from './utils.js';
+
+import { loadTestData, MockValidator } from './utils.js';
+import { Validator } from '../../validator.js';
 
 describe('AggregateRatingValidator', () => {
   describe('JSON-LD', () => {
     let validator;
 
     beforeEach(() => {
-      validator = new AggregateRatingValidator('jsonld');
+      validator = new Validator();
+      validator.registeredHandlers = {
+        AggregateRating: [() => import('../AggregateRating.js')],
+        Restaurant: [MockValidator],
+        PostalAddress: [MockValidator],
+      };
     });
 
     it('should validate a correct aggregateRating structure in valid1.json', async () => {
-      const data = await loadTestData(
-        'aggregateRating/valid1.json',
-        'jsonld',
-        'AggregateRating',
-      );
-      const issues = validator.validate(data);
+      const data = await loadTestData('aggregateRating/valid1.json', 'jsonld');
+      const issues = await validator.validate(data);
       expect(issues).to.have.lengthOf(0);
     });
 
@@ -24,12 +26,11 @@ describe('AggregateRatingValidator', () => {
       const data = await loadTestData(
         'aggregateRating/invalid_missing_counts.json',
         'jsonld',
-        'AggregateRating',
       );
-      const issues = validator.validate(data);
-      expect(issues[0]).to.deep.equal({
+      const issues = await validator.validate(data);
+      expect(issues[0]).to.deep.include({
         severity: 'ERROR',
-        location: '35,245',
+        location: '35,246',
         issueMessage:
           'One of the following conditions needs to be met: Required attribute "ratingCount" is missing or Required attribute "reviewCount" is missing',
       });
@@ -39,12 +40,11 @@ describe('AggregateRatingValidator', () => {
       const data = await loadTestData(
         'aggregateRating/invalid_missing_rating_value.json',
         'jsonld',
-        'AggregateRating',
       );
-      const issues = validator.validate(data);
-      expect(issues[0]).to.deep.equal({
+      const issues = await validator.validate(data);
+      expect(issues[0]).to.deep.include({
         severity: 'ERROR',
-        location: '35,244',
+        location: '35,245',
         issueMessage: 'Required attribute "ratingValue" is missing',
       });
     });
@@ -53,12 +53,11 @@ describe('AggregateRatingValidator', () => {
       const data = await loadTestData(
         'aggregateRating/invalid_rating_out_of_range.json',
         'jsonld',
-        'AggregateRating',
       );
-      const issues = validator.validate(data);
-      expect(issues[0]).to.deep.equal({
+      const issues = await validator.validate(data);
+      expect(issues[0]).to.deep.include({
         severity: 'ERROR',
-        location: '35,266',
+        location: '35,267',
         issueMessage: 'Rating is outside the specified or default range',
       });
     });
@@ -67,18 +66,17 @@ describe('AggregateRatingValidator', () => {
       const data = await loadTestData(
         'aggregateRating/invalid_missing_item_reviewed.json',
         'jsonld',
-        'AggregateRating',
       );
-      const issues = validator.validate(data);
+      const issues = await validator.validate(data);
       expect(issues).to.have.lengthOf(2);
-      expect(issues[0]).to.deep.equal({
+      expect(issues[0]).to.deep.include({
         severity: 'ERROR',
-        location: '35,186',
+        location: '35,187',
         issueMessage: 'Required attribute "itemReviewed" is missing',
       });
-      expect(issues[1]).to.deep.equal({
+      expect(issues[1]).to.deep.include({
         severity: 'ERROR',
-        location: '35,186',
+        location: '35,187',
         issueMessage: 'Required attribute "itemReviewed.name" is missing',
       });
     });

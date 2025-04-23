@@ -1,53 +1,37 @@
 import BaseValidator from './base.js';
 
-export default class BreadcrumbValidator extends BaseValidator {
-  constructor(dataFormat, location) {
-    super(dataFormat, location);
+// TODO: Check if there is a difference if ListItem for breadcrumb or not
+
+export default class ListItemValidator extends BaseValidator {
+  constructor(config) {
+    super(config);
     this.validateItemUrl = this.validateItemUrl.bind(this);
   }
 
   getConditions() {
     return [
-      this.required('itemListElement', 'array'),
-      this.atLeastTwoItems,
-      this.children(
-        'itemListElement',
-        this.or(
-          this.required('name', 'string'),
-          this.required('item.name', 'string'),
-        ),
-        this.required('position', 'number'),
-        this.validateItemUrl,
+      this.or(
+        this.required('name', 'string'),
+        this.required('item.name', 'string'),
       ),
+      this.required('position', 'number'),
+      this.validateItemUrl,
     ].map((c) => c.bind(this));
   }
 
-  atLeastTwoItems(data) {
-    if (
-      data['itemListElement'] &&
-      Array.isArray(data['itemListElement']) &&
-      data['itemListElement'].length < 2
-    ) {
-      return {
-        issueMessage: 'At least two ListItems are required',
-        location: this.location,
-        severity: 'WARNING',
-      };
-    }
-    return null;
-  }
+  validateItemUrl(data) {
+    const lastPathItem = this.path[this.path.length - 1];
 
-  validateItemUrl(element, index, data) {
-    const isLast = index === data['itemListElement'].length - 1;
+    const isLast = lastPathItem.index === lastPathItem.length - 1;
 
     let urlToCheck;
     let urlPath;
 
-    if (this.checkType(element.item, 'object')) {
-      urlToCheck = element.item['@id'];
+    if (this.checkType(data.item, 'object')) {
+      urlToCheck = data.item['@id'];
       urlPath = 'item.@id';
-    } else if (element.item) {
-      urlToCheck = element.item;
+    } else if (data.item) {
+      urlToCheck = data.item;
       urlPath = 'item';
     }
 
@@ -89,8 +73,8 @@ export default class BreadcrumbValidator extends BaseValidator {
     } catch (e) {
       return {
         issueMessage: `Invalid URL in field "${urlPath}"`,
-        location: this.location,
         severity: 'WARNING',
+        path: this.path,
       };
     }
 

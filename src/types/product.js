@@ -1,22 +1,16 @@
 import BaseValidator from './base.js';
-import AggregateRatingValidator from './aggregateRating.js';
-import ReviewValidator from './review.js';
 
 export default class ProductValidator extends BaseValidator {
-  constructor(dataFormat, location) {
-    super(dataFormat, location);
-  }
-
   getConditions() {
     return [
       this.required('name'),
       this.ratingReviewOrOffers,
-      this.aggregateRating,
       this.offers,
-      this.review,
+      this.notesCount,
     ].map((c) => c.bind(this));
   }
 
+  // TODO: Move to Offer/AggregateOffer validator
   offers(data) {
     if (!data.offers) {
       return null;
@@ -89,18 +83,7 @@ export default class ProductValidator extends BaseValidator {
     return issues;
   }
 
-  aggregateRating(data) {
-    if (!data.aggregateRating) {
-      return null;
-    }
-    return new AggregateRatingValidator(
-      this.dataFormat,
-      this.location,
-      true,
-    ).validate(data.aggregateRating);
-  }
-
-  review(data) {
+  notesCount(data) {
     if (!data.review) {
       return null;
     }
@@ -118,12 +101,6 @@ export default class ProductValidator extends BaseValidator {
         notes += review.positiveNotes?.itemListElement?.length || 0;
         notes += review.negativeNotes?.itemListElement?.length || 0;
       }
-
-      issues.push(
-        ...new ReviewValidator(this.dataFormat, this.location, true).validate(
-          review,
-        ),
-      );
     }
 
     // Need to have at least 2 or zero notes
@@ -131,8 +108,8 @@ export default class ProductValidator extends BaseValidator {
       issues.push({
         issueMessage:
           'At least 2 notes, either positive or negative, are required',
-        location: this.location,
         severity: 'WARNING',
+        path: this.path,
       });
     }
 
@@ -147,8 +124,8 @@ export default class ProductValidator extends BaseValidator {
       issues.push({
         issueMessage:
           'One of the following attributes is required: "aggregateRating", "offers" or "review"',
-        location: this.location,
         severity: 'ERROR',
+        path: this.path,
       });
     }
 

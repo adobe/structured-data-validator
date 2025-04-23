@@ -12,68 +12,44 @@ describe('Schema.org Validator', () => {
 
   describe('JSON-LD', () => {
     it('should do a schema.org validation on BreadcrumbList', async () => {
-      const data = await loadTestData(
-        'breadcrumb/valid1.json',
-        'jsonld',
-        'BreadcrumbList',
-      );
+      const data = await loadTestData('breadcrumb/valid1.json', 'jsonld');
 
-      const issues = await validator.validate(data);
+      const issues = await validator.validate(data.jsonld.BreadcrumbList[0]);
       expect(issues).to.have.lengthOf(0);
     });
 
     it('should do a schema.org validation on BreadcrumbList with multiple items', async () => {
-      const data = await loadTestData(
-        'breadcrumb/valid2.json',
-        'jsonld',
-        'BreadcrumbList',
-      );
+      const data = await loadTestData('breadcrumb/valid2.json', 'jsonld');
 
-      const issues = await validator.validate(data);
+      const issues = await validator.validate(data.jsonld.BreadcrumbList[0]);
       expect(issues).to.have.lengthOf(0);
     });
 
     it('should do a schema.org validation on Product with basic properties', async () => {
-      const data = await loadTestData(
-        'product/valid1.json',
-        'jsonld',
-        'Product',
-      );
+      const data = await loadTestData('product/valid1.json', 'jsonld');
 
-      const issues = await validator.validate(data);
+      const issues = await validator.validate(data.jsonld.Product[0]);
       expect(issues).to.have.lengthOf(0);
     });
 
     it('should do a schema.org validation on Product with offer', async () => {
-      const data = await loadTestData(
-        'product/valid2.json',
-        'jsonld',
-        'Product',
-      );
+      const data = await loadTestData('product/valid2.json', 'jsonld');
 
-      const issues = await validator.validate(data);
+      const issues = await validator.validate(data.jsonld.Product[0]);
       expect(issues).to.have.lengthOf(0);
     });
 
     it('should do a schema.org validation on Product with reviews', async () => {
-      const data = await loadTestData(
-        'product/valid3.json',
-        'jsonld',
-        'Product',
-      );
+      const data = await loadTestData('product/valid3.json', 'jsonld');
 
-      const issues = await validator.validate(data);
+      const issues = await validator.validate(data.jsonld.Product[0]);
       expect(issues).to.have.lengthOf(0);
     });
 
     it('should do a schema.org validation on Product with aggregate rating', async () => {
-      const data = await loadTestData(
-        'product/valid4.json',
-        'jsonld',
-        'Product',
-      );
+      const data = await loadTestData('product/valid4.json', 'jsonld');
 
-      const issues = await validator.validate(data);
+      const issues = await validator.validate(data.jsonld.Product[0]);
       expect(issues).to.have.lengthOf(0);
     });
 
@@ -81,14 +57,13 @@ describe('Schema.org Validator', () => {
       const data = await loadTestData(
         'product/invalid_attribute.json',
         'jsonld',
-        'Product',
       );
 
-      const issues = await validator.validate(data);
-      expect(issues[0]).to.deep.equal({
+      const issues = await validator.validate(data.jsonld.Product[0]);
+      expect(issues[0]).to.deep.include({
         issueMessage:
           'Property "my-custom-attribute" for type "Product" at "[0]" is not supported by the schema.org specification',
-        location: '35,491',
+        location: '35,492',
         severity: 'WARNING',
       });
     });
