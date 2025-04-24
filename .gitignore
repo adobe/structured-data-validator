@@ -9,3 +9,4 @@ client_secret_*.json
 Downloads/
 fixtures/
 prompts/
+coverage/

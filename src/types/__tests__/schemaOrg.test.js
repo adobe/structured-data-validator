@@ -8,8 +8,8 @@ describe('Schema.org Validator', () => {
 
   before(() => {
     validator = new Validator();
+    validator.globalHandlers = [() => import('../schemaOrg.js')];
     validator.registeredHandlers = {
-      _global: [() => import('../schemaOrg.js')],
       BreadcrumbList: [MockValidator],
       ListItem: [MockValidator],
       WebPage: [MockValidator],

@@ -1,7 +1,5 @@
 import BaseValidator from './base.js';
 
-// TODO: Check if there is a difference if ListItem for breadcrumb or not
-
 export default class ListItemValidator extends BaseValidator {
   constructor(config) {
     super(config);

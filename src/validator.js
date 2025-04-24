@@ -1,24 +1,8 @@
 export class Validator {
   constructor() {
-    // TODO: Remove and derive from keys of this.registeredHandlers
-    this.supportedTypes = [
-      'BreadcrumbList',
-      'ListItem',
-      'Product',
-      'Review',
-      'AggregateRating',
-      'Person',
-      'Organization',
-      'Offer',
-      'AggregateOffer',
-      'PriceSpecification',
-      'UnitPriceSpecification',
-    ];
-
-    // TODO: ProductGroup
+    this.globalHandlers = [() => import('./types/schemaOrg.js')];
 
     this.registeredHandlers = {
-      _global: [() => import('./types/schemaOrg.js')],
       BreadcrumbList: [() => import('./types/BreadcrumbList.js')],
       Person: [() => import('./types/Person.js')],
       Organization: [() => import('./types/Organization.js')],
@@ -35,7 +19,6 @@ export class Validator {
     };
   }
 
-  // TODO: Combine with schema org validator? So that we have the traverse logic only once
   async #validateSubtree(data, rootData, dataFormat, path = []) {
     const spacing = '  ' + '  '.repeat(path.length);
 
@@ -59,7 +42,8 @@ export class Validator {
     if (typeof data === 'object' && data !== null) {
       if (!data['@type']) {
         console.warn(`${spacing}  WARN: No type found for item`);
-        // TODO: Validation error as type is missing
+        // TODO: Should return a validation error as type is missing,
+        //       WAE is already returning an error
         return [];
       }
 
@@ -82,7 +66,7 @@ export class Validator {
             );
             return [];
           }
-          handlers.push(...(this.registeredHandlers._global || []));
+          handlers.push(...(this.globalHandlers || []));
 
           const handlerPromises = handlers.map(async (handler) => {
             const handlerClass = (await handler()).default;
@@ -192,6 +176,22 @@ export class Validator {
           });
         }
       }
+    }
+
+    // Expose WAE errors, filter out metadata errors
+    const errors = waeData.errors.filter((e) => dataFormats.includes(e.format));
+    for (const error of errors) {
+      const result = {
+        dataFormat: error.format,
+        message: error.message,
+      };
+      if (error.sourceCodeLocation) {
+        result.location = `${error.sourceCodeLocation.startOffset},${error.sourceCodeLocation.endOffset}`;
+      }
+      if (error.source) {
+        result.source = error.source;
+      }
+      results.push(result);
     }
 
     return results;
