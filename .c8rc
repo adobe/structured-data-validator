@@ -3,7 +3,7 @@
   "check-coverage": true,
   "reporter": ["text", "lcov"],
   "include": ["src/**/*.js"],
-  "exclude": ["**/*.test.js", "src/index.js"],
+  "exclude": ["**/*.test.js", "src/local.js"],
   "branches": 90,
   "lines": 90,
   "functions": 70,

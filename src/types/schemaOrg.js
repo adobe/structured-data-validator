@@ -191,7 +191,7 @@ export default class SchemaOrgValidator {
     });
   }
 
-  async validateSchema(data) {
+  async validate(data) {
     const issues = [];
 
     if (typeof data === 'object' && data !== null) {
@@ -226,13 +226,5 @@ export default class SchemaOrgValidator {
     }
 
     return issues;
-  }
-
-  async validate(data) {
-    // TODO: Check if we actually need to expand the data
-    // let expanded = await jsonld.expand(data);
-    // console.log('expanded', expanded);
-
-    return this.validateSchema(data);
   }
 }

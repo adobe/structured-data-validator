@@ -1,10 +1,12 @@
 {
-  "name": "structured-data-parser",
-  "version": "1.0.0",
-  "description": "",
-  "private": true,
+  "name": "@adobe/structured-data-parser",
+  "version": "1.0.0-beta.1",
+  "publishConfig": {
+    "access": "public"
+  },
+  "description": "Structured Data Parser",
   "type": "module",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
     "test": "c8 mocha --recursive '**/*.test.js'",
     "lint": "eslint 'src/**/*.js'",
@@ -15,9 +17,7 @@
   "author": "",
   "license": "Apache-2.0",
   "dependencies": {
-    "@marbec/web-auto-extractor": "^2.0.0-beta.2",
-    "googleapis": "^146.0.0",
-    "jsonld": "^8.3.3"
+    "@marbec/web-auto-extractor": "^2.0.0-beta.2"
   },
   "devDependencies": {
     "@eslint/js": "^9.22.0",

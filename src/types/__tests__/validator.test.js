@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 
-import { Validator } from '../../validator.js';
+import Validator from '../../index.js';
 
 describe('Validator', () => {
   let validator;
