@@ -1,15 +1,14 @@
 import { readFileSync } from 'fs';
-import { join } from 'path';
-// import jsonld from 'jsonld';
 
 export default class SchemaOrgValidator {
   // Cache schema globally to improve performance
   static schemaCache = null;
 
-  constructor({ dataFormat, path, type }) {
+  constructor({ dataFormat, path, type, schemaOrgPath }) {
     this.dataFormat = dataFormat;
     this.path = path;
     this.type = type;
+    this.schemaOrgPath = schemaOrgPath;
   }
 
   #stripSchema(name) {
@@ -35,10 +34,7 @@ export default class SchemaOrgValidator {
 
     SchemaOrgValidator.schemaCache = new Promise((resolve) => {
       // TODO: To optimize performance, we could reduce schema to only types and properties required for Google Rich Results
-      let rawSchema = readFileSync(
-        join(process.cwd(), 'gallery/schemaorg-current-https.jsonld'),
-        'utf8',
-      );
+      let rawSchema = readFileSync(this.schemaOrgPath, 'utf8');
       rawSchema = JSON.parse(rawSchema);
 
       const schema = {};

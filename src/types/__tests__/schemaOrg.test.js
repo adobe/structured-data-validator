@@ -1,13 +1,21 @@
 import { expect } from 'chai';
+import { join } from 'path';
 
 import { loadTestData, MockValidator } from './utils.js';
 import { Validator } from '../../validator.js';
 
 describe('Schema.org Validator', () => {
   let validator;
+  const schemaOrgPath = join(
+    process.cwd(),
+    'src',
+    'types',
+    '__tests__',
+    'schemaorg-current-https.jsonld',
+  );
 
   before(() => {
-    validator = new Validator();
+    validator = new Validator(schemaOrgPath);
     validator.globalHandlers = [() => import('../schemaOrg.js')];
     validator.registeredHandlers = {
       BreadcrumbList: [MockValidator],
@@ -86,33 +94,33 @@ describe('Schema.org Validator', () => {
         errorType: 'schemaOrg',
       });
     });
-  });
 
-  it('should return an error if an invalid attribute in a subtype was detected', async () => {
-    const data = await loadTestData(
-      'breadcrumb/invalid-attribute.json',
-      'jsonld',
-    );
+    it('should return an error if an invalid attribute in a subtype was detected', async () => {
+      const data = await loadTestData(
+        'breadcrumb/invalid-attribute.json',
+        'jsonld',
+      );
 
-    const issues = await validator.validate(data);
+      const issues = await validator.validate(data);
 
-    expect(issues).to.have.lengthOf(1);
-    expect(issues[0]).to.deep.include({
-      rootType: 'BreadcrumbList',
-      issueMessage:
-        'Property "my-custom-attribute" for type "ListItem" is not supported by the schema.org specification',
-      location: '35,535',
-      severity: 'WARNING',
-      path: [
-        { type: 'BreadcrumbList', index: 0 },
-        {
-          property: 'itemListElement',
-          index: 2,
-          length: 3,
-          type: 'ListItem',
-        },
-      ],
-      errorType: 'schemaOrg',
+      expect(issues).to.have.lengthOf(1);
+      expect(issues[0]).to.deep.include({
+        rootType: 'BreadcrumbList',
+        issueMessage:
+          'Property "my-custom-attribute" for type "ListItem" is not supported by the schema.org specification',
+        location: '35,535',
+        severity: 'WARNING',
+        path: [
+          { type: 'BreadcrumbList', index: 0 },
+          {
+            property: 'itemListElement',
+            index: 2,
+            length: 3,
+            type: 'ListItem',
+          },
+        ],
+        errorType: 'schemaOrg',
+      });
     });
   });
 

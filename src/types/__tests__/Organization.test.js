@@ -12,6 +12,7 @@ describe('OrganizationValidator', () => {
       validator.registeredHandlers = {
         Organization: [() => import('../Organization.js')],
       };
+      validator.globalHandlers = [];
     });
 
     it('should validate a correct organization', async () => {

@@ -12,6 +12,7 @@ describe('PersonValidator', () => {
       validator.registeredHandlers = {
         Person: [() => import('../Person.js')],
       };
+      validator.globalHandlers = [];
     });
 
     it('should validate a correct person', async () => {

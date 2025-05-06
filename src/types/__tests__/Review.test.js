@@ -17,6 +17,7 @@ describe('ReviewValidator', () => {
         Organization: [() => import('../Organization.js')],
         PostalAddress: [MockValidator],
       };
+      validator.globalHandlers = [];
     });
 
     it('should validate a correct review structure in valid1.json', async () => {
@@ -131,6 +132,7 @@ describe('ReviewValidator', () => {
       validator.registeredHandlers = {
         Review: [() => import('../Review.js')],
       };
+      validator.globalHandlers = [];
     });
 
     // TODO: Needs support for RDFa rel parsing in web-auto-extractor

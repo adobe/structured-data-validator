@@ -11,6 +11,7 @@ fixtures/
 prompts/
 coverage/
 src/types/__tests__/
+gallery/
 .github/
 .prettierignore
 .c8rc

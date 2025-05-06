@@ -14,6 +14,7 @@ describe('AggregateRatingValidator', () => {
         Restaurant: [MockValidator],
         PostalAddress: [MockValidator],
       };
+      validator.globalHandlers = [];
     });
 
     it('should validate a correct aggregateRating structure in valid1.json', async () => {

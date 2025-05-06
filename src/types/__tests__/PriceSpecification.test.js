@@ -13,6 +13,7 @@ describe('PriceSpecificationValidator', () => {
         PriceSpecification: [() => import('../PriceSpecification.js')],
         UnitPriceSpecification: [() => import('../PriceSpecification.js')],
       };
+      validator.globalHandlers = [];
     });
 
     it('should validate a correct PriceSpecification in valid1.json', async () => {

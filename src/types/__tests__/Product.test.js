@@ -24,6 +24,7 @@ describe('ProductValidator', () => {
         PriceSpecification: [() => import('../PriceSpecification.js')],
         UnitPriceSpecification: [() => import('../UnitPriceSpecification.js')],
       };
+      validator.globalHandlers = [];
     });
 
     it('should validate a correct product structure in valid1.json', async () => {

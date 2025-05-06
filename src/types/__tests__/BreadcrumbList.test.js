@@ -14,6 +14,7 @@ describe('BreadcrumbListValidator', () => {
         ListItem: [() => import('../ListItem.js')],
         WebPage: [MockValidator],
       };
+      validator.globalHandlers = [];
     });
 
     it('should validate a correct breadcrumb structure in valid1.json', async () => {
@@ -157,6 +158,7 @@ describe('BreadcrumbListValidator', () => {
         ListItem: [() => import('../ListItem.js')],
         WebPage: [MockValidator],
       };
+      validator.globalHandlers = [];
     });
 
     it('should validate a correct breadcrumb structure in microdata-valid1.html', async () => {
@@ -257,6 +259,7 @@ describe('BreadcrumbListValidator', () => {
         ListItem: [() => import('../ListItem.js')],
         WebPage: [MockValidator],
       };
+      validator.globalHandlers = [];
     });
 
     it('should validate a correct breadcrumb structure in rdfa-valid1.html', async () => {

@@ -1,5 +1,6 @@
 export class Validator {
-  constructor() {
+  constructor(schemaOrgPath) {
+    this.schemaOrgPath = schemaOrgPath;
     this.globalHandlers = [() => import('./types/schemaOrg.js')];
 
     this.registeredHandlers = {
@@ -75,6 +76,7 @@ export class Validator {
               path,
               // If an object has multiple types, we need to pass the current type for any global handlers
               type,
+              schemaOrgPath: this.schemaOrgPath,
             });
             return handlerInstance.validate(data);
           });
