@@ -28,7 +28,7 @@ export default [
         'error',
         {
           source: 'file',
-          path: './license-header.txt',
+          path: './.eslint-header.txt',
           variables: {
             year: '2025',
           },
