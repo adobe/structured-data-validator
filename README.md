@@ -1,4 +1,4 @@
-# @adobe/structured-data-parser
+# @adobe/structured-data-validator
 
 A JavaScript library for validating and parsing structured data according to Schema.org specifications and Google Rich Results requirements. This library ensures your structured data meets both Schema.org standards and Google's specific requirements for rich results, helping to optimize your content for search engines and other platforms.
 
@@ -11,7 +11,7 @@ A JavaScript library for validating and parsing structured data according to Sch
 ## Installation
 
 ```bash
-npm install @adobe/structured-data-parser
+npm install @adobe/structured-data-validator
 ```
 
 ## Usage
@@ -19,7 +19,7 @@ npm install @adobe/structured-data-parser
 This library works in conjunction with [@marbec/web-auto-extractor](https://www.npmjs.com/package/@marbec/web-auto-extractor) to validate structured data extracted from web pages.
 
 ```javascript
-import { Validator } from '@adobe/structured-data-parser';
+import { Validator } from '@adobe/structured-data-validator';
 import WebAutoExtractor from '@marbec/web-auto-extractor';
 
 // First, extract structured data from HTML
