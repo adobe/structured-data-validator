@@ -196,7 +196,9 @@ export class Validator {
     for (const error of errors) {
       const result = {
         dataFormat: error.format,
-        message: error.message,
+        issueMessage: error.message,
+        rootType: error.format,
+        severity: 'ERROR',
       };
       if (error.sourceCodeLocation) {
         result.location = `${error.sourceCodeLocation.startOffset},${error.sourceCodeLocation.endOffset}`;
