@@ -20,9 +20,6 @@
   },
   "author": "Adobe",
   "license": "Apache-2.0",
-  "dependencies": {
-    "@marbec/web-auto-extractor": "^2.0.0-beta.2"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/adobe/structured-data-validator.git"
@@ -39,5 +36,8 @@
     "globals": "^16.0.0",
     "mocha": "^11.1.0",
     "prettier": "^3.5.3"
+  },
+  "dependencies": {
+    "@marbec/web-auto-extractor": "^2.0.0-beta.12"
   }
 }

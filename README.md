@@ -1,5 +1,10 @@
 # @adobe/structured-data-validator
 
+![GitHub License](https://img.shields.io/github/license/adobe/structured-data-validator)
+[![CI](https://github.com/adobe/structured-data-validator/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/adobe/structured-data-validator/actions/workflows/ci.yml)
+[![NPM Version](https://img.shields.io/npm/v/%40adobe%2Fstructured-data-validator?link=https%3A%2F%2Fwww.npmjs.com%2Fpackage%2F%40adobe%2Fstructured-data-validator)](https://www.npmjs.com/package/@adobe/structured-data-validator)
+![Node Current](https://img.shields.io/node/v/%40adobe%2Fstructured-data-validator)
+
 A JavaScript library for validating and parsing structured data according to Schema.org specifications and Google Rich Results requirements. This library ensures your structured data meets both Schema.org standards and Google's specific requirements for rich results, helping to optimize your content for search engines and other platforms.
 
 ## Features

@@ -17,3 +17,4 @@ gallery/
 .c8rc
 eslint.config.js
 src/local.js
+license-header.txt
