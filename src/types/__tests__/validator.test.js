@@ -10,14 +10,24 @@
  * governing permissions and limitations under the License.
  */
 import { expect } from 'chai';
+import sinon from 'sinon';
+import { join } from 'path';
 
 import Validator from '../../index.js';
 
 describe('Validator', () => {
   let validator;
 
+  const schemaOrgPath = join(
+    process.cwd(),
+    'src',
+    'types',
+    '__tests__',
+    'schemaorg-current-https.jsonld',
+  );
+
   beforeEach(() => {
-    validator = new Validator();
+    validator = new Validator(schemaOrgPath);
   });
 
   it('should expose errors from WAE', async () => {
@@ -46,5 +56,29 @@ describe('Validator', () => {
       rootType: 'jsonld',
       severity: 'ERROR',
     });
+  });
+
+  it('should print debug information when debug logging is active', async () => {
+    const waeData = {
+      jsonld: {
+        BreadcrumbList: [
+          {
+            '@type': 'BreadcrumbList',
+            itemListElement: [],
+          },
+        ],
+      },
+      errors: [],
+    };
+
+    validator.debug = true;
+
+    const consoleSpy = sinon.spy(console, 'debug');
+    try {
+      await validator.validate(waeData);
+      expect(consoleSpy.called).to.be.true;
+    } finally {
+      consoleSpy.restore();
+    }
   });
 });

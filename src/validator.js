@@ -13,6 +13,7 @@ export class Validator {
   constructor(schemaOrgPath) {
     this.schemaOrgPath = schemaOrgPath;
     this.globalHandlers = [() => import('./types/schemaOrg.js')];
+    this.debug = false;
 
     this.registeredHandlers = {
       BreadcrumbList: [() => import('./types/BreadcrumbList.js')],
@@ -53,7 +54,7 @@ export class Validator {
 
     if (typeof data === 'object' && data !== null) {
       if (!data['@type']) {
-        console.warn(`${spacing}  WARN: No type found for item`);
+        this.debug && console.warn(`${spacing}  WARN: No type found for item`);
         // TODO: Should return a validation error as type is missing,
         //       WAE is already returning an error
         return [];
@@ -68,14 +69,20 @@ export class Validator {
 
       const typeIssues = await Promise.all(
         types.map(async (type) => {
-          // console.debug(`${spacing}VALIDATE TYPE:`, type, JSON.stringify(path));
+          this.debug &&
+            console.debug(
+              `${spacing}VALIDATE TYPE:`,
+              type,
+              JSON.stringify(path),
+            );
 
           // Find supported handlers
           const handlers = [...(this.registeredHandlers[type] || [])];
           if (!handlers || handlers.length === 0) {
-            console.warn(
-              `${spacing}  WARN: No handlers registered for type: ${type}`,
-            );
+            this.debug &&
+              console.warn(
+                `${spacing}  WARN: No handlers registered for type: ${type}`,
+              );
             return [];
           }
           handlers.push(...(this.globalHandlers || []));
@@ -95,9 +102,9 @@ export class Validator {
           // Wait for all handlers to complete
           const handlerResults = (await Promise.all(handlerPromises)).flat();
 
-          /* for (const issue of handlerResults) {
-            console.debug(`${spacing}  ISSUE:`, issue);
-          } */
+          for (const issue of handlerResults) {
+            this.debug && console.debug(`${spacing}  ISSUE:`, issue);
+          }
 
           return handlerResults;
         }),
@@ -118,9 +125,9 @@ export class Validator {
             // Object
             (!Array.isArray(data[key]) && typeof data[key] === 'object')),
       );
-      /* if (properties.length > 0) {
+      if (this.debug && properties.length > 0) {
         console.debug(`${spacing}PROPERTIES:`, properties);
-      } */
+      }
 
       const propertyIssues = await Promise.all(
         properties.map((property) => {
@@ -158,12 +165,12 @@ export class Validator {
       ) {
         continue;
       }
-      // console.debug('DATA FORMAT:', dataFormat);
+      this.debug && console.debug('DATA FORMAT:', dataFormat);
       const rootTypes = Object.keys(waeData[dataFormat]);
 
       // Validate root type items
       for (const rootType of rootTypes) {
-        // console.debug('  ROOT TYPE:', rootType);
+        this.debug && console.debug('  ROOT TYPE:', rootType);
         const rootTypeItems = waeData[dataFormat][rootType];
 
         // Validate each root type item
