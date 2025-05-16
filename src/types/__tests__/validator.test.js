@@ -40,9 +40,11 @@ describe('Validator', () => {
     expect(results).to.have.lengthOf(1);
     expect(results[0]).to.deep.include({
       dataFormat: 'jsonld',
-      message: 'JSON-LD object missing @type attribute',
+      issueMessage: 'JSON-LD object missing @type attribute',
       location: '0,2',
       source: '{}',
+      rootType: 'jsonld',
+      severity: 'ERROR',
     });
   });
 });
