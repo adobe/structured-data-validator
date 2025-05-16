@@ -210,7 +210,6 @@ export default class SchemaOrgValidator {
       const properties = Object.keys(data).filter(
         (key) => !key.startsWith('@'),
       );
-      // console.debug(`Found properties: ${properties.map((p) => p.replace('http://schema.org/', '')).join(', ')}`);
 
       // Check in schema.org schema if all properties are supported within the given type
       await Promise.all(
@@ -227,7 +226,6 @@ export default class SchemaOrgValidator {
               errorType: 'schemaOrg',
             });
           }
-          // console.debug(`Property ${propertyId} for type ${typeId} is ${isValid ? 'valid' : 'invalid'}`);
         }),
       );
     }

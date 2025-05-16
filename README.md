@@ -67,6 +67,17 @@ The validator expects the output format from `@marbec/web-auto-extractor`, which
 - `npm run format` - Check code formatting
 - `npm run format:fix` - Fix code formatting issues
 
+### Debug Logging
+
+To enable debug logging and see detailed validation output, set the `debug` property to `true` on your `Validator` instance:
+
+```js
+const validator = new Validator(schemaOrgPath);
+validator.debug = true; // Enable debug logging
+```
+
+This will print additional information to the console during validation, which is useful for development and troubleshooting.
+
 ## Dependencies
 
 - [@marbec/web-auto-extractor](https://www.npmjs.com/package/@marbec/web-auto-extractor) - For extracting structured data from web pages
