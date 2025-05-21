@@ -58,6 +58,11 @@ describe('Validator', () => {
     });
   });
 
+  it('should not fail when errors are missing', async () => {
+    const results = await validator.validate({});
+    expect(results).to.have.lengthOf(0);
+  });
+
   it('should print debug information when debug logging is active', async () => {
     const waeData = {
       jsonld: {

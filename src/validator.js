@@ -26,9 +26,7 @@ export class Validator {
       Offer: [() => import('./types/Offer.js')],
       AggregateOffer: [() => import('./types/AggregateOffer.js')],
       PriceSpecification: [() => import('./types/PriceSpecification.js')],
-      UnitPriceSpecification: [
-        () => import('./types/UnitPriceSpecification.js'),
-      ],
+      UnitPriceSpecification: [() => import('./types/PriceSpecification.js')],
     };
   }
 
@@ -199,8 +197,10 @@ export class Validator {
     }
 
     // Expose WAE errors, filter out metadata errors
-    const errors = waeData.errors.filter((e) => dataFormats.includes(e.format));
-    for (const error of errors) {
+    const errors = waeData.errors?.filter((e) =>
+      dataFormats.includes(e.format),
+    );
+    for (const error of errors || []) {
       const result = {
         dataFormat: error.format,
         issueMessage: error.message,

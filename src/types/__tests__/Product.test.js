@@ -33,7 +33,7 @@ describe('ProductValidator', () => {
         ListItem: [MockValidator],
         AggregateOffer: [() => import('../AggregateOffer.js')],
         PriceSpecification: [() => import('../PriceSpecification.js')],
-        UnitPriceSpecification: [() => import('../UnitPriceSpecification.js')],
+        UnitPriceSpecification: [() => import('../PriceSpecification.js')],
       };
       validator.globalHandlers = [];
     });
