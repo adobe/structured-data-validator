@@ -2,6 +2,9 @@ name: CI
 
 on: [push]
 
+env:
+  CI_BRANCH: ${{ github.ref_name }}
+
 jobs:
   build:
     runs-on: ubuntu-latest
