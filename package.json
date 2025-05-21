@@ -1,6 +1,6 @@
 {
   "name": "@adobe/structured-data-validator",
-  "version": "0.0.1-beta.2",
+  "version": "0.0.1-beta.3",
   "publishConfig": {
     "access": "public"
   },
