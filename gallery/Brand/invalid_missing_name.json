@@ -1,0 +1,6 @@
+{
+  "@context": "https://schema.org",
+  "@type": "Brand",
+  "url": "https://www.example.com",
+  "logo": "https://www.example.com/logo.png"
+}

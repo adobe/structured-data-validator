@@ -1,0 +1,31 @@
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Example Online Store",
+  "url": "https://www.example.com",
+  "sameAs": [
+    "https://example.net/profile/example12",
+    "https://example.org/@example34"
+  ],
+  "logo": "https://www.example.com/assets/images/logo.png",
+  "contactPoint": {
+    "contactType": "Customer Service",
+    "email": "support@example.com",
+    "telephone": "+47-99-999-9900"
+  },
+  "vatID": "FR12345678901",
+  "iso6523Code": "0199:724500PMK2A2M1SQQ228",
+  "hasMerchantReturnPolicy": {
+    "@type": "MerchantReturnPolicy",
+    "applicableCountry": ["DE", "AT", "CH"],
+    "returnPolicyCountry": "IE",
+    "returnPolicyCategory": "https://schema.org/MerchantReturnFiniteReturnWindow",
+    "merchantReturnDays": 60,
+    "itemCondition": "https://schema.org/NewCondition",
+    "returnMethod": "https://schema.org/ReturnByMail",
+    "returnFees": "https://schema.org/FreeReturn",
+    "refundType": "https://schema.org/FullRefund",
+    "returnLabelSource": "https://schema.org/ReturnLabelCustomerResponsibility",
+    "merchantReturnLink": "https://www.example.com/return-policy"
+  }
+}

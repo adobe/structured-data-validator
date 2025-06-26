@@ -1,0 +1,8 @@
+{
+  "@type": "Offer",
+  "priceSpecification": {
+    "@type": "UnitPriceSpecification",
+    "price": 10.0,
+    "priceCurrency": "USD"
+  }
+}

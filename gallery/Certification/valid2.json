@@ -1,0 +1,15 @@
+{
+  "@context": "https://schema.org/",
+  "@type": "Certification",
+  "issuedBy": {
+    "@type": "Organization",
+    "name": "ADEME"
+  },
+  "name": "Vehicle_CO2_Class",
+  "certificationRating": {
+    "@type": "Rating",
+    "ratingValue": "E",
+    "bestRating": "A",
+    "worstRating": "G"
+  }
+}

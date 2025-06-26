@@ -1,0 +1,11 @@
+{
+  "@context": "https://schema.org/",
+  "@type": "Certification",
+  "issuedBy": {
+    "@type": "Organization",
+    "name": "European_Commission"
+  },
+  "name": "EPREL",
+  "url": "https://eprel.ec.europa.eu/screen/product/ovens/53553",
+  "certificationIdentification": "53553"
+}

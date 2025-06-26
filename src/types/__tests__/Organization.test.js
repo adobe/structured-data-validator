@@ -20,9 +20,6 @@ describe('OrganizationValidator', () => {
 
     beforeEach(() => {
       validator = new Validator();
-      validator.registeredHandlers = {
-        Organization: [() => import('../Organization.js')],
-      };
       validator.globalHandlers = [];
     });
 

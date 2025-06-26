@@ -20,10 +20,6 @@ describe('PriceSpecificationValidator', () => {
 
     beforeEach(() => {
       validator = new Validator();
-      validator.registeredHandlers = {
-        PriceSpecification: [() => import('../PriceSpecification.js')],
-        UnitPriceSpecification: [() => import('../PriceSpecification.js')],
-      };
       validator.globalHandlers = [];
     });
 

@@ -20,9 +20,6 @@ describe('PersonValidator', () => {
 
     beforeEach(() => {
       validator = new Validator();
-      validator.registeredHandlers = {
-        Person: [() => import('../Person.js')],
-      };
       validator.globalHandlers = [];
     });
 

@@ -21,7 +21,7 @@ describe('AggregateRatingValidator', () => {
     beforeEach(() => {
       validator = new Validator();
       validator.registeredHandlers = {
-        AggregateRating: [() => import('../AggregateRating.js')],
+        ...validator.registeredHandlers,
         Restaurant: [MockValidator],
         PostalAddress: [MockValidator],
       };
@@ -29,14 +29,14 @@ describe('AggregateRatingValidator', () => {
     });
 
     it('should validate a correct aggregateRating structure in valid1.json', async () => {
-      const data = await loadTestData('aggregateRating/valid1.json', 'jsonld');
+      const data = await loadTestData('AggregateRating/valid1.json', 'jsonld');
       const issues = await validator.validate(data);
       expect(issues).to.have.lengthOf(0);
     });
 
     it('should fail when both ratingCount and reviewCount are missing', async () => {
       const data = await loadTestData(
-        'aggregateRating/invalid_missing_counts.json',
+        'AggregateRating/invalid_missing_counts.json',
         'jsonld',
       );
       const issues = await validator.validate(data);
@@ -50,7 +50,7 @@ describe('AggregateRatingValidator', () => {
 
     it('should fail when ratingValue is missing', async () => {
       const data = await loadTestData(
-        'aggregateRating/invalid_missing_rating_value.json',
+        'AggregateRating/invalid_missing_rating_value.json',
         'jsonld',
       );
       const issues = await validator.validate(data);
@@ -63,7 +63,7 @@ describe('AggregateRatingValidator', () => {
 
     it('should fail when ratingValue is outside the specified range', async () => {
       const data = await loadTestData(
-        'aggregateRating/invalid_rating_out_of_range.json',
+        'AggregateRating/invalid_rating_out_of_range.json',
         'jsonld',
       );
       const issues = await validator.validate(data);
@@ -76,7 +76,7 @@ describe('AggregateRatingValidator', () => {
 
     it('should fail when itemReviewed is missing', async () => {
       const data = await loadTestData(
-        'aggregateRating/invalid_missing_item_reviewed.json',
+        'AggregateRating/invalid_missing_item_reviewed.json',
         'jsonld',
       );
       const issues = await validator.validate(data);

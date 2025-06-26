@@ -1,0 +1,7 @@
+{
+  "@context": "https://schema.org",
+  "@type": "SizeSpecification",
+  "name": "Medium T-Shirt Size",
+  "sizeSystem": "https://schema.org/US",
+  "sizeGroup": "https://schema.org/Adult"
+}

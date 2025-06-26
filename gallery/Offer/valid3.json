@@ -1,0 +1,12 @@
+{
+  "@type": "Offer",
+  "url": "https://www.example.com/trinket_offer",
+  "price": 10.0,
+  "priceCurrency": "GBP",
+  "priceSpecification": {
+    "@type": "UnitPriceSpecification",
+    "priceType": "https://schema.org/StrikethroughPrice",
+    "price": 15.0,
+    "priceCurrency": "GBP"
+  }
+}
