@@ -1,0 +1,13 @@
+{
+  "@type": "MerchantReturnPolicy",
+  "applicableCountry": "CH",
+  "returnPolicyCategory": "https://schema.org/MerchantReturnFiniteReturnWindow",
+  "merchantReturnDays": 60,
+  "returnMethod": "https://schema.org/ReturnByMail",
+  "returnFees": "https://schema.org/ReturnShippingFees",
+  "returnShippingFeesAmount": {
+    "@type": "MonetaryAmount",
+    "value": 3.49,
+    "currency": "CHF"
+  }
+}

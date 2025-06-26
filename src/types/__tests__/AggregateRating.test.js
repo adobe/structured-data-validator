@@ -21,7 +21,7 @@ describe('AggregateRatingValidator', () => {
     beforeEach(() => {
       validator = new Validator();
       validator.registeredHandlers = {
-        AggregateRating: [() => import('../AggregateRating.js')],
+        ...validator.registeredHandlers,
         Restaurant: [MockValidator],
         PostalAddress: [MockValidator],
       };
@@ -29,7 +29,7 @@ describe('AggregateRatingValidator', () => {
     });
 
     it('should validate a correct aggregateRating structure in valid1.json', async () => {
-      const data = await loadTestData('aggregateRating/valid1.json', 'jsonld');
+      const data = await loadTestData('AggregateRating/valid1.json', 'jsonld');
       const issues = await validator.validate(data);
       expect(issues).to.have.lengthOf(0);
     });

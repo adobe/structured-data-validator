@@ -1,0 +1,8 @@
+{
+  "@context": "https://schema.org/",
+  "@type": "3DModel",
+  "encoding": {
+    "@type": "MediaObject",
+    "contentUrl": "https://example.com/sofa.gltf"
+  }
+}

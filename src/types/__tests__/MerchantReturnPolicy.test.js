@@ -14,7 +14,7 @@ import { expect } from 'chai';
 import { loadTestData } from './utils.js';
 import { Validator } from '../../validator.js';
 
-describe('PriceSpecificationValidator', () => {
+describe('MerchantReturnPolicyValidator', () => {
   describe('JSON-LD', () => {
     let validator;
 
@@ -23,51 +23,57 @@ describe('PriceSpecificationValidator', () => {
       validator.globalHandlers = [];
     });
 
-    it('should validate a correct PriceSpecification in valid1.json', async () => {
+    it('should validate a correct merchant return policy structure in valid1.json', async () => {
       const data = await loadTestData(
-        'PriceSpecification/valid1.json',
+        'MerchantReturnPolicy/valid1.json',
         'jsonld',
       );
       const issues = await validator.validate(data);
       expect(issues).to.have.lengthOf(0);
     });
 
-    it('should validate a correct UnitPriceSpecification in valid2.json', async () => {
+    it('should validate return shipping fees', async () => {
       const data = await loadTestData(
-        'PriceSpecification/valid2.json',
+        'MerchantReturnPolicy/valid2.json',
         'jsonld',
       );
       const issues = await validator.validate(data);
       expect(issues).to.have.lengthOf(0);
     });
 
-    it('should detect missing required price attribute in invalid1.json', async () => {
+    it('should validate additional recommended fields in Organization context', async () => {
       const data = await loadTestData(
-        'PriceSpecification/invalid1.json',
+        'MerchantReturnPolicy/valid3.json',
         'jsonld',
       );
       const issues = await validator.validate(data);
+      const errors = issues.filter((i) => i.severity === 'ERROR');
+      expect(errors).to.have.lengthOf(0);
+      const warnings = issues.filter((i) => i.severity === 'WARNING');
+      expect(warnings).to.have.lengthOf(7);
+    });
 
-      expect(issues).to.have.lengthOf(1);
-      expect(issues[0]).to.deep.include({
-        rootType: 'PriceSpecification',
-        issueMessage: 'Required attribute "price" is missing',
+    it('should validate applicableCountry and returnPolicyCategory', async () => {
+      const data = await loadTestData(
+        'MerchantReturnPolicy/missing-applicableCountry.json',
+        'jsonld',
+      );
+      const issues = await validator.validate(data);
+      const errors = issues.filter((i) => i.severity === 'ERROR');
+      expect(errors).to.have.lengthOf(1);
+      expect(errors[0]).to.deep.include({
+        rootType: 'MerchantReturnPolicy',
+        dataFormat: 'jsonld',
+        location: '35,352',
+        issueMessage:
+          'Either applicableCountry and returnPolicyCategory or merchantReturnLink must be present',
         severity: 'ERROR',
-      });
-    });
-
-    it('should detect invalid currency in invalid3.json', async () => {
-      const data = await loadTestData(
-        'PriceSpecification/invalid2.json',
-        'jsonld',
-      );
-      const issues = await validator.validate(data);
-
-      expect(issues).to.have.lengthOf(1);
-      expect(issues[0]).to.deep.include({
-        rootType: 'PriceSpecification',
-        issueMessage: 'Invalid type for attribute "priceCurrency"',
-        severity: 'WARNING',
+        path: [
+          {
+            type: 'MerchantReturnPolicy',
+            index: 0,
+          },
+        ],
       });
     });
   });

@@ -19,8 +19,8 @@ export default class RatingValidator extends BaseValidator {
 
       // Those fields are listed as recommended in documentation
       // BUT: Google validator does not show warnings and assumes default values 0 and 5.
-      this.recommended('bestRating', 'number'),
-      this.recommended('worstRating', 'number'),
+      this.recommended('bestRating'),
+      this.recommended('worstRating'),
     ];
 
     return conditions.map((c) => c.bind(this));

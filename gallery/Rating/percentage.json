@@ -1,0 +1,7 @@
+{
+  "@context": "https://schema.org/",
+  "@type": "Rating",
+  "ratingValue": "40%",
+  "bestRating": "100%",
+  "worstRating": "0%"
+}

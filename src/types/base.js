@@ -22,7 +22,7 @@ export default class BaseValidator {
   validate(data) {
     const issues = [];
 
-    for (const condition of this.getConditions()) {
+    for (const condition of this.getConditions(data)) {
       const issue = condition(data);
       if (Array.isArray(issue)) {
         issues.push(...issue);
@@ -51,7 +51,7 @@ export default class BaseValidator {
   required(name, type, ...opts) {
     return (data) => {
       const value = this.#valueByPath(data, name);
-      if (!value) {
+      if (value === undefined || value === null || value === '') {
         return {
           issueMessage: `Required attribute "${name}" is missing`,
           severity: 'ERROR',
@@ -144,5 +144,18 @@ export default class BaseValidator {
       return false;
     }
     return true;
+  }
+
+  inType(type) {
+    return (
+      this.path.length > 1 && this.path[this.path.length - 2].type === type
+    );
+  }
+
+  inProperty(property) {
+    return (
+      this.path.length > 1 &&
+      this.path[this.path.length - 1].property === property
+    );
   }
 }

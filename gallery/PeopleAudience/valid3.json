@@ -1,0 +1,7 @@
+{
+  "@context": "https://schema.org",
+  "@type": "PeopleAudience",
+  "name": "Adults",
+  "suggestedGender": "https://schema.org/Male",
+  "suggestedMinAge": 13
+}

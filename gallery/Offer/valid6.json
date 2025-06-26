@@ -1,0 +1,20 @@
+{
+  "@type": "Offer",
+  "url": "https://www.example.com/trinket_offer",
+  "priceSpecification": [
+    {
+      "@type": "UnitPriceSpecification",
+      "price": 10.0,
+      "priceCurrency": "GBP"
+    },
+    {
+      "@type": "UnitPriceSpecification",
+      "price": 8.0,
+      "priceCurrency": "GBP",
+      "validForMemberTier": {
+        "@type": "MemberProgramTier",
+        "@id": "https://www.example.com/com/members#tier_gold"
+      }
+    }
+  ]
+}

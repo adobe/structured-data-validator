@@ -1,0 +1,8 @@
+{
+  "@context": "https://schema.org",
+  "@type": "PeopleAudience",
+  "name": "Young Adults",
+  "suggestedGender": "https://schema.org/Male",
+  "suggestedMaxAge": 25,
+  "suggestedMinAge": 18
+}

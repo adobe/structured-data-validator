@@ -14,7 +14,7 @@ import { expect } from 'chai';
 import { loadTestData } from './utils.js';
 import { Validator } from '../../validator.js';
 
-describe('PersonValidator', () => {
+describe('QuantitativeValueValidator', () => {
   describe('JSON-LD', () => {
     let validator;
 
@@ -23,22 +23,22 @@ describe('PersonValidator', () => {
       validator.globalHandlers = [];
     });
 
-    it('should validate a correct person', async () => {
-      const data = await loadTestData('Person/valid.json', 'jsonld');
+    it('should validate a correct unit pricing structure in unitpricing-valid1.json', async () => {
+      const data = await loadTestData(
+        'QuantitativeValue/unitpricing-valid1.json',
+        'jsonld',
+      );
       const issues = await validator.validate(data);
       expect(issues).to.have.lengthOf(0);
     });
 
-    it('should detect a missing name', async () => {
-      const data = await loadTestData('Person/invalid.json', 'jsonld');
+    it('should validate a correct shipping structure in shipping-valid1.json', async () => {
+      const data = await loadTestData(
+        'QuantitativeValue/shipping-valid1.json',
+        'jsonld',
+      );
       const issues = await validator.validate(data);
-      expect(issues).to.have.lengthOf(1);
-      expect(issues[0]).to.deep.include({
-        rootType: 'Person',
-        issueMessage: 'Required attribute "name" is missing',
-        location: '35,96',
-        severity: 'ERROR',
-      });
+      expect(issues).to.have.lengthOf(0);
     });
   });
 });

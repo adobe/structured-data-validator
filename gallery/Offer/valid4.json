@@ -1,0 +1,16 @@
+{
+  "@type": "Offer",
+  "priceSpecification": [
+    {
+      "@type": "UnitPriceSpecification",
+      "price": 10.0,
+      "priceCurrency": "GBP"
+    },
+    {
+      "@type": "UnitPriceSpecification",
+      "priceType": "https://schema.org/StrikethroughPrice",
+      "price": 15.0,
+      "priceCurrency": "GBP"
+    }
+  ]
+}

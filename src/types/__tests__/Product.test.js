@@ -21,49 +21,40 @@ describe('ProductValidator', () => {
     beforeEach(() => {
       validator = new Validator();
       validator.registeredHandlers = {
-        Product: [() => import('../Product.js')],
-        AggregateRating: [() => import('../AggregateRating.js')],
-        Review: [() => import('../Review.js')],
-        Rating: [() => import('../Rating.js')],
-        Person: [() => import('../Person.js')],
+        ...validator.registeredHandlers,
+        Product: [() => import('../Product.js')], // skip ProductMerchant checks
         ItemList: [MockValidator],
-        Brand: [MockValidator],
-        Offer: [() => import('../Offer.js')],
-        Organization: [() => import('../Organization.js')],
         ListItem: [MockValidator],
-        AggregateOffer: [() => import('../AggregateOffer.js')],
-        PriceSpecification: [() => import('../PriceSpecification.js')],
-        UnitPriceSpecification: [() => import('../PriceSpecification.js')],
       };
       validator.globalHandlers = [];
     });
 
     it('should validate a correct product structure in valid1.json', async () => {
-      const data = await loadTestData('product/valid1.json', 'jsonld');
+      const data = await loadTestData('Product/valid1.json', 'jsonld');
       const issues = await validator.validate(data);
       expect(issues).to.have.lengthOf(0);
     });
 
     it('should validate a correct product structure in valid2.json', async () => {
-      const data = await loadTestData('product/valid2.json', 'jsonld');
+      const data = await loadTestData('Product/valid2.json', 'jsonld');
       const issues = await validator.validate(data);
       expect(issues).to.have.lengthOf(0);
     });
 
     it('should validate a correct product structure in valid3.json', async () => {
-      const data = await loadTestData('product/valid3.json', 'jsonld');
+      const data = await loadTestData('Product/valid3.json', 'jsonld');
       const issues = await validator.validate(data);
       expect(issues).to.have.lengthOf(0);
     });
 
     it('should validate a correct product structure in valid4.json', async () => {
-      const data = await loadTestData('product/valid4.json', 'jsonld');
+      const data = await loadTestData('Product/valid4.json', 'jsonld');
       const issues = await validator.validate(data);
       expect(issues).to.have.lengthOf(0);
     });
 
     it('should show warnings for recommended fields in only_offers.json', async () => {
-      const data = await loadTestData('product/only_offers.json', 'jsonld');
+      const data = await loadTestData('Product/only_offers.json', 'jsonld');
       const issues = await validator.validate(data);
       expect(issues).to.have.lengthOf(2);
       expect(issues[0]).to.deep.include({
@@ -79,7 +70,7 @@ describe('ProductValidator', () => {
     });
 
     it('should detect missing name in missing_name.json', async () => {
-      const data = await loadTestData('product/missing_name.json', 'jsonld');
+      const data = await loadTestData('Product/missing_name.json', 'jsonld');
       const issues = await validator.validate(data);
       expect(issues).to.have.lengthOf(1);
       expect(issues[0]).to.deep.include({
@@ -120,7 +111,7 @@ describe('ProductValidator', () => {
     });
 
     it('should detect missing price in offer_no_price.json', async () => {
-      const data = await loadTestData('product/offer_no_price.json', 'jsonld');
+      const data = await loadTestData('Product/offer_no_price.json', 'jsonld');
       const issues = await validator.validate(data);
       expect(issues).to.have.lengthOf(1);
       expect(issues[0]).to.deep.include({
@@ -263,7 +254,7 @@ describe('ProductValidator', () => {
     });
 
     it('should detect missing rating count in rating_no_count.json', async () => {
-      const data = await loadTestData('product/rating_no_count.json', 'jsonld');
+      const data = await loadTestData('Product/rating_no_count.json', 'jsonld');
       const issues = await validator.validate(data);
       expect(issues).to.have.lengthOf(1);
       expect(issues[0]).to.deep.include({

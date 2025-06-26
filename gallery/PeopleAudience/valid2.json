@@ -1,0 +1,12 @@
+{
+  "@context": "https://schema.org",
+  "@type": "PeopleAudience",
+  "name": "Children Audience",
+  "suggestedGender": "https://schema.org/Female",
+  "suggestedAge": {
+    "@type": "QuantitativeValue",
+    "minValue": 5,
+    "maxValue": 12,
+    "unitCode": "ANN"
+  }
+}

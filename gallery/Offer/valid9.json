@@ -1,0 +1,19 @@
+{
+  "@type": "Offer",
+  "url": "https://www.example.com/trinket_offer",
+  "priceSpecification": {
+    "@type": "UnitPriceSpecification",
+    "price": 81.0,
+    "priceCurrency": "EUR",
+    "referenceQuantity": {
+      "@type": "QuantitativeValue",
+      "value": "4.5",
+      "unitCode": "LTR",
+      "valueReference": {
+        "@type": "QuantitativeValue",
+        "value": "750",
+        "unitCode": "MLT"
+      }
+    }
+  }
+}

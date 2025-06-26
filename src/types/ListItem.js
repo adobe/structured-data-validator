@@ -51,7 +51,7 @@ export default class ListItemValidator extends BaseValidator {
 
     try {
       if (!urlToCheck) {
-        throw 'URL is missing';
+        throw 'Field "item" with URL is missing';
       }
 
       // Handle absolute URLs
@@ -60,7 +60,11 @@ export default class ListItemValidator extends BaseValidator {
         urlToCheck.startsWith('https://') ||
         this.dataFormat === 'jsonld'
       ) {
-        new URL(urlToCheck);
+        try {
+          new URL(urlToCheck);
+        } catch (e) {
+          throw `Invalid URL in field "${urlPath}"`;
+        }
         return null;
       }
 
@@ -76,12 +80,12 @@ export default class ListItemValidator extends BaseValidator {
 
         // Check if valid relative path
         if (!urlWithoutParams.match(/^\/[a-z0-9\-/]+$/)) {
-          throw 'Invalid URL';
+          throw `Invalid URL in field "${urlPath}"`;
         }
       }
     } catch (e) {
       return {
-        issueMessage: `Invalid URL in field "${urlPath}"`,
+        issueMessage: e,
         severity: 'WARNING',
         path: this.path,
       };
