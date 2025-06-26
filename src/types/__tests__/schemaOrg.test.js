@@ -46,46 +46,63 @@ describe('Schema.org Validator', () => {
   });
 
   describe('JSON-LD', () => {
-    it('should do a schema.org validation on BreadcrumbList', async () => {
-      const data = await loadTestData('Breadcrumb/valid1.json', 'jsonld');
+    const files = [
+      '3DModel/valid1.json',
+      'AggregateRating/valid1.json',
+      'Brand/valid1.json',
+      'Breadcrumb/valid1.json',
+      'Breadcrumb/valid2.json',
+      'Certification/valid1.json',
+      'Certification/valid2.json',
+      'DefinedRegion/valid1.json',
+      'DefinedRegion/valid2.json',
+      'ImageObject/valid1.json',
+      'ImageObject/valid2.json',
+      'MerchantReturnPolicy/valid1.json',
+      'MerchantReturnPolicy/valid2.json',
+      'MerchantReturnPolicy/valid3.json',
+      'Offer/valid1.json',
+      'Offer/valid2.json',
+      'Offer/valid3.json',
+      'Offer/valid4.json',
+      'Offer/valid5.json',
+      'Offer/valid6.json',
+      'Offer/valid7.json',
+      'Offer/valid8.json',
+      'Offer/valid9.json',
+      'OfferShippingDetails/valid1.json',
+      'OfferShippingDetails/valid2.json',
+      'Organization/valid.json',
+      'PeopleAudience/valid1.json',
+      'PeopleAudience/valid2.json',
+      'PeopleAudience/valid3.json',
+      'Person/valid.json',
+      'PriceSpecification/valid1.json',
+      'PriceSpecification/valid2.json',
+      'Product/valid1.json',
+      'Product/valid2.json',
+      'Product/valid3.json',
+      'Product/valid4.json',
+      'ProductMerchant/valid1.json',
+      'ProductMerchant/valid2.json',
+      'ProductMerchant/valid3.json',
+      'Recipe/valid1.json',
+      'Review/valid1.json',
+      'ShippingDeliveryTime/valid1.json',
+      'SizeSpecification/valid1.json',
+      'VideoObject/valid1.json',
+      'VideoObject/valid2.json',
+      'VideoObject/valid3.json',
+      'VideoObject/valid4.json',
+    ];
 
-      const issues = await validator.validate(data);
-      expect(issues).to.have.lengthOf(0);
-    });
+    files.forEach((file) => {
+      it(`should do a schema.org validation on ${file}`, async () => {
+        const data = await loadTestData(file, 'jsonld');
 
-    it('should do a schema.org validation on BreadcrumbList with multiple items', async () => {
-      const data = await loadTestData('Breadcrumb/valid2.json', 'jsonld');
-
-      const issues = await validator.validate(data);
-      expect(issues).to.have.lengthOf(0);
-    });
-
-    it('should do a schema.org validation on Product with basic properties', async () => {
-      const data = await loadTestData('Product/valid1.json', 'jsonld');
-
-      const issues = await validator.validate(data);
-      expect(issues).to.have.lengthOf(0);
-    });
-
-    it('should do a schema.org validation on Product with offer', async () => {
-      const data = await loadTestData('Product/valid2.json', 'jsonld');
-
-      const issues = await validator.validate(data);
-      expect(issues).to.have.lengthOf(0);
-    });
-
-    it('should do a schema.org validation on Product with reviews', async () => {
-      const data = await loadTestData('Product/valid3.json', 'jsonld');
-
-      const issues = await validator.validate(data);
-      expect(issues).to.have.lengthOf(0);
-    });
-
-    it('should do a schema.org validation on Product with aggregate rating', async () => {
-      const data = await loadTestData('Product/valid4.json', 'jsonld');
-
-      const issues = await validator.validate(data);
-      expect(issues).to.have.lengthOf(0);
+        const issues = await validator.validate(data);
+        expect(issues).to.have.lengthOf(0);
+      });
     });
 
     it('should return an error if invalid attribute was detected', async () => {
