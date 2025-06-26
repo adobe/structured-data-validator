@@ -82,7 +82,7 @@ describe('ProductValidator', () => {
 
     it('should detect missing rating, review or offers in no_rating_review_offers.json', async () => {
       const data = await loadTestData(
-        'product/no_rating_review_offers.json',
+        'Product/no_rating_review_offers.json',
         'jsonld',
       );
       const issues = await validator.validate(data);
@@ -97,7 +97,7 @@ describe('ProductValidator', () => {
 
     it('should detect single note in review_single_note.json', async () => {
       const data = await loadTestData(
-        'product/review_single_note.json',
+        'Product/review_single_note.json',
         'jsonld',
       );
       const issues = await validator.validate(data);
@@ -128,7 +128,7 @@ describe('ProductValidator', () => {
 
     it('should detect missing currency in offer_no_currency.json', async () => {
       const data = await loadTestData(
-        'product/offer_no_currency.json',
+        'Product/offer_no_currency.json',
         'jsonld',
       );
       const issues = await validator.validate(data);
@@ -147,7 +147,7 @@ describe('ProductValidator', () => {
 
     it('should detect missing availability in offer_no_availability.json', async () => {
       const data = await loadTestData(
-        'product/offer_no_availability.json',
+        'Product/offer_no_availability.json',
         'jsonld',
       );
       const issues = await validator.validate(data);
@@ -165,7 +165,7 @@ describe('ProductValidator', () => {
 
     it('should detect invalid date in offer_invalid_date.json', async () => {
       const data = await loadTestData(
-        'product/offer_invalid_date.json',
+        'Product/offer_invalid_date.json',
         'jsonld',
       );
       const issues = await validator.validate(data);
@@ -183,7 +183,7 @@ describe('ProductValidator', () => {
 
     it('should detect missing low price in aggregate_offer_no_low_price.json', async () => {
       const data = await loadTestData(
-        'product/aggregate_offer_no_low_price.json',
+        'Product/aggregate_offer_no_low_price.json',
         'jsonld',
       );
       const issues = await validator.validate(data);
@@ -201,7 +201,7 @@ describe('ProductValidator', () => {
 
     it('should detect missing currency in aggregate_offer_no_currency.json', async () => {
       const data = await loadTestData(
-        'product/aggregate_offer_no_currency.json',
+        'Product/aggregate_offer_no_currency.json',
         'jsonld',
       );
       const issues = await validator.validate(data);
@@ -219,7 +219,7 @@ describe('ProductValidator', () => {
 
     it('should detect missing high price in aggregate_offer_no_high_price.json', async () => {
       const data = await loadTestData(
-        'product/aggregate_offer_no_high_price.json',
+        'Product/aggregate_offer_no_high_price.json',
         'jsonld',
       );
       const issues = await validator.validate(data);
@@ -237,7 +237,7 @@ describe('ProductValidator', () => {
 
     it('should detect missing offer count in aggregate_offer_no_count.json', async () => {
       const data = await loadTestData(
-        'product/aggregate_offer_no_count.json',
+        'Product/aggregate_offer_no_count.json',
         'jsonld',
       );
       const issues = await validator.validate(data);

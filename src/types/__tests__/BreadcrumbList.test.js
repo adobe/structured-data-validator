@@ -194,7 +194,7 @@ describe('BreadcrumbListValidator', () => {
 
     it('should validate a correct breadcrumb structure in microdata-valid1.html', async () => {
       const data = await loadTestData(
-        'breadcrumb/microdata-valid1.html',
+        'Breadcrumb/microdata-valid1.html',
         'microdata',
       );
       const issues = await validator.validate(data);
@@ -203,7 +203,7 @@ describe('BreadcrumbListValidator', () => {
 
     it('should validate multiple breadcrumb lists in microdata-valid1.html', async () => {
       const data = await loadTestData(
-        'breadcrumb/microdata-valid2.html',
+        'Breadcrumb/microdata-valid2.html',
         'microdata',
       );
       expect(data.microdata.BreadcrumbList).to.have.lengthOf(2);
@@ -213,7 +213,7 @@ describe('BreadcrumbListValidator', () => {
 
     it('should detect missing required attributes in microdata-invalid1.html', async () => {
       const data = await loadTestData(
-        'breadcrumb/microdata-invalid1.html',
+        'Breadcrumb/microdata-invalid1.html',
         'microdata',
       );
       const issues = await validator.validate(data);
@@ -228,7 +228,7 @@ describe('BreadcrumbListValidator', () => {
 
     it('should detect invalid URL in microdata-invalid2.html', async () => {
       const data = await loadTestData(
-        'breadcrumb/microdata-invalid2.html',
+        'Breadcrumb/microdata-invalid2.html',
         'microdata',
       );
       const issues = await validator.validate(data);
@@ -242,7 +242,7 @@ describe('BreadcrumbListValidator', () => {
 
     it('should detect missing required attributes in microdata-invalid3.html', async () => {
       const data = await loadTestData(
-        'breadcrumb/microdata-invalid3.html',
+        'Breadcrumb/microdata-invalid3.html',
         'microdata',
       );
       const issues = await validator.validate(data);
@@ -258,7 +258,7 @@ describe('BreadcrumbListValidator', () => {
     it('should not detect relative URLs as issues in microdata-invalid4.html', async () => {
       // This is different behavior than JSON-LD and RDFa
       const data = await loadTestData(
-        'breadcrumb/microdata-invalid4.html',
+        'Breadcrumb/microdata-invalid4.html',
         'microdata',
       );
       const issues = await validator.validate(data);
@@ -267,7 +267,7 @@ describe('BreadcrumbListValidator', () => {
 
     it('should detect missing field in microdata-invalid5.html', async () => {
       const data = await loadTestData(
-        'breadcrumb/microdata-invalid5.html',
+        'Breadcrumb/microdata-invalid5.html',
         'microdata',
       );
       const issues = await validator.validate(data);

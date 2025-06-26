@@ -90,7 +90,7 @@ describe('Schema.org Validator', () => {
 
     it('should return an error if invalid attribute was detected', async () => {
       const data = await loadTestData(
-        'product/invalid_attribute.json',
+        'Product/invalid_attribute.json',
         'jsonld',
       );
 
@@ -108,7 +108,7 @@ describe('Schema.org Validator', () => {
 
     it('should return an error if an invalid attribute in a subtype was detected', async () => {
       const data = await loadTestData(
-        'breadcrumb/invalid-attribute.json',
+        'Breadcrumb/invalid-attribute.json',
         'jsonld',
       );
 
@@ -138,7 +138,7 @@ describe('Schema.org Validator', () => {
   describe('Microdata', () => {
     it('should do a schema.org validation on BreadcrumbList', async () => {
       const data = await loadTestData(
-        'breadcrumb/microdata-valid1.html',
+        'Breadcrumb/microdata-valid1.html',
         'microdata',
       );
 
