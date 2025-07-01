@@ -21,14 +21,6 @@ export default class ProductMerchantValidator extends BaseValidator {
       this.recommended('brand'),
       this.recommended('color', 'string'),
       this.recommended('description', 'string'),
-      this.or(
-        this.recommended('gtin', 'string'),
-        this.recommended('gtin8', 'string'),
-        this.recommended('gtin12', 'string'),
-        this.recommended('gtin13', 'string'),
-        this.recommended('gtin14', 'string'),
-        this.recommended('isbn', 'string'),
-      ),
       this.recommended('hasCertification'),
       this.recommended('inProductGroupWithID', 'string'),
       this.recommended('isVariantOf'),
@@ -38,6 +30,57 @@ export default class ProductMerchantValidator extends BaseValidator {
       this.recommended('size'),
       this.recommended('sku', 'string'),
       this.recommended('subjectOf'),
+      this.validateGtin,
     ].map((c) => c.bind(this));
+  }
+
+  validateGtin(data) {
+    let gtinFields = ['gtin', 'gtin8', 'gtin12', 'gtin13', 'gtin14', 'isbn'];
+
+    // Check if gtin is present on product
+    const productPass =
+      this.or(...gtinFields.map((field) => this.recommended(field, 'string')))(
+        data,
+      ) === null;
+
+    // Check if gtin is present on offers object
+    let offerPass = false;
+    if (
+      data.offers &&
+      typeof data.offers === 'object' &&
+      !Array.isArray(data.offers)
+    ) {
+      offerPass =
+        this.or(
+          ...gtinFields.map((field) =>
+            this.recommended(`offers.${field}`, 'string'),
+          ),
+        )(data.offers) === null;
+    }
+
+    // Check if gtin is present on offers array
+    let allOffersPass = false;
+    if (data.offers && Array.isArray(data.offers)) {
+      allOffersPass = true;
+      data.offers.forEach((offer, index) => {
+        const offerPass =
+          this.or(
+            ...gtinFields.map((field) => this.recommended(field, 'string')),
+          )(offer, index, data) === null;
+        if (!offerPass) {
+          allOffersPass = false;
+        }
+      });
+    }
+
+    if (productPass || offerPass || allOffersPass) {
+      return null;
+    }
+
+    return {
+      issueMessage: `Missing one of field ${gtinFields.map((a) => `"${a}"`).join(', ')} on either product or all offers`,
+      severity: 'WARNING',
+      path: this.path,
+    };
   }
 }

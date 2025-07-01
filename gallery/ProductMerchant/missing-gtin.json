@@ -1,0 +1,44 @@
+{
+  "@context": "https://schema.org/",
+  "@type": "Product",
+  "gtin": "",
+  "sku": "trinket-12345",
+  "image": [
+    "https://example.com/photos/16x9/trinket.jpg",
+    "https://example.com/photos/4x3/trinket.jpg",
+    "https://example.com/photos/1x1/trinket.jpg"
+  ],
+  "name": "Nice trinket",
+  "description": "Trinket with clean lines",
+  "brand": {
+    "@type": "Brand",
+    "name": "MyBrand"
+  },
+  "offers": [
+    {
+      "@type": "Offer",
+      "sku": "trinket-12345-0001",
+      "url": "https://www.example.com/trinket_offer?variant=0001",
+      "itemCondition": "https://schema.org/NewCondition",
+      "availability": "https://schema.org/InStock",
+      "gtin": "",
+      "priceSpecification": {
+        "@type": "PriceSpecification",
+        "price": 39.99,
+        "priceCurrency": "CHF"
+      }
+    },
+    {
+      "@type": "Offer",
+      "sku": "trinket-12345-0002",
+      "url": "https://www.example.com/trinket_offer?variant=0002",
+      "itemCondition": "https://schema.org/NewCondition",
+      "availability": "https://schema.org/InStock",
+      "priceSpecification": {
+        "@type": "PriceSpecification",
+        "price": 39.99,
+        "priceCurrency": "CHF"
+      }
+    }
+  ]
+}
