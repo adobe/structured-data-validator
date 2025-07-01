@@ -137,7 +137,7 @@ describe('ProductValidator', () => {
         issueMessage:
           'One of the following conditions needs to be met: Missing field "priceCurrency" (optional) or Missing field "priceSpecification.priceCurrency" (optional)',
         location: '35,1119',
-        severity: 'ERROR',
+        severity: 'WARNING',
         path: [
           { type: 'Product', index: 0 },
           { property: 'offers', type: 'Offer' },

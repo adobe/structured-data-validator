@@ -78,12 +78,21 @@ export default class BaseValidator {
       if (pass) {
         return null;
       }
+
+      // Use highest severity of the issues
+      const severity = issues.reduce((max, i) => {
+        if (i && i.severity === 'ERROR') {
+          return 'ERROR';
+        }
+        return max;
+      }, 'WARNING');
+
       return {
         issueMessage: `One of the following conditions needs to be met: ${issues
           .flat()
           .map((c) => c.issueMessage)
           .join(' or ')}`,
-        severity: 'ERROR',
+        severity,
         path: this.path,
       };
     };
