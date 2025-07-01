@@ -1,3 +1,10 @@
+# [1.2.0](https://github.com/adobe/structured-data-validator/compare/v1.1.0...v1.2.0) (2025-07-01)
+
+
+### Features
+
+* Improve gtin check on Product ([#22](https://github.com/adobe/structured-data-validator/issues/22)) ([34f58e4](https://github.com/adobe/structured-data-validator/commit/34f58e4d5f92eb772f0af156d88dc1a9fd00249a))
+
 # [1.1.0](https://github.com/adobe/structured-data-validator/compare/v1.0.0...v1.1.0) (2025-06-26)
 
 
