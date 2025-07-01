@@ -13,21 +13,27 @@ import BaseValidator from './base.js';
 
 export default class ImageObjectValidator extends BaseValidator {
   getConditions() {
-    return [
+    const conditions = [
       this.or(this.required('contentUrl', 'url'), this.required('url', 'url')),
+    ];
 
-      this.or(
-        this.required('creator'),
-        this.required('creditText'),
-        this.required('copyrightNotice'),
-        this.required('license'),
-      ),
+    // Only require these additional fields for root image objects
+    if (this.path.length === 1) {
+      conditions.push(
+        this.or(
+          this.required('creator'),
+          this.required('creditText'),
+          this.required('copyrightNotice'),
+          this.required('license'),
+        ),
 
-      this.recommended('acquireLicensePage', 'url'),
-      this.recommended('creator'),
-      this.recommended('creditText'),
-      this.recommended('copyrightNotice'),
-      this.recommended('license'),
-    ].map((c) => c.bind(this));
+        this.recommended('acquireLicensePage', 'url'),
+        this.recommended('creator'),
+        this.recommended('creditText'),
+        this.recommended('copyrightNotice'),
+        this.recommended('license'),
+      );
+    }
+    return conditions.map((c) => c.bind(this));
   }
 }

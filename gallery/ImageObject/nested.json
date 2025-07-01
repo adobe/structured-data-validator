@@ -1,0 +1,15 @@
+{
+  "@type": "Organization",
+  "@id": "https://www.example.com/",
+  "name": "Washington Times",
+  "logo": {
+    "@type": "ImageObject",
+    "@id": "https://www.example.com/logo.png",
+    "contentUrl": "https://www.example.com/logo.png"
+  },
+  "image": {
+    "@type": "ImageObject",
+    "@id": "https://www.example.com/logo.png",
+    "contentUrl": "https://www.example.com/logo.png"
+  }
+}
