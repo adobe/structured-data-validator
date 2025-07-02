@@ -1,3 +1,10 @@
+## [1.2.1](https://github.com/adobe/structured-data-validator/compare/v1.2.0...v1.2.1) (2025-07-02)
+
+
+### Bug Fixes
+
+* Reduce requirements for nested ImageObject ([#24](https://github.com/adobe/structured-data-validator/issues/24)) ([0e17080](https://github.com/adobe/structured-data-validator/commit/0e170800a3b5fbe6debbc349ddd333dd5a4201b6))
+
 # [1.2.0](https://github.com/adobe/structured-data-validator/compare/v1.1.0...v1.2.0) (2025-07-01)
 
 
