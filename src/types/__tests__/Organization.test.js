@@ -40,5 +40,11 @@ describe('OrganizationValidator', () => {
         severity: 'ERROR',
       });
     });
+
+    it('should validate an organization with multiple types', async () => {
+      const data = await loadTestData('Organization/multi-type.json', 'jsonld');
+      const issues = await validator.validate(data);
+      expect(issues).to.have.lengthOf(0);
+    });
   });
 });

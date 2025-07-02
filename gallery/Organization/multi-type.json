@@ -1,0 +1,5 @@
+{
+  "@type": ["Person", "Organization"],
+  "@id": "https://www.example.com/",
+  "name": "Washington Times"
+}

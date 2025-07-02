@@ -34,5 +34,11 @@ describe('ImageObjectValidator', () => {
       const issues = await validator.validate(data);
       expect(issues).to.have.lengthOf(2);
     });
+
+    it('should ignore additional fields on nested image objects', async () => {
+      const data = await loadTestData('ImageObject/nested.json', 'jsonld');
+      const issues = await validator.validate(data);
+      expect(issues).to.have.lengthOf(0);
+    });
   });
 });
