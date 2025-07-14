@@ -20,6 +20,7 @@ export default class ImageObjectValidator extends BaseValidator {
     // Only require these additional fields for root image objects
     if (this.path.length === 1) {
       conditions.push(
+        // Be aware, this rule is not shown as an error in the validator. Instead the entity is completely ignored if not at least one of these fields is present.
         this.or(
           this.required('creator'),
           this.required('creditText'),
