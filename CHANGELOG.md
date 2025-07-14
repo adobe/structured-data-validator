@@ -1,3 +1,10 @@
+## [1.2.2](https://github.com/adobe/structured-data-validator/compare/v1.2.1...v1.2.2) (2025-07-14)
+
+
+### Bug Fixes
+
+* Allow relative URLs ([#26](https://github.com/adobe/structured-data-validator/issues/26)) ([442d9b2](https://github.com/adobe/structured-data-validator/commit/442d9b2e7a0267ccedf232a2cd3513f386279aef))
+
 ## [1.2.1](https://github.com/adobe/structured-data-validator/compare/v1.2.0...v1.2.1) (2025-07-02)
 
 
