@@ -9,6 +9,8 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
+import { isObject } from '../utils.js';
+
 export default class BaseValidator {
   constructor({ dataFormat, path }) {
     this.dataFormat = dataFormat;
@@ -123,10 +125,12 @@ export default class BaseValidator {
     // TODO: Write tests for all type checks
     if (type === 'string' && typeof data !== 'string') {
       return false;
+    } else if (type === 'arrayOrObject') {
+      return isObject(data) || Array.isArray(data);
     } else if (type === 'array' && !Array.isArray(data)) {
       return false;
-    } else if (type === 'object' && typeof data !== 'object') {
-      return false;
+    } else if (type === 'object') {
+      return isObject(data);
     } else if (type === 'number') {
       if (typeof data === 'number') {
         return true;
