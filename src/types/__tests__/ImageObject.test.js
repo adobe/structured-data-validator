@@ -32,13 +32,40 @@ describe('ImageObjectValidator', () => {
     it('should validate a correct image object structure in valid2.json', async () => {
       const data = await loadTestData('ImageObject/valid2.json', 'jsonld');
       const issues = await validator.validate(data);
-      expect(issues).to.have.lengthOf(2);
+      const errors = issues.filter((issue) => issue.severity === 'ERROR');
+      expect(errors).to.have.lengthOf(0);
     });
 
     it('should ignore additional fields on nested image objects', async () => {
       const data = await loadTestData('ImageObject/nested.json', 'jsonld');
       const issues = await validator.validate(data);
       expect(issues).to.have.lengthOf(0);
+    });
+
+    it('should allow relative URLs', async () => {
+      const data = await loadTestData('ImageObject/valid3.json', 'jsonld');
+      const issues = await validator.validate(data);
+      const errors = issues.filter((issue) => issue.severity === 'ERROR');
+      expect(errors).to.have.lengthOf(0);
+    });
+
+    it('should not allow data: URLs', async () => {
+      const data = await loadTestData('ImageObject/dataUrl.json', 'jsonld');
+      const issues = await validator.validate(data);
+      const errors = issues.filter((issue) => issue.severity === 'ERROR');
+      expect(errors).to.have.lengthOf(1);
+      expect(errors[0]).to.deep.include({
+        rootType: 'ImageObject',
+        issueMessage:
+          'One of the following conditions needs to be met: Required attribute "contentUrl" is missing or Invalid type for attribute "url"',
+        severity: 'ERROR',
+        path: [
+          {
+            type: 'ImageObject',
+            index: 0,
+          },
+        ],
+      });
     });
   });
 });

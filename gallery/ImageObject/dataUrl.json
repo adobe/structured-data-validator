@@ -1,0 +1,11 @@
+{
+  "@context": "https://schema.org/",
+  "@type": "ImageObject",
+  "url": "data:image/gif;base64,R0lGODlhEAAQAMQAAORHHOVSKudfOulrSOp3WOyDZu6QdvCchPGolfO0o/XBs/fNwfjZ0frl3/zy7////wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAkAABAALAAAAAAQABAAAAVVICSOZGlCQAosJ6mu7fiyZeKqNKToQGDsM8hBADgUXoGAiqhSvp5QAnQKGIgUhwFUYLCVDFCrKUE1lBavAViFIDlTImbKC5Gm2hB0SlBCBMQiB0UjIQA7",
+  "acquireLicensePage": "https://example.com/how-to-use-my-images",
+  "creator": {
+    "@type": "Person",
+    "name": "Brixton Brownstone"
+  },
+  "copyrightNotice": "Clara Kent"
+}
