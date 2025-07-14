@@ -144,8 +144,12 @@ export default class BaseValidator {
       const date = new Date(data);
       return !isNaN(date.getTime());
     } else if (type === 'url') {
+      // Absolute or relative URL, but no data: URLs
+      if (data.startsWith('data:')) {
+        return false;
+      }
       try {
-        new URL(data);
+        new URL(data, 'https://example.com');
       } catch (e) {
         return false;
       }

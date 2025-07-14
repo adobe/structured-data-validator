@@ -1,0 +1,11 @@
+{
+  "@context": "https://schema.org/",
+  "@type": "ImageObject",
+  "url": "/photos/1x1/black-labrador-puppy.jpg",
+  "acquireLicensePage": "https://example.com/how-to-use-my-images",
+  "creator": {
+    "@type": "Person",
+    "name": "Brixton Brownstone"
+  },
+  "copyrightNotice": "Clara Kent"
+}
