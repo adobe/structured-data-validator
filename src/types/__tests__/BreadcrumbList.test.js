@@ -40,6 +40,20 @@ describe('BreadcrumbListValidator', () => {
       expect(issues).to.have.lengthOf(0);
     });
 
+    it('should validate a breadcrumb with a single item as object', async () => {
+      const data = await loadTestData('Breadcrumb/valid-single.json', 'jsonld');
+      const issues = await validator.validate(data);
+      const errors = issues.filter((issue) => issue.severity === 'ERROR');
+      const warnings = issues.filter((issue) => issue.severity === 'WARNING');
+      expect(errors).to.have.lengthOf(0);
+      expect(warnings).to.have.lengthOf(1);
+      expect(warnings[0]).to.deep.include({
+        issueMessage: 'At least two ListItems are required',
+        severity: 'WARNING',
+        path: [{ type: 'BreadcrumbList', index: 0 }],
+      });
+    });
+
     it('should detect missing required attributes in invalid1.json', async () => {
       const data = await loadTestData('Breadcrumb/invalid1.json', 'jsonld');
       const issues = await validator.validate(data);
