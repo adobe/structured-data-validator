@@ -54,6 +54,32 @@ describe('BreadcrumbListValidator', () => {
       });
     });
 
+    it('should validate positions that use text', async () => {
+      const data = await loadTestData(
+        'Breadcrumb/valid-text-position.json',
+        'jsonld',
+      );
+      const issues = await validator.validate(data);
+      expect(issues).to.have.lengthOf(1);
+      expect(issues[0]).to.deep.include({
+        rootType: 'BreadcrumbList',
+        issueMessage: 'Field "item" with URL is missing',
+        severity: 'WARNING',
+        path: [
+          {
+            type: 'BreadcrumbList',
+            index: 0,
+          },
+          {
+            index: 1,
+            length: 2,
+            property: 'itemListElement',
+            type: 'ListItem',
+          },
+        ],
+      });
+    });
+
     it('should detect missing required attributes in invalid1.json', async () => {
       const data = await loadTestData('Breadcrumb/invalid1.json', 'jsonld');
       const issues = await validator.validate(data);
