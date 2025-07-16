@@ -17,6 +17,7 @@ export default class BreadcrumbListValidator extends BaseValidator {
     return [
       this.required('itemListElement', 'arrayOrObject'),
       this.atLeastTwoItems,
+      this.validateItemUrl,
     ].map((c) => c.bind(this));
   }
 
@@ -34,5 +35,112 @@ export default class BreadcrumbListValidator extends BaseValidator {
       };
     }
     return null;
+  }
+
+  validateItemUrl(data) {
+    if (!data['itemListElement']) {
+      return null;
+    }
+
+    // Get all items and sort by position
+    const items = [];
+    if (Array.isArray(data['itemListElement'])) {
+      items.push(...data['itemListElement']);
+    } else if (isObject(data['itemListElement'])) {
+      items.push(data['itemListElement']);
+    }
+
+    // Check if all positions are numbers
+    const allPositionsAreNumbers = items.every((item) =>
+      this.checkType(item.position, 'number'),
+    );
+
+    // Find last item by position
+    let lastItem = null;
+    if (allPositionsAreNumbers) {
+      lastItem = items.reduce((acc, item) => {
+        if (Number(item.position) > Number(acc.position)) {
+          return item;
+        }
+        return acc;
+      }, items[0]);
+    }
+
+    const issues = [];
+
+    for (const [index, listItem] of items.entries()) {
+      const newPath = [
+        ...this.path,
+        {
+          type: listItem['@type'] ? listItem['@type'] : 'ListItem',
+          index,
+          length: items.length,
+          property: 'itemListElement',
+        },
+      ];
+
+      // if not all positions are numbers, last item is impossible to determine, so no item is considered last
+      const isLast = allPositionsAreNumbers ? listItem === lastItem : false;
+
+      let urlToCheck;
+      let urlPath;
+
+      if (this.checkType(listItem.item, 'object')) {
+        urlToCheck = listItem.item['@id'];
+        urlPath = 'item.@id';
+      } else if (listItem.item) {
+        urlToCheck = listItem.item;
+        urlPath = 'item';
+      }
+
+      // Last element does not need a URL, but if it has one, it should be valid
+      if (isLast && !urlToCheck) {
+        continue;
+      }
+
+      try {
+        if (!urlToCheck) {
+          throw 'Field "item" with URL is missing';
+        }
+
+        // Handle absolute URLs
+        if (
+          urlToCheck.startsWith('http://') ||
+          urlToCheck.startsWith('https://') ||
+          this.dataFormat === 'jsonld'
+        ) {
+          try {
+            new URL(urlToCheck);
+          } catch (e) {
+            throw `Invalid URL in field "${urlPath}"`;
+          }
+          continue;
+        }
+
+        // Handle relative URLs
+        // Special case for microdata: / is allowed
+        if (urlToCheck === '/' && this.dataFormat === 'microdata') {
+          continue;
+        }
+
+        if (this.dataFormat === 'rdfa' || this.dataFormat === 'microdata') {
+          // Remove any query parameters and hash fragments for validation
+          const urlWithoutParams = urlToCheck.split('?')[0].split('#')[0];
+
+          // Check if valid relative path
+          if (!urlWithoutParams.match(/^\/[a-z0-9\-/]+$/)) {
+            throw `Invalid URL in field "${urlPath}"`;
+          }
+        }
+      } catch (e) {
+        issues.push({
+          issueMessage: e,
+          severity: 'WARNING',
+          path: newPath,
+        });
+      }
+    }
+
+    return issues;
   }
 }
