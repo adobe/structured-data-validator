@@ -1,3 +1,10 @@
+## [1.2.3](https://github.com/adobe/structured-data-validator/compare/v1.2.2...v1.2.3) (2025-07-16)
+
+
+### Bug Fixes
+
+* Adjust breadcrumb position logic ([#29](https://github.com/adobe/structured-data-validator/issues/29)) ([052b443](https://github.com/adobe/structured-data-validator/commit/052b44343a2ed16546412e5d88823d0b7881de67))
+
 ## [1.2.2](https://github.com/adobe/structured-data-validator/compare/v1.2.1...v1.2.2) (2025-07-14)
 
 
