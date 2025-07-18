@@ -57,7 +57,7 @@ const { default: WebAutoExtractor } = await import(
   'https://unpkg.com/@marbec/web-auto-extractor@latest/dist/index.js'
 );
 const { default: Validator } = await import(
-  'https://cdn.jsdelivr.net/gh/adobe/structured-data-validator@browser-support/src/index.js'
+  'https://unpkg.com/@adobe/structured-data-validator@latest/src/index.js'
 );
 
 const extractedData = new WebAutoExtractor({
