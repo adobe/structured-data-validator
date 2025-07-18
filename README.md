@@ -49,14 +49,23 @@ The validator expects the output format from `@marbec/web-auto-extractor`, which
 - RDFa
 
 ### Browser
+
 You can run the parser and validator directly in the browser on any website using the following commands:
 
 ```js
-const { default: WebAutoExtractor } = await import('https://unpkg.com/@marbec/web-auto-extractor@latest/dist/index.js');
-const { default: Validator } = await import('https://unpkg.com/@adobe/structured-data-validator@latest/src/index.js');
+const { default: WebAutoExtractor } = await import(
+  'https://unpkg.com/@marbec/web-auto-extractor@latest/dist/index.js'
+);
+const { default: Validator } = await import(
+  'https://unpkg.com/@adobe/structured-data-validator@latest/src/index.js'
+);
 
-const extractedData = new WebAutoExtractor().parse(document.documentElement.outerHTML);
-const schemaOrgJson = await (await fetch('https://schema.org/version/latest/schemaorg-all-https.jsonld')).json();
+const extractedData = new WebAutoExtractor().parse(
+  document.documentElement.outerHTML,
+);
+const schemaOrgJson = await (
+  await fetch('https://schema.org/version/latest/schemaorg-all-https.jsonld')
+).json();
 await new Validator(schemaOrgJson).validate(extractedData);
 ```
 
