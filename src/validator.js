@@ -10,9 +10,13 @@
  * governing permissions and limitations under the License.
  */
 export class Validator {
-  constructor(schemaOrgPath) {
-    this.schemaOrgPath = schemaOrgPath;
-    this.globalHandlers = [() => import('./types/schemaOrg.js')];
+  constructor(schemaOrgJson) {
+    this.schemaOrgJson = schemaOrgJson;
+    if (this.schemaOrgJson) {
+      // Only add schema.org validation handler if schema is provided
+      this.globalHandlers = [() => import('./types/schemaOrg.js')];
+    }
+
     this.debug = false;
 
     this.registeredHandlers = {
@@ -107,7 +111,7 @@ export class Validator {
               path,
               // If an object has multiple types, we need to pass the current type for any global handlers
               type,
-              schemaOrgPath: this.schemaOrgPath,
+              schemaOrgJson: this.schemaOrgJson,
             });
             return handlerInstance.validate(data);
           });

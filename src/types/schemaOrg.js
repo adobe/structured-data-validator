@@ -9,17 +9,15 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-import { readFileSync } from 'fs';
-
 export default class SchemaOrgValidator {
   // Cache schema globally to improve performance
   static schemaCache = null;
 
-  constructor({ dataFormat, path, type, schemaOrgPath }) {
+  constructor({ dataFormat, path, type, schemaOrgJson }) {
     this.dataFormat = dataFormat;
     this.path = path;
     this.type = type;
-    this.schemaOrgPath = schemaOrgPath;
+    this.schemaOrgJson = schemaOrgJson;
   }
 
   #stripSchema(name) {
@@ -44,14 +42,10 @@ export default class SchemaOrgValidator {
     }
 
     SchemaOrgValidator.schemaCache = new Promise((resolve) => {
-      // TODO: To optimize performance, we could reduce schema to only types and properties required for Google Rich Results
-      let rawSchema = readFileSync(this.schemaOrgPath, 'utf8');
-      rawSchema = JSON.parse(rawSchema);
-
       const schema = {};
 
       // Get all types
-      const entites = rawSchema['@graph'];
+      const entites = this.schemaOrgJson['@graph'];
       entites
         .filter((entity) => entity['@type'] === 'rdfs:Class')
         .forEach((type) => {
@@ -98,9 +92,6 @@ export default class SchemaOrgValidator {
       // Add inherited properties
       const processOrder = this.#getTopologicalOrder(schema);
       this.#addInheritedProperties(schema, processOrder);
-
-      // DEBUG: Write computed schema to a file
-      // await writeFile(join(process.cwd(), 'gallery/schemaorg-current-types.json'), JSON.stringify(schema, null, 2));
 
       resolve(schema);
     });

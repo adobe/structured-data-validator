@@ -31,8 +31,11 @@ import WebAutoExtractor from '@marbec/web-auto-extractor';
 const extractor = new WebAutoExtractor({ addLocation: true, embedSource: ['rdfa', 'microdata'] });
 const extractedData = extractor.parse(sampleHTML);
 
+// Fetch the current schema.org schema
+const schemaOrgJson = await (await fetch('https://schema.org/version/latest/schemaorg-all-https.jsonld')).json();
+
 // Create a validator instance
-const validator = new Validator();
+const validator = new Validator(schemaOrgJson);
 
 // Validate the extracted structured data
 const results = await validator.validate(extractedData);
@@ -44,6 +47,29 @@ The validator expects the output format from `@marbec/web-auto-extractor`, which
 - JSON-LD structured data
 - Microdata
 - RDFa
+
+### Browser
+
+You can run the parser and validator directly in the browser on any website using the following commands:
+
+```js
+const { default: WebAutoExtractor } = await import(
+  'https://unpkg.com/@marbec/web-auto-extractor@latest/dist/index.js'
+);
+const { default: Validator } = await import(
+  'https://unpkg.com/@adobe/structured-data-validator@latest/src/index.js'
+);
+
+const extractedData = new WebAutoExtractor({
+  addLocation: true,
+  embedSource: ['rdfa', 'microdata'],
+}).parse(document.documentElement.outerHTML);
+console.log(extractedData);
+const schemaOrgJson = await (
+  await fetch('https://schema.org/version/latest/schemaorg-all-https.jsonld')
+).json();
+await new Validator(schemaOrgJson).validate(extractedData);
+```
 
 ## Development
 
@@ -72,7 +98,7 @@ The validator expects the output format from `@marbec/web-auto-extractor`, which
 To enable debug logging and see detailed validation output, set the `debug` property to `true` on your `Validator` instance:
 
 ```js
-const validator = new Validator(schemaOrgPath);
+const validator = new Validator();
 validator.debug = true; // Enable debug logging
 ```
 
