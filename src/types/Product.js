@@ -68,8 +68,14 @@ export default class ProductValidator extends BaseValidator {
 
     // If only offers is present, then aggregateRating and review are recommended
     if (data.offers && (!data.aggregateRating || !data.review)) {
-      issues.push(this.recommended('aggregateRating', 'object')(data));
-      issues.push(this.recommended('review', 'object')(data));
+      const aggregateRating = this.recommended('aggregateRating', 'object')(data);
+      if (aggregateRating) {
+        issues.push(aggregateRating);
+      }
+      const review = this.recommended('review', 'object')(data);
+      if (review) {
+        issues.push(review);
+      }
     }
 
     return issues;
