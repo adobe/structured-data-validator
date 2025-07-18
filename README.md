@@ -57,12 +57,14 @@ const { default: WebAutoExtractor } = await import(
   'https://unpkg.com/@marbec/web-auto-extractor@latest/dist/index.js'
 );
 const { default: Validator } = await import(
-  'https://unpkg.com/@adobe/structured-data-validator@latest/src/index.js'
+  'https://cdn.jsdelivr.net/gh/adobe/structured-data-validator@browser-support/src/index.js'
 );
 
-const extractedData = new WebAutoExtractor().parse(
-  document.documentElement.outerHTML,
-);
+const extractedData = new WebAutoExtractor({
+  addLocation: true,
+  embedSource: ['rdfa', 'microdata'],
+}).parse(document.documentElement.outerHTML);
+console.log(extractedData);
 const schemaOrgJson = await (
   await fetch('https://schema.org/version/latest/schemaorg-all-https.jsonld')
 ).json();
