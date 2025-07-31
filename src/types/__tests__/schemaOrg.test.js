@@ -11,6 +11,7 @@
  */
 import { expect } from 'chai';
 import { join } from 'path';
+import { readFileSync } from 'fs';
 
 import { loadTestData, MockValidator } from './utils.js';
 import { Validator } from '../../validator.js';
@@ -25,8 +26,10 @@ describe('Schema.org Validator', () => {
     'schemaorg-current-https.jsonld',
   );
 
+  const schemaOrgJson = JSON.parse(readFileSync(schemaOrgPath, 'utf8'));
+
   before(() => {
-    validator = new Validator(schemaOrgPath);
+    validator = new Validator(schemaOrgJson);
     validator.globalHandlers = [() => import('../schemaOrg.js')];
     validator.registeredHandlers = {
       BreadcrumbList: [MockValidator],
