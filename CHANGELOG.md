@@ -1,3 +1,10 @@
+## [1.2.4](https://github.com/adobe/structured-data-validator/compare/v1.2.3...v1.2.4) (2025-07-31)
+
+
+### Bug Fixes
+
+* Allow execution in the browser ([#31](https://github.com/adobe/structured-data-validator/issues/31)) ([159d9fb](https://github.com/adobe/structured-data-validator/commit/159d9fb1e71fc9b08d0821026bac98131fdf4f41))
+
 ## [1.2.3](https://github.com/adobe/structured-data-validator/compare/v1.2.2...v1.2.3) (2025-07-16)
 
 
