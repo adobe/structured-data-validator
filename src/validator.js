@@ -28,6 +28,7 @@ export class Validator {
       Certification: [() => import('./types/Certification.js')],
       DefinedRegion: [() => import('./types/DefinedRegion.js')],
       ImageObject: [() => import('./types/ImageObject.js')],
+      VideoObject: [() => import('./types/VideoObject.js')],
       ListItem: [() => import('./types/ListItem.js')],
       MerchantReturnPolicy: [() => import('./types/MerchantReturnPolicy.js')],
       Offer: [() => import('./types/Offer.js')],

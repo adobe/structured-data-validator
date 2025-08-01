@@ -97,6 +97,9 @@ describe('Schema.org Validator', () => {
       'VideoObject/valid2.json',
       'VideoObject/valid3.json',
       'VideoObject/valid4.json',
+      'VideoObject/missing-required.json',
+      'VideoObject/missing-content-embed.json',
+      'VideoObject/with-contentUrl.json',
     ];
 
     files.forEach((file) => {
