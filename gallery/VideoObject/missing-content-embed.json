@@ -1,0 +1,7 @@
+{
+  "@context": "https://schema.org",
+  "@type": "VideoObject",
+  "name": "Sample Video Title",
+  "thumbnailUrl": "https://example.com/thumbnail.jpg",
+  "uploadDate": "2023-01-01"
+}
