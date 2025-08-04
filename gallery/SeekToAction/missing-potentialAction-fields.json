@@ -7,4 +7,5 @@
       "urlTemplate": "https://example.com/video?t={seek_to_second_number}"
     }
   }
-} 
+}
+ 
