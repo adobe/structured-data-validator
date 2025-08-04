@@ -1,0 +1,10 @@
+{
+  "@context": "https://schema.org",
+  "@type": "SeekToAction",
+  "potentialAction": {
+    "target": {
+      "@type": "EntryPoint",
+      "urlTemplate": "https://example.com/video?t={seek_to_second_number}"
+    }
+  }
+} 
