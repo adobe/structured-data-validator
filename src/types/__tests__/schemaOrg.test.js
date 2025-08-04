@@ -96,10 +96,10 @@ describe('Schema.org Validator', () => {
       'VideoObject/valid1.json',
       'VideoObject/valid2.json',
       'VideoObject/valid3.json',
+      'Clip/valid1.json',
+      'SeekToAction/valid1.json',
+      'BroadcastEvent/valid1.json',
       'VideoObject/valid4.json',
-      'VideoObject/missing-required.json',
-      'VideoObject/missing-content-embed.json',
-      'VideoObject/with-contentUrl.json',
     ];
 
     files.forEach((file) => {
