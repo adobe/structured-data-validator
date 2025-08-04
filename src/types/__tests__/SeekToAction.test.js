@@ -27,18 +27,31 @@ describe('SeekToAction as nested in VideoObject', () => {
   });
 
   it('should report error for missing required SeekToAction fields', async () => {
-    const data = await loadTestData('SeekToAction/missing-seektoaction-fields.json', 'jsonld');
+    const data = await loadTestData(
+      'SeekToAction/missing-seektoaction-fields.json',
+      'jsonld',
+    );
     const issues = await validator.validate(data);
     const errors = issues.filter((issue) => issue.severity === 'ERROR');
     expect(errors.length).to.be.greaterThan(0);
-    expect(errors.some(e => e.issueMessage.includes('startOffset-input') || e.issueMessage.includes('target'))).to.be.true;
+    expect(
+      errors.some(
+        (e) =>
+          e.issueMessage.includes('startOffset-input') ||
+          e.issueMessage.includes('target'),
+      ),
+    ).to.be.true;
   });
 
   it('should report error for missing SeekToAction object', async () => {
-    const data = await loadTestData('SeekToAction/missing-seektoaction.json', 'jsonld');
+    const data = await loadTestData(
+      'SeekToAction/missing-seektoaction.json',
+      'jsonld',
+    );
     const issues = await validator.validate(data);
     const errors = issues.filter((issue) => issue.severity === 'ERROR');
     expect(errors.length).to.be.greaterThan(0);
-    expect(errors.some(e => e.issueMessage.includes('potentialAction'))).to.be.true;
+    expect(errors.some((e) => e.issueMessage.includes('potentialAction'))).to.be
+      .true;
   });
-}); 
+});

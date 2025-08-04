@@ -37,13 +37,15 @@ describe('ClipValidator', () => {
     const data = await loadTestData('Clip/missing-endOffset.json', 'jsonld');
     const issues = await validator.validate(data);
     const warnings = issues.filter((issue) => issue.severity === 'WARNING');
-    expect(warnings.some(w => w.issueMessage.includes('endOffset'))).to.be.true;
+    expect(warnings.some((w) => w.issueMessage.includes('endOffset'))).to.be
+      .true;
   });
 
   it('should not warn if endOffset is present', async () => {
     const data = await loadTestData('Clip/with-endOffset.json', 'jsonld');
     const issues = await validator.validate(data);
     const warnings = issues.filter((issue) => issue.severity === 'WARNING');
-    expect(warnings.some(w => w.issueMessage.includes('endOffset'))).to.be.false;
+    expect(warnings.some((w) => w.issueMessage.includes('endOffset'))).to.be
+      .false;
   });
-}); 
+});

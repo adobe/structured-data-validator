@@ -20,4 +20,4 @@ export default class SeekToActionValidator extends BaseValidator {
     ];
     return conditions.map((c) => c.bind(this));
   }
-} 
+}

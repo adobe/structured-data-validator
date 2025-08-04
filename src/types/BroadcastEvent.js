@@ -22,4 +22,4 @@ export default class BroadcastEventValidator extends BaseValidator {
     ];
     return conditions.map((c) => c.bind(this));
   }
-} 
+}

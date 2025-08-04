@@ -1,4 +1,4 @@
- /**
+/**
  * Copyright 2025 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
@@ -27,26 +27,37 @@ describe('BroadcastEventValidator', () => {
   });
 
   it('should report error for missing required publication fields', async () => {
-    const data = await loadTestData('BroadcastEvent/missing-publication-fields.json', 'jsonld');
+    const data = await loadTestData(
+      'BroadcastEvent/missing-publication-fields.json',
+      'jsonld',
+    );
     const issues = await validator.validate(data);
     const errors = issues.filter((issue) => issue.severity === 'ERROR');
     expect(errors.length).to.be.greaterThan(0);
-    expect(errors.some(e => e.issueMessage.includes('publication'))).to.be.true;
+    expect(errors.some((e) => e.issueMessage.includes('publication'))).to.be
+      .true;
   });
 
   it('should report error for missing publication object', async () => {
-    const data = await loadTestData('BroadcastEvent/missing-publication.json', 'jsonld');
+    const data = await loadTestData(
+      'BroadcastEvent/missing-publication.json',
+      'jsonld',
+    );
     const issues = await validator.validate(data);
     const errors = issues.filter((issue) => issue.severity === 'ERROR');
     expect(errors.length).to.be.greaterThan(0);
-    expect(errors.some(e => e.issueMessage.includes('publication'))).to.be.true;
+    expect(errors.some((e) => e.issueMessage.includes('publication'))).to.be
+      .true;
   });
 
   it('should report error for missing startDate at root', async () => {
-    const data = await loadTestData('BroadcastEvent/missing-root-startDate.json', 'jsonld');
+    const data = await loadTestData(
+      'BroadcastEvent/missing-root-startDate.json',
+      'jsonld',
+    );
     const issues = await validator.validate(data);
     const errors = issues.filter((issue) => issue.severity === 'ERROR');
     expect(errors.length).to.be.greaterThan(0);
-    expect(errors.some(e => e.issueMessage.includes('startDate'))).to.be.true;
+    expect(errors.some((e) => e.issueMessage.includes('startDate'))).to.be.true;
   });
-}); 
+});

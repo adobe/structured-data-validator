@@ -24,4 +24,4 @@ export default class ClipValidator extends BaseValidator {
     ];
     return conditions.map((c) => c.bind(this));
   }
-} 
+}
