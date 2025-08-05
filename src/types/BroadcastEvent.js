@@ -15,10 +15,8 @@ export default class BroadcastEventValidator extends BaseValidator {
   getConditions() {
     const conditions = [
       this.required('startDate', 'date'),
-      this.required('publication', 'object'),
-      this.required('publication.endDate', 'date'),
-      this.required('publication.isLiveBroadcast', 'boolean'),
-      this.required('publication.startDate', 'date'),
+      this.required('endDate', 'date'),
+      this.required('isLiveBroadcast', 'boolean'),
     ];
     return conditions.map((c) => c.bind(this));
   }

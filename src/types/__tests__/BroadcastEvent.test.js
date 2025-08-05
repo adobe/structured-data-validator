@@ -26,35 +26,24 @@ describe('BroadcastEventValidator', () => {
     expect(issues).to.have.lengthOf(0);
   });
 
-  it('should report error for missing required publication fields', async () => {
-    const data = await loadTestData(
-      'BroadcastEvent/missing-publication-fields.json',
-      'jsonld',
-    );
+  it('should report error for missing isLiveBroadcast', async () => {
+    const data = await loadTestData('BroadcastEvent/missing-isLiveBroadcast.json', 'jsonld');
     const issues = await validator.validate(data);
     const errors = issues.filter((issue) => issue.severity === 'ERROR');
     expect(errors.length).to.be.greaterThan(0);
-    expect(errors.some((e) => e.issueMessage.includes('publication'))).to.be
-      .true;
+    expect(errors.some((e) => e.issueMessage.includes('isLiveBroadcast'))).to.be.true;
   });
 
-  it('should report error for missing publication object', async () => {
-    const data = await loadTestData(
-      'BroadcastEvent/missing-publication.json',
-      'jsonld',
-    );
+  it('should report error for missing endDate', async () => {
+    const data = await loadTestData('BroadcastEvent/missing-endDate.json', 'jsonld');
     const issues = await validator.validate(data);
     const errors = issues.filter((issue) => issue.severity === 'ERROR');
     expect(errors.length).to.be.greaterThan(0);
-    expect(errors.some((e) => e.issueMessage.includes('publication'))).to.be
-      .true;
+    expect(errors.some((e) => e.issueMessage.includes('endDate'))).to.be.true;
   });
 
-  it('should report error for missing startDate at root', async () => {
-    const data = await loadTestData(
-      'BroadcastEvent/missing-root-startDate.json',
-      'jsonld',
-    );
+  it('should report error for missing startDate', async () => {
+    const data = await loadTestData('BroadcastEvent/missing-startDate.json', 'jsonld');
     const issues = await validator.validate(data);
     const errors = issues.filter((issue) => issue.severity === 'ERROR');
     expect(errors.length).to.be.greaterThan(0);

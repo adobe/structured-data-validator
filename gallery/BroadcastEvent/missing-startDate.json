@@ -2,6 +2,5 @@
   "@context": "https://schema.org",
   "@type": "BroadcastEvent",
   "isLiveBroadcast": true,
-  "startDate": "2024-10-27T14:00:00+00:00",
   "endDate": "2024-10-27T14:37:14+00:00"
 }
