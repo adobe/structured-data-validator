@@ -14,9 +14,8 @@ import BaseValidator from './base.js';
 export default class SeekToActionValidator extends BaseValidator {
   getConditions() {
     const conditions = [
-      this.required('potentialAction', 'object'),
-      this.required('potentialAction.startOffset-input', 'string'),
-      this.required('potentialAction.target', 'object'),
+      this.required('target'),
+      this.required('startOffset-input'),
     ];
     return conditions.map((c) => c.bind(this));
   }

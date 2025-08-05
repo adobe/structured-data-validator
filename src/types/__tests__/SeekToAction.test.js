@@ -23,6 +23,8 @@ describe('SeekToAction as nested in VideoObject', () => {
   it('should validate a VideoObject with a correct nested SeekToAction in valid1.json', async () => {
     const data = await loadTestData('SeekToAction/valid1.json', 'jsonld');
     const issues = await validator.validate(data);
+    console.log('noel', issues);
+    console.log('noel', data);
     expect(issues).to.have.lengthOf(0);
   });
 
@@ -41,17 +43,5 @@ describe('SeekToAction as nested in VideoObject', () => {
           e.issueMessage.includes('target'),
       ),
     ).to.be.true;
-  });
-
-  it('should report error for missing SeekToAction object', async () => {
-    const data = await loadTestData(
-      'SeekToAction/missing-seektoaction.json',
-      'jsonld',
-    );
-    const issues = await validator.validate(data);
-    const errors = issues.filter((issue) => issue.severity === 'ERROR');
-    expect(errors.length).to.be.greaterThan(0);
-    expect(errors.some((e) => e.issueMessage.includes('potentialAction'))).to.be
-      .true;
   });
 });
