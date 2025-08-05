@@ -1,6 +1,6 @@
 {
-  "@context": "https://schema.org",
   "@type": "BroadcastEvent",
+  "name": "First scheduled broadcast",
   "isLiveBroadcast": true,
-  "endDate": "2024-10-27T14:37:14+00:00"
+  "endDate": "2018-10-27T14:37:14+00:00"
 }
