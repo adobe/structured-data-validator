@@ -20,28 +20,32 @@ describe('SeekToAction as nested in VideoObject', () => {
     validator.globalHandlers = [];
   });
 
-  it('should validate a VideoObject with a correct nested SeekToAction in valid1.json', async () => {
+  it('should a SeekToAction entity in valid1.json', async () => {
     const data = await loadTestData('SeekToAction/valid1.json', 'jsonld');
     const issues = await validator.validate(data);
-    console.log('noel', issues);
-    console.log('noel', data);
     expect(issues).to.have.lengthOf(0);
   });
 
-  it('should report error for missing required SeekToAction fields', async () => {
+  it('should report error for missing target', async () => {
     const data = await loadTestData(
-      'SeekToAction/missing-seektoaction-fields.json',
+      'SeekToAction/missing-target.json',
       'jsonld',
     );
     const issues = await validator.validate(data);
     const errors = issues.filter((issue) => issue.severity === 'ERROR');
     expect(errors.length).to.be.greaterThan(0);
-    expect(
-      errors.some(
-        (e) =>
-          e.issueMessage.includes('startOffset-input') ||
-          e.issueMessage.includes('target'),
-      ),
-    ).to.be.true;
+    expect(errors.some((e) => e.issueMessage.includes('target'))).to.be.true;
+  });
+
+  it('should report error for missing startOffset-input', async () => {
+    const data = await loadTestData(
+      'SeekToAction/missing-startOffset.json',
+      'jsonld',
+    );
+    const issues = await validator.validate(data);
+    const errors = issues.filter((issue) => issue.severity === 'ERROR');
+    expect(errors.length).to.be.greaterThan(0);
+    expect(errors.some((e) => e.issueMessage.includes('startOffset-input'))).to
+      .be.true;
   });
 });

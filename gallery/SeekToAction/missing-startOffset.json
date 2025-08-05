@@ -1,0 +1,4 @@
+{
+  "@type": "SeekToAction",
+  "target": "https://video.example.com/watch/videoID?t={seek_to_second_number}"
+}
