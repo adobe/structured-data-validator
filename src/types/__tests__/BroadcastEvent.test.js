@@ -27,15 +27,22 @@ describe('BroadcastEventValidator', () => {
   });
 
   it('should report error for missing isLiveBroadcast', async () => {
-    const data = await loadTestData('BroadcastEvent/missing-isLiveBroadcast.json', 'jsonld');
+    const data = await loadTestData(
+      'BroadcastEvent/missing-isLiveBroadcast.json',
+      'jsonld',
+    );
     const issues = await validator.validate(data);
     const errors = issues.filter((issue) => issue.severity === 'ERROR');
     expect(errors.length).to.be.greaterThan(0);
-    expect(errors.some((e) => e.issueMessage.includes('isLiveBroadcast'))).to.be.true;
+    expect(errors.some((e) => e.issueMessage.includes('isLiveBroadcast'))).to.be
+      .true;
   });
 
   it('should report error for missing endDate', async () => {
-    const data = await loadTestData('BroadcastEvent/missing-endDate.json', 'jsonld');
+    const data = await loadTestData(
+      'BroadcastEvent/missing-endDate.json',
+      'jsonld',
+    );
     const issues = await validator.validate(data);
     const errors = issues.filter((issue) => issue.severity === 'ERROR');
     expect(errors.length).to.be.greaterThan(0);
@@ -43,7 +50,10 @@ describe('BroadcastEventValidator', () => {
   });
 
   it('should report error for missing startDate', async () => {
-    const data = await loadTestData('BroadcastEvent/missing-startDate.json', 'jsonld');
+    const data = await loadTestData(
+      'BroadcastEvent/missing-startDate.json',
+      'jsonld',
+    );
     const issues = await validator.validate(data);
     const errors = issues.filter((issue) => issue.severity === 'ERROR');
     expect(errors.length).to.be.greaterThan(0);
