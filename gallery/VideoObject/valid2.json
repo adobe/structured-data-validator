@@ -1,7 +1,7 @@
 {
   "@context": "https://schema.org",
   "@type": "VideoObject",
-  "contentURL": "https://example.com/bald-eagle-at-the-park.mp4",
+  "contentUrl": "https://example.com/bald-eagle-at-the-park.mp4",
   "description": "Bald eagle at the park livestream.",
   "duration": "PT37M14S",
   "embedUrl": "https://example.com/bald-eagle-at-the-park",
@@ -29,6 +29,15 @@
       "isLiveBroadcast": true,
       "startDate": "2024-10-27T18:00:00+00:00",
       "endDate": "2024-10-27T18:37:14+00:00"
+    }
+  ],
+  "hasPart": [
+    {
+      "@type": "Clip",
+      "name": "Cat jumps",
+      "startOffset": 30,
+      "endOffset": 45,
+      "url": "https://www.example.com/example?t=30"
     }
   ]
 }

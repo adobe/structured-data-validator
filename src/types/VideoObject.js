@@ -15,7 +15,7 @@ export default class VideoObjectValidator extends BaseValidator {
   getConditions() {
     const conditions = [
       this.required('name', 'string'),
-      this.required('thumbnailUrl', 'string'),
+      this.required('thumbnailUrl'),
       this.required('uploadDate', 'date'),
 
       this.recommended('description', 'string'),

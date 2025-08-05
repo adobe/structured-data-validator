@@ -20,10 +20,22 @@ describe('VideoObjectValidator', () => {
     validator.globalHandlers = [];
   });
 
-  it('should validate a correct VideoObject structure in valid1.json', async () => {
+  it('should show warnings for recommended fields in valid1.json', async () => {
+    const warnings = [
+      {
+        issueMessage: 'Missing field "hasPart" (optional)',
+        severity: 'WARNING',
+      },
+      {
+        issueMessage: 'Missing field "publication" (optional)',
+        severity: 'WARNING',
+      },
+    ];
     const data = await loadTestData('VideoObject/valid1.json', 'jsonld');
     const issues = await validator.validate(data);
-    expect(issues).to.have.lengthOf(0);
+    expect(issues).to.have.lengthOf(2);
+    expect(issues[0]).to.deep.include(warnings[0]);
+    expect(issues[1]).to.deep.include(warnings[1]);
   });
 
   it('should report error for missing required fields', async () => {
@@ -67,5 +79,11 @@ describe('VideoObjectValidator', () => {
           w.issueMessage.includes('embedUrl'),
       ),
     ).to.be.false;
+  });
+
+  it('should validate a correct VideoObject structure in valid2.json with no warnings or errors', async () => {
+    const data = await loadTestData('VideoObject/valid2.json', 'jsonld');
+    const issues = await validator.validate(data);
+    expect(issues).to.have.lengthOf(0);
   });
 });
