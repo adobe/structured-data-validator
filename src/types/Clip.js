@@ -15,8 +15,6 @@ export default class ClipValidator extends BaseValidator {
   getConditions() {
     const conditions = [
       this.required('name', 'string'),
-      this.required('thumbnailUrl', 'url'),
-      this.required('uploadDate', 'date'),
       this.required('startOffset', 'number'),
       this.required('url', 'url'),
 

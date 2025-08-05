@@ -2,8 +2,6 @@
   "@context": "https://schema.org",
   "@type": "Clip",
   "name": "Sample Clip",
-  "thumbnailUrl": "https://example.com/clip-thumbnail.jpg",
-  "uploadDate": "2024-06-01",
   "startOffset": 10,
   "url": "https://example.com/clip.mp4",
   "endOffset": 120
