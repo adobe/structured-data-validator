@@ -45,7 +45,8 @@ describe('VideoObjectValidator', () => {
     );
     const issues = await validator.validate(data);
     const errors = issues.filter((issue) => issue.severity === 'ERROR');
-    const expectedErrors = [{
+    const expectedErrors = [
+      {
         issueMessage: 'Required attribute "name" is missing',
         severity: 'ERROR',
       },
@@ -101,7 +102,8 @@ describe('VideoObjectValidator', () => {
   it('should validate a correct VideoObject structure in valid3.json', async () => {
     const data = await loadTestData('VideoObject/valid3.json', 'jsonld');
     const issues = await validator.validate(data);
-    const expectedIssues = [{
+    const expectedIssues = [
+      {
         issueMessage: 'Missing field "expires" (optional)',
         severity: 'WARNING',
       },
@@ -124,7 +126,8 @@ describe('VideoObjectValidator', () => {
   it('should validate a correct VideoObject structure in valid4.json', async () => {
     const data = await loadTestData('VideoObject/valid4.json', 'jsonld');
     const issues = await validator.validate(data);
-    const expectedIssues = [{
+    const expectedIssues = [
+      {
         issueMessage: 'Missing field "duration" (optional)',
         severity: 'WARNING',
       },
