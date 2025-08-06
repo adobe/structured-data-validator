@@ -30,8 +30,7 @@ describe('ClipValidator', () => {
     const data = await loadTestData('Clip/missing-required.json', 'jsonld');
     const issues = await validator.validate(data);
     const errors = issues.filter((issue) => issue.severity === 'ERROR');
-    const expectedErrors = [
-      {
+    const expectedErrors = [{
         issueMessage: 'Required attribute "name" is missing',
         severity: 'ERROR',
       },
@@ -42,7 +41,7 @@ describe('ClipValidator', () => {
       {
         issueMessage: 'Required attribute "url" is missing',
         severity: 'ERROR',
-      }
+      },
     ];
     expect(errors).to.have.lengthOf(3);
     expect(errors[0]).to.deep.include(expectedErrors[0]);
