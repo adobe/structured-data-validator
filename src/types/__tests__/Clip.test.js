@@ -30,7 +30,24 @@ describe('ClipValidator', () => {
     const data = await loadTestData('Clip/missing-required.json', 'jsonld');
     const issues = await validator.validate(data);
     const errors = issues.filter((issue) => issue.severity === 'ERROR');
-    expect(errors.length).to.be.greaterThan(0);
+    const expectedErrors = [
+      {
+        issueMessage: 'Required attribute "name" is missing',
+        severity: 'ERROR',
+      },
+      {
+        issueMessage: 'Required attribute "startOffset" is missing',
+        severity: 'ERROR',
+      },
+      {
+        issueMessage: 'Required attribute "url" is missing',
+        severity: 'ERROR',
+      }
+    ];
+    expect(errors).to.have.lengthOf(3);
+    expect(errors[0]).to.deep.include(expectedErrors[0]);
+    expect(errors[1]).to.deep.include(expectedErrors[1]);
+    expect(errors[2]).to.deep.include(expectedErrors[2]);
   });
 
   it('should warn if recommended endOffset is missing', async () => {
