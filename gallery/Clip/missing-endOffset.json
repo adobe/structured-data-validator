@@ -1,0 +1,7 @@
+{
+  "@context": "https://schema.org",
+  "@type": "Clip",
+  "name": "Cat misses the fence",
+  "startOffset": 111,
+  "url": "https://www.example.com/example?t=111"
+}
