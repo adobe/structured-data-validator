@@ -61,7 +61,6 @@ describe('BroadcastEventValidator', () => {
     );
     const issues = await validator.validate(data);
     const errors = issues.filter((issue) => issue.severity === 'ERROR');
-    console.log('noel 1', errors);
     expect(errors).to.have.lengthOf(1);
     expect(errors[0]).to.deep.include({
       issueMessage: 'Required attribute "startDate" is missing',

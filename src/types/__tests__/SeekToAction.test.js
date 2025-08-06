@@ -33,8 +33,11 @@ describe('SeekToAction as nested in VideoObject', () => {
     );
     const issues = await validator.validate(data);
     const errors = issues.filter((issue) => issue.severity === 'ERROR');
-    expect(errors.length).to.be.greaterThan(0);
-    expect(errors.some((e) => e.issueMessage.includes('target'))).to.be.true;
+    expect(errors).to.have.lengthOf(1);
+    expect(errors[0]).to.deep.include({
+      issueMessage: 'Required attribute "target" is missing',
+      severity: 'ERROR',
+    });
   });
 
   it('should report error for missing startOffset-input', async () => {
@@ -44,8 +47,10 @@ describe('SeekToAction as nested in VideoObject', () => {
     );
     const issues = await validator.validate(data);
     const errors = issues.filter((issue) => issue.severity === 'ERROR');
-    expect(errors.length).to.be.greaterThan(0);
-    expect(errors.some((e) => e.issueMessage.includes('startOffset-input'))).to
-      .be.true;
+    expect(errors).to.have.lengthOf(1);
+    expect(errors[0]).to.deep.include({
+      issueMessage: 'Required attribute "startOffset-input" is missing',
+      severity: 'ERROR',
+    });
   });
 });
