@@ -67,14 +67,11 @@ describe('VideoObjectValidator', () => {
     );
     const issues = await validator.validate(data);
     const warnings = issues.filter((issue) => issue.severity === 'WARNING');
-    expect(warnings.length).to.be.greaterThan(0);
-    expect(
-      warnings.some(
-        (w) =>
-          w.issueMessage.includes('contentUrl') ||
-          w.issueMessage.includes('embedUrl'),
-      ),
-    ).to.be.true;
+    expect(warnings).to.have.lengthOf(1);
+    expect(warnings[0]).to.deep.include({
+      issueMessage: 'One of the following conditions needs to be met: Missing field "contentUrl" (optional) or Missing field "embedUrl" (optional)',
+      severity: 'WARNING',
+    });
   });
 
   it('should not warn if at least one of contentUrl or embedUrl is present', async () => {
@@ -84,13 +81,7 @@ describe('VideoObjectValidator', () => {
     );
     const issues = await validator.validate(data);
     const warnings = issues.filter((issue) => issue.severity === 'WARNING');
-    expect(
-      warnings.some(
-        (w) =>
-          w.issueMessage.includes('contentUrl') ||
-          w.issueMessage.includes('embedUrl'),
-      ),
-    ).to.be.false;
+    expect(warnings).to.have.lengthOf(0);
   });
 
   it('should validate a correct VideoObject structure in valid2.json with no warnings or errors', async () => {
