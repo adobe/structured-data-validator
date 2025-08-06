@@ -33,9 +33,11 @@ describe('BroadcastEventValidator', () => {
     );
     const issues = await validator.validate(data);
     const errors = issues.filter((issue) => issue.severity === 'ERROR');
-    expect(errors.length).to.be.greaterThan(0);
-    expect(errors.some((e) => e.issueMessage.includes('isLiveBroadcast'))).to.be
-      .true;
+    expect(errors).to.have.lengthOf(1);
+    expect(errors[0]).to.deep.include({
+      issueMessage: 'Required attribute "isLiveBroadcast" is missing',
+      severity: 'ERROR',
+    });
   });
 
   it('should report error for missing endDate', async () => {
@@ -45,8 +47,11 @@ describe('BroadcastEventValidator', () => {
     );
     const issues = await validator.validate(data);
     const errors = issues.filter((issue) => issue.severity === 'ERROR');
-    expect(errors.length).to.be.greaterThan(0);
-    expect(errors.some((e) => e.issueMessage.includes('endDate'))).to.be.true;
+    expect(errors).to.have.lengthOf(1);
+    expect(errors[0]).to.deep.include({
+      issueMessage: 'Required attribute "endDate" is missing',
+      severity: 'ERROR',
+    });
   });
 
   it('should report error for missing startDate', async () => {
@@ -56,7 +61,11 @@ describe('BroadcastEventValidator', () => {
     );
     const issues = await validator.validate(data);
     const errors = issues.filter((issue) => issue.severity === 'ERROR');
-    expect(errors.length).to.be.greaterThan(0);
-    expect(errors.some((e) => e.issueMessage.includes('startDate'))).to.be.true;
+    console.log('noel 1', errors);
+    expect(errors).to.have.lengthOf(1);
+    expect(errors[0]).to.deep.include({
+      issueMessage: 'Required attribute "startDate" is missing',
+      severity: 'ERROR',
+    });
   });
 });
