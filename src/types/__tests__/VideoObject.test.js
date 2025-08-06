@@ -69,7 +69,8 @@ describe('VideoObjectValidator', () => {
     const warnings = issues.filter((issue) => issue.severity === 'WARNING');
     expect(warnings).to.have.lengthOf(1);
     expect(warnings[0]).to.deep.include({
-      issueMessage: 'One of the following conditions needs to be met: Missing field "contentUrl" (optional) or Missing field "embedUrl" (optional)',
+      issueMessage:
+        'One of the following conditions needs to be met: Missing field "contentUrl" (optional) or Missing field "embedUrl" (optional)',
       severity: 'WARNING',
     });
   });
