@@ -1,3 +1,10 @@
+# [1.3.0](https://github.com/adobe/structured-data-validator/compare/v1.2.4...v1.3.0) (2025-08-06)
+
+
+### Features
+
+* Added VideoObject support  ([#34](https://github.com/adobe/structured-data-validator/issues/34)) ([36e863a](https://github.com/adobe/structured-data-validator/commit/36e863a34ffcc9aa80e4f6be4a5b70b8ed28f2e3))
+
 ## [1.2.4](https://github.com/adobe/structured-data-validator/compare/v1.2.3...v1.2.4) (2025-07-31)
 
 
