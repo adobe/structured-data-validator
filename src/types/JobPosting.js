@@ -22,7 +22,7 @@ export default class JobPostingValidator extends BaseValidator {
         'jobLocation',
         'applicantLocationRequirements',
       ),
-      
+
       this.recommended('applicantLocationRequirements'),
       this.recommended('baseSalary'),
       this.recommended('directApply', 'boolean'),
