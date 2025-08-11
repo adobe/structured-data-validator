@@ -21,8 +21,8 @@ export default class JobPostingValidator extends BaseValidator {
       this.conditionalRequirement(
         'jobLocation',
         'applicantLocationRequirements',
-      ), // if applicantLocationRequirements is present, jobLocation is not required
-
+      ),
+      
       this.recommended('applicantLocationRequirements'),
       this.recommended('baseSalary'),
       this.recommended('directApply', 'boolean'),
