@@ -49,7 +49,7 @@ export default class JobPostingValidator extends BaseValidator {
         }
       }
     }
-    
+
     if (data.jobLocation) {
       const addressCountryIssues = this.required(
         'jobLocation.address.addressCountry',
