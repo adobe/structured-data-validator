@@ -18,19 +18,47 @@ export default class JobPostingValidator extends BaseValidator {
       this.required('description', 'string'),
       this.required('datePosted', 'date'),
       this.required('hiringOrganization'),
-      this.conditionalRequirement(
-        'jobLocation',
-        'applicantLocationRequirements',
-      ),
-
+      this.checkJobLocations,
       this.recommended('applicantLocationRequirements'),
       this.recommended('baseSalary'),
-      this.recommended('directApply', 'boolean'),
+      this.recommended('directApply'),
       this.recommended('employmentType'),
       this.recommended('identifier'),
       this.recommended('jobLocationType', 'string'),
       this.recommended('validThrough', 'date'),
     ];
     return conditions.map((c) => c.bind(this));
+  }
+
+  checkJobLocations(data) {
+    const issues = [];
+    if (
+      data.jobLocationType === 'TELECOMMUTE' &&
+      !data.applicantLocationRequirements
+    ) {
+      const applicantLocationIssue = this.required(
+        'applicantLocationRequirements',
+      )(data);
+      if (applicantLocationIssue) {
+        issues.push(applicantLocationIssue);
+      }
+    }
+
+    if (!data.applicantLocationRequirements) {
+      const jobLocationIssues = this.required('jobLocation')(data);
+      if (jobLocationIssues) {
+        issues.push(jobLocationIssues);
+      }
+    }
+
+    if (data.jobLocation) {
+      const addressCountryIssues = this.required(
+        'jobLocation.address.addressCountry',
+      )(data);
+      if (addressCountryIssues) {
+        issues.push(addressCountryIssues);
+      }
+    }
+    return issues;
   }
 }

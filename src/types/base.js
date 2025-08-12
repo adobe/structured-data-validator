@@ -175,27 +175,4 @@ export default class BaseValidator {
       this.path[this.path.length - 1].property === property
     );
   }
-
-  // if 'deactivator' value is present, 'require' value is not required
-  conditionalRequirement(require, deactivator) {
-    return (data) => {
-      const requiredValue = this.#valueByPath(data, require);
-      const deactivatorValue = this.#valueByPath(data, deactivator);
-      if (
-        (requiredValue === undefined ||
-          requiredValue === null ||
-          requiredValue === '') &&
-        (deactivatorValue === undefined ||
-          deactivatorValue === null ||
-          deactivatorValue === '')
-      ) {
-        return {
-          issueMessage: `Required attribute "${require}" is missing`,
-          severity: 'ERROR',
-          path: this.path,
-        };
-      }
-      return null;
-    };
-  }
 }
