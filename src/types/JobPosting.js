@@ -32,25 +32,24 @@ export default class JobPostingValidator extends BaseValidator {
 
   checkJobLocations(data) {
     const issues = [];
-    if (
-      data.jobLocationType === 'TELECOMMUTE' &&
-      !data.applicantLocationRequirements
-    ) {
-      const applicantLocationIssue = this.required(
-        'applicantLocationRequirements',
-      )(data);
-      if (applicantLocationIssue) {
-        issues.push(applicantLocationIssue);
+    if (data.jobLocationType === 'TELECOMMUTE') {
+      if (!data.applicantLocationRequirements) {
+        const applicantLocationIssue = this.required(
+          'applicantLocationRequirements',
+        )(data);
+        if (applicantLocationIssue) {
+          issues.push(applicantLocationIssue);
+        }
+      }
+    } else {
+      if (!data.applicantLocationRequirements) {
+        const jobLocationIssues = this.required('jobLocation')(data);
+        if (jobLocationIssues) {
+          issues.push(jobLocationIssues);
+        }
       }
     }
-
-    if (!data.applicantLocationRequirements) {
-      const jobLocationIssues = this.required('jobLocation')(data);
-      if (jobLocationIssues) {
-        issues.push(jobLocationIssues);
-      }
-    }
-
+    
     if (data.jobLocation) {
       const addressCountryIssues = this.required(
         'jobLocation.address.addressCountry',
