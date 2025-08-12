@@ -25,7 +25,8 @@ describe('JobPostingValidator', () => {
     const issues = await validator.validate(data);
     const expectedIssues = [
       {
-        issueMessage: 'Missing field "applicantLocationRequirements" (optional)',
+        issueMessage:
+          'Missing field "applicantLocationRequirements" (optional)',
         severity: 'WARNING',
       },
       {
@@ -58,7 +59,8 @@ describe('JobPostingValidator', () => {
     const issues = await validator.validate(data);
     const expectedWarnings = [
       {
-        issueMessage: 'Missing field "applicantLocationRequirements" (optional)',
+        issueMessage:
+          'Missing field "applicantLocationRequirements" (optional)',
         severity: 'WARNING',
       },
       {
@@ -77,7 +79,10 @@ describe('JobPostingValidator', () => {
   });
 
   it('should report errors for missing required fields', async () => {
-    const data = await loadTestData('JobPosting/missing-required.json', 'jsonld');
+    const data = await loadTestData(
+      'JobPosting/missing-required.json',
+      'jsonld',
+    );
     const issues = await validator.validate(data);
     const expectedErrors = [
       {
@@ -97,7 +102,10 @@ describe('JobPostingValidator', () => {
   });
 
   it('should report error for missing addressCountry in jobLocation', async () => {
-    const data = await loadTestData('JobPosting/missing-address-country.json', 'jsonld');
+    const data = await loadTestData(
+      'JobPosting/missing-address-country.json',
+      'jsonld',
+    );
     const issues = await validator.validate(data);
     const expectedErrors = [
       {
@@ -112,7 +120,10 @@ describe('JobPostingValidator', () => {
   });
 
   it('should require applicantLocationRequirements for remote jobs', async () => {
-    const data = await loadTestData('JobPosting/remote-missing-location.json', 'jsonld');
+    const data = await loadTestData(
+      'JobPosting/remote-missing-location.json',
+      'jsonld',
+    );
     const issues = await validator.validate(data);
     const expectedErrors = [
       {
@@ -134,11 +145,15 @@ describe('JobPostingValidator', () => {
   });
 
   it('should warn for missing recommended fields', async () => {
-    const data = await loadTestData('JobPosting/missing-recommended.json', 'jsonld');
+    const data = await loadTestData(
+      'JobPosting/missing-recommended.json',
+      'jsonld',
+    );
     const issues = await validator.validate(data);
     const expectedWarnings = [
       {
-        issueMessage: 'Missing field "applicantLocationRequirements" (optional)',
+        issueMessage:
+          'Missing field "applicantLocationRequirements" (optional)',
         severity: 'WARNING',
       },
       {
