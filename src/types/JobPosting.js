@@ -34,9 +34,7 @@ export default class JobPostingValidator extends BaseValidator {
     const issues = [];
     if (data.jobLocationType === 'TELECOMMUTE') {
       if (!data.applicantLocationRequirements) {
-        const applicantLocationIssue = this.required(
-          'applicantLocationRequirements',
-        )(data);
+        const applicantLocationIssue = this.required('applicantLocationRequirements')(data);
         if (applicantLocationIssue) {
           issues.push(applicantLocationIssue);
         }
@@ -51,9 +49,7 @@ export default class JobPostingValidator extends BaseValidator {
     }
 
     if (data.jobLocation) {
-      const addressCountryIssues = this.required(
-        'jobLocation.address.addressCountry',
-      )(data);
+      const addressCountryIssues = this.required('jobLocation.address.addressCountry')(data);
       if (addressCountryIssues) {
         issues.push(addressCountryIssues);
       }
