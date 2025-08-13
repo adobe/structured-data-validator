@@ -1,3 +1,10 @@
+## [1.4.1](https://github.com/adobe/structured-data-validator/compare/v1.4.0...v1.4.1) (2025-08-13)
+
+
+### Bug Fixes
+
+* Handling array of contentUrls ([#39](https://github.com/adobe/structured-data-validator/issues/39)) ([77af6d5](https://github.com/adobe/structured-data-validator/commit/77af6d57b63b3cd9ed8a8244a8f263a224b4cf78))
+
 # [1.4.0](https://github.com/adobe/structured-data-validator/compare/v1.3.0...v1.4.0) (2025-08-13)
 
 
