@@ -67,5 +67,14 @@ describe('ImageObjectValidator', () => {
         ],
       });
     });
+
+    it('should allow contentUrl as an array', async () => {
+      const data = await loadTestData(
+        'ImageObject/content-url-array.json',
+        'jsonld',
+      );
+      const issues = await validator.validate(data);
+      expect(issues).to.have.lengthOf(0);
+    });
   });
 });

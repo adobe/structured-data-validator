@@ -145,13 +145,16 @@ export default class BaseValidator {
       return !isNaN(date.getTime());
     } else if (type === 'url') {
       // Absolute or relative URL, but no data: URLs
-      if (data.startsWith('data:')) {
-        return false;
-      }
-      try {
-        new URL(data, 'https://example.com');
-      } catch (e) {
-        return false;
+      let urlValues = Array.isArray(data) ? data : [data];
+      for (const url of urlValues) {
+        if (url.startsWith('data:')) {
+          return false;
+        }
+        try {
+          new URL(url, 'https://example.com');
+        } catch (e) {
+          return false;
+        }
       }
     } else if (type === 'currency') {
       return typeof data === 'string' && /^[A-Z]{3}$/.test(data);
