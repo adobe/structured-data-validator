@@ -1,3 +1,10 @@
+# [1.4.0](https://github.com/adobe/structured-data-validator/compare/v1.3.0...v1.4.0) (2025-08-13)
+
+
+### Features
+
+* Add JobPosting support ([#38](https://github.com/adobe/structured-data-validator/issues/38)) ([6523109](https://github.com/adobe/structured-data-validator/commit/652310903c7364701e065f0f0dded6ba9c619f05))
+
 # [1.3.0](https://github.com/adobe/structured-data-validator/compare/v1.2.4...v1.3.0) (2025-08-06)
 
 

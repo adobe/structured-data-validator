@@ -50,6 +50,7 @@ export class Validator {
       ShippingDeliveryTime: [() => import('./types/ShippingDeliveryTime.js')],
       SizeSpecification: [() => import('./types/SizeSpecification.js')],
       UnitPriceSpecification: [() => import('./types/PriceSpecification.js')],
+      JobPosting: [() => import('./types/JobPosting.js')],
     };
   }
 
