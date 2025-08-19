@@ -163,7 +163,7 @@ export default class BaseValidator {
     } else if (type === 'regex' && !value.test(data)) {
       return false;
     } else if (type === 'duration' && !this.validDurationFormat(data)) {
-      return false; // TODO: Test coverage?
+      return false;
     }
     return true;
   }

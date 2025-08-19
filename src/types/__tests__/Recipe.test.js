@@ -107,7 +107,6 @@ describe('RecipeValidator', () => {
     const data = await loadTestData('Recipe/invalid5.json', 'jsonld');
     const issues = await validator.validate(data);
     const warnings = issues.filter((issue) => issue.severity === 'WARNING');
-
     const expectedIssues = [
       'aggregateRating',
       'author',
