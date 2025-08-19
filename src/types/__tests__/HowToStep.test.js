@@ -38,21 +38,15 @@ describe('HowToStepValidator', () => {
     );
     const issues = await validator.validate(data);
     const errors = issues.filter((issue) => issue.severity === 'ERROR');
-    const expectedIssues = [
-      {
-        issueMessage: 'Required attribute "text" is missing',
-        severity: 'ERROR',
-      },
-      {
-        issueMessage: 'Required attribute "itemListElement" is missing',
-        severity: 'ERROR',
-      },
-    ];
 
-    expect(errors).to.have.lengthOf(2);
-    for (let i = 0; i < expectedIssues.length; i++) {
-      expect(errors[i]).to.deep.include(expectedIssues[i]);
-    }
+    const expectedIssue = {
+      issueMessage:
+        'One of the following conditions needs to be met: Required attribute "text" is missing or Required attribute "itemListElement" is missing',
+      severity: 'ERROR',
+    };
+
+    expect(errors).to.have.lengthOf(1);
+    expect(errors[0]).to.deep.include(expectedIssue);
   });
 
   it('should warn for missing recommended fields', async () => {
@@ -62,6 +56,7 @@ describe('HowToStepValidator', () => {
     );
     const issues = await validator.validate(data);
     const warnings = issues.filter((issue) => issue.severity === 'WARNING');
+
     const expectedIssues = [
       {
         issueMessage: 'Missing field "itemListElement" (optional)',
@@ -109,6 +104,7 @@ describe('HowToStepValidator', () => {
     );
     const issues = await validator.validate(data);
     const errors = issues.filter((issue) => issue.severity === 'ERROR');
+
     const expectedIssues = [
       {
         issueMessage: 'Required attribute "text" is missing',

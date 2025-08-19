@@ -162,6 +162,8 @@ export default class BaseValidator {
       return false;
     } else if (type === 'regex' && !value.test(data)) {
       return false;
+    } else if (type === 'duration' && !this.validDurationFormat(data)) {
+      return false; // TODO: Test coverage?
     }
     return true;
   }
@@ -177,5 +179,11 @@ export default class BaseValidator {
       this.path.length > 1 &&
       this.path[this.path.length - 1].property === property
     );
+  }
+
+  validDurationFormat(time) {
+    const durationRegex =
+      /^P(?=\d|T\d)(\d+Y)?(\d+M)?(\d+D)?(T(\d+H)?(\d+M)?(\d+S)?)?$/;
+    return durationRegex.test(time);
   }
 }

@@ -17,7 +17,7 @@ export default class HowToStepValidator extends BaseValidator {
       this.textAndItemList,
       this.validateItemListElement,
 
-      this.recommended('image', 'url'),
+      this.recommended('image'),
       this.recommended('name', 'string'),
       this.recommended('url', 'url'),
       this.recommended('video'),
@@ -27,15 +27,19 @@ export default class HowToStepValidator extends BaseValidator {
 
   textAndItemList(data) {
     const issues = [];
-    if (data.itemListElement) {
-      issues.push(this.required('itemListElement')(data));
+    const hasItemList =
+      data.itemListElement !== undefined && data.itemListElement !== null;
+    const hasText = data.text !== undefined && data.text !== null;
+
+    if (hasItemList && !hasText) {
       issues.push(this.recommended('text')(data));
-    } else if (data.text) {
+    } else if (hasText && !hasItemList) {
       issues.push(this.required('text')(data));
       issues.push(this.recommended('itemListElement')(data));
-    } else {
-      issues.push(this.required('text')(data));
-      issues.push(this.required('itemListElement')(data));
+    } else if (!hasItemList && !hasText) {
+      issues.push(
+        this.or(this.required('text'), this.required('itemListElement'))(data),
+      );
     }
     return issues;
   }

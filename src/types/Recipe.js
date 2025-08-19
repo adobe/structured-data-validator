@@ -14,7 +14,7 @@ import BaseValidator from './base.js';
 export default class RecipeValidator extends BaseValidator {
   getConditions() {
     const conditions = [
-      this.required('image', 'url'),
+      this.validateImage,
       this.required('name', 'string'),
 
       this.recommended('aggregateRating'),
@@ -31,11 +31,6 @@ export default class RecipeValidator extends BaseValidator {
       this.recommended('video'),
     ];
     return conditions.map((c) => c.bind(this));
-  }
-  validTimeFormat(time) {
-    const durationRegex =
-      /^P(?=\d|T\d)(\d+Y)?(\d+M)?(\d+D)?(T(\d+H)?(\d+M)?(\d+S)?)?$/;
-    return durationRegex.test(time);
   }
 
   validateNutritionAndYield(data) {
@@ -59,23 +54,35 @@ export default class RecipeValidator extends BaseValidator {
 
     if (hasCookTime || hasPrepTime) {
       if (hasCookTime && !hasPrepTime) {
-        issues.push(this.recommended('prepTime')(data));
+        issues.push(this.recommended('prepTime', 'duration')(data));
       }
       if (!hasCookTime && hasPrepTime) {
-        issues.push(this.recommended('cookTime')(data));
+        issues.push(this.recommended('cookTime', 'duration')(data));
       }
     } else if (!hasTotalTime) {
-      issues.push(this.recommended('totalTime')(data));
+      issues.push(this.recommended('totalTime', 'duration')(data));
     }
 
-    ['cookTime', 'prepTime', 'totalTime'].forEach((fieldName) => {
-      if (data[fieldName] && !this.validTimeFormat(data[fieldName])) {
+    const timeFields = ['cookTime', 'prepTime', 'totalTime'];
+    for (const fieldName of timeFields) {
+      if (data[fieldName] && !this.validDurationFormat(data[fieldName])) {
         issues.push({
           issueMessage: `Invalid format for ${fieldName}`,
           severity: 'ERROR',
         });
       }
-    });
+    }
+    return issues;
+  }
+
+  validateImage(data) {
+    const issues = [];
+    if (Array.isArray(data.image)) {
+      issues.push(this.required('image', 'url')(data));
+    } else {
+      issues.push(this.required('image')(data));
+    }
+
     return issues;
   }
 }

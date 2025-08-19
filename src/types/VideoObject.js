@@ -19,7 +19,7 @@ export default class VideoObjectValidator extends BaseValidator {
       this.required('uploadDate', 'date'),
 
       this.recommended('description', 'string'),
-      this.recommended('duration', 'string'),
+      this.recommended('duration', 'duration'),
       this.recommended('expires', 'date'),
       this.recommended('hasPart'),
       this.recommended('publication'),

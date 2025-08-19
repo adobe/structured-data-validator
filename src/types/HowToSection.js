@@ -14,7 +14,7 @@ import BaseValidator from './base.js';
 export default class HowToSectionValidator extends BaseValidator {
   getConditions() {
     const conditions = [
-      this.required('itemListElement', 'array'),
+      this.required('itemListElement'),
       this.required('name', 'string'),
     ];
     return conditions.map((c) => c.bind(this));

@@ -72,7 +72,6 @@ describe('RecipeValidator', () => {
         severity: 'ERROR',
       },
     ];
-
     expect(errors).to.have.lengthOf(1);
     for (let i = 0; i < expectedIssues.length; i++) {
       expect(errors[i]).to.deep.include(expectedIssues[i]);
@@ -107,37 +106,29 @@ describe('RecipeValidator', () => {
   it('should validate HowToStep structure in invalid5.json', async () => {
     const data = await loadTestData('Recipe/invalid5.json', 'jsonld');
     const issues = await validator.validate(data);
-    const errors = issues.filter((issue) => issue.severity === 'ERROR');
+    const warnings = issues.filter((issue) => issue.severity === 'WARNING');
+
     const expectedIssues = [
-      {
-        issueMessage: 'Required attribute "text" is missing',
-        severity: 'ERROR',
-      },
-      {
-        issueMessage: 'Required attribute "itemListElement" is missing',
-        severity: 'ERROR',
-      },
-      {
-        issueMessage: 'Required attribute "text" is missing',
-        severity: 'ERROR',
-      },
-      {
-        issueMessage: 'Required attribute "itemListElement" is missing',
-        severity: 'ERROR',
-      },
-      {
-        issueMessage: 'Required attribute "text" is missing',
-        severity: 'ERROR',
-      },
-      {
-        issueMessage: 'Required attribute "itemListElement" is missing',
-        severity: 'ERROR',
-      },
+      'aggregateRating',
+      'author',
+      'datePublished',
+      'keywords',
+      'recipeCategory',
+      'recipeCuisine',
+      'recipeYield',
+      'nutrition.calories',
+      'totalTime',
+      'video',
+      'video',
     ];
 
-    expect(errors).to.have.lengthOf(6);
+    expect(warnings).to.have.lengthOf(11);
     for (let i = 0; i < expectedIssues.length; i++) {
-      expect(errors[i]).to.deep.include(expectedIssues[i]);
+      const expected = {
+        issueMessage: `Missing field "${expectedIssues[i]}" (optional)`,
+        severity: 'WARNING',
+      };
+      expect(warnings[i]).to.deep.include(expected);
     }
   });
 
