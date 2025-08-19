@@ -66,7 +66,7 @@ export default class RecipeValidator extends BaseValidator {
       }
     } else if (!hasTotalTime) {
       issues.push(this.recommended('totalTime')(data));
-    } 
+    }
 
     ['cookTime', 'prepTime', 'totalTime'].forEach((fieldName) => {
       if (data[fieldName] && !this.validTimeFormat(data[fieldName])) {
