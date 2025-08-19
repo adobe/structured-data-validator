@@ -1,0 +1,16 @@
+{
+  "@type": "HowToStep",
+  "name": "Blend",
+  "url": "https://example.com/non-alcoholic-pina-colada#step1",
+  "image": "https://example.com/photos/non-alcoholic-pina-colada/step1.jpg",
+  "itemListElement": [
+    {
+      "@type": "HowToDirection",
+      "text": "Pour flour into a large bowl"
+    },
+    {
+      "@type": "HowToTip",
+      "text": "Sift the flour for better texture"
+    }
+  ]
+}

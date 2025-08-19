@@ -1,0 +1,64 @@
+/**
+ * Copyright 2025 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
+import BaseValidator from './base.js';
+
+export default class HowToStepValidator extends BaseValidator {
+  getConditions() {
+    const conditions = [
+      this.textAndItemList,
+      this.validateItemListElement,
+
+      this.recommended('image', 'url'),
+      this.recommended('name', 'string'),
+      this.recommended('url', 'url'),
+      this.recommended('video'),
+    ];
+    return conditions.map((c) => c.bind(this));
+  }
+
+  textAndItemList(data) {
+    const issues = [];
+    if (data.itemListElement) {
+      issues.push(this.required('itemListElement')(data));
+      issues.push(this.recommended('text')(data));
+    } else if (data.text) {
+      issues.push(this.required('text')(data));
+      issues.push(this.recommended('itemListElement')(data));
+    } else {
+      issues.push(this.required('text')(data));
+      issues.push(this.required('itemListElement')(data));
+    }
+    return issues;
+  }
+
+  validateItemListElement(data) {
+    const issues = [];
+    if (!data.itemListElement) {
+      return issues;
+    }
+
+    for (const item of data.itemListElement) {
+      if (item['@type'] === 'HowToDirection' || item['@type'] === 'HowToTip') {
+        issues.push(...this.checkDirectionAndTip(item));
+      }
+    }
+    return issues;
+  }
+
+  checkDirectionAndTip(item) {
+    const issues = [];
+    if (!item.text) {
+      issues.push(this.required('text')(item));
+    }
+    return issues;
+  }
+}
