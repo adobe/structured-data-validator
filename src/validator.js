@@ -54,6 +54,8 @@ export class Validator {
       Recipe: [() => import('./types/Recipe.js')],
       HowToStep: [() => import('./types/HowToStep.js')],
       HowToSection: [() => import('./types/HowToSection.js')],
+      HowToDirection: [() => import('./types/HowToDirection.js')],
+      HowToTip: [() => import('./types/HowToTip.js')],
     };
   }
 

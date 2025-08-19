@@ -15,7 +15,6 @@ export default class HowToStepValidator extends BaseValidator {
   getConditions() {
     const conditions = [
       this.textAndItemList,
-      this.validateItemListElement,
 
       this.recommended('image'),
       this.recommended('name', 'string'),
@@ -40,20 +39,6 @@ export default class HowToStepValidator extends BaseValidator {
       issues.push(
         this.or(this.required('text'), this.required('itemListElement'))(data),
       );
-    }
-    return issues;
-  }
-
-  validateItemListElement(data) {
-    const issues = [];
-    if (!data.itemListElement) {
-      return issues;
-    }
-
-    for (const item of data.itemListElement) {
-      if (item['@type'] === 'HowToDirection' || item['@type'] === 'HowToTip') {
-        issues.push(...this.checkDirectionAndTip(item));
-      }
     }
     return issues;
   }
