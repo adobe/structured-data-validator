@@ -1,3 +1,10 @@
+# [1.5.0](https://github.com/adobe/structured-data-validator/compare/v1.4.1...v1.5.0) (2025-08-20)
+
+
+### Features
+
+* Add Support for Recipe and child entities  ([#41](https://github.com/adobe/structured-data-validator/issues/41)) ([76c76e6](https://github.com/adobe/structured-data-validator/commit/76c76e67be7d340dd86ab790009ab488e02706f3))
+
 ## [1.4.1](https://github.com/adobe/structured-data-validator/compare/v1.4.0...v1.4.1) (2025-08-13)
 
 
