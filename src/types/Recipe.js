@@ -34,7 +34,6 @@ export default class RecipeValidator extends BaseValidator {
   }
 
   validateNutritionAndYield(data) {
-    // If nutrition.calories is defined, recipeYield must be defined with the number of servings
     const issues = [];
     if (data.nutrition?.calories && !data.recipeYield) {
       issues.push(this.required('recipeYield')(data));
@@ -61,7 +60,6 @@ export default class RecipeValidator extends BaseValidator {
     } else {
       issues.push(this.recommended('totalTime', 'duration')(data));
     }
-
     return issues.filter((issue) => issue !== null);
   }
 
@@ -72,7 +70,6 @@ export default class RecipeValidator extends BaseValidator {
     } else {
       issues.push(this.required('image')(data));
     }
-
     return issues.filter((issue) => issue !== null);
   }
 }
