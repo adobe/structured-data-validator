@@ -30,24 +30,14 @@ export default class HowToStepValidator extends BaseValidator {
       data.itemListElement !== undefined && data.itemListElement !== null;
     const hasText = data.text !== undefined && data.text !== null;
 
-    if (hasItemList && !hasText) {
+    if (hasItemList || hasText) {
       issues.push(this.recommended('text')(data));
-    } else if (hasText && !hasItemList) {
-      issues.push(this.required('text')(data));
       issues.push(this.recommended('itemListElement')(data));
-    } else if (!hasItemList && !hasText) {
+    } else {
       issues.push(
         this.or(this.required('text'), this.required('itemListElement'))(data),
       );
     }
-    return issues;
-  }
-
-  checkDirectionAndTip(item) {
-    const issues = [];
-    if (!item.text) {
-      issues.push(this.required('text')(item));
-    }
-    return issues;
+    return issues.filter((issue) => issue !== null);
   }
 }

@@ -42,7 +42,7 @@ export default class RecipeValidator extends BaseValidator {
       issues.push(this.recommended('recipeYield')(data));
       issues.push(this.recommended('nutrition.calories')(data));
     }
-    return issues;
+    return issues.filter((issue) => issue !== null);
   }
 
   validateCookTime(data) {
@@ -53,26 +53,16 @@ export default class RecipeValidator extends BaseValidator {
       data.totalTime !== undefined && data.totalTime !== null;
 
     if (hasCookTime || hasPrepTime) {
-      if (hasCookTime && !hasPrepTime) {
-        issues.push(this.recommended('prepTime', 'duration')(data));
+      issues.push(this.recommended('prepTime', 'duration')(data));
+      issues.push(this.recommended('cookTime', 'duration')(data));
+      if (hasTotalTime) {
+        issues.push(this.recommended('totalTime', 'duration')(data));
       }
-      if (!hasCookTime && hasPrepTime) {
-        issues.push(this.recommended('cookTime', 'duration')(data));
-      }
-    } else if (!hasTotalTime) {
+    } else {
       issues.push(this.recommended('totalTime', 'duration')(data));
     }
 
-    const timeFields = ['cookTime', 'prepTime', 'totalTime'];
-    for (const fieldName of timeFields) {
-      if (data[fieldName] && !this.validDurationFormat(data[fieldName])) {
-        issues.push({
-          issueMessage: `Invalid format for ${fieldName}`,
-          severity: 'ERROR',
-        });
-      }
-    }
-    return issues;
+    return issues.filter((issue) => issue !== null);
   }
 
   validateImage(data) {
@@ -83,6 +73,6 @@ export default class RecipeValidator extends BaseValidator {
       issues.push(this.required('image')(data));
     }
 
-    return issues;
+    return issues.filter((issue) => issue !== null);
   }
 }

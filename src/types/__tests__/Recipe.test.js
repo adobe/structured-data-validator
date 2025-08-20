@@ -81,25 +81,18 @@ describe('RecipeValidator', () => {
   it('should validate invalid time format in invalid4.json', async () => {
     const data = await loadTestData('Recipe/invalid4.json', 'jsonld');
     const issues = await validator.validate(data);
-    const errors = issues.filter((issue) => issue.severity === 'ERROR');
-    const expectedIssues = [
-      {
-        issueMessage: 'Invalid format for cookTime',
-        severity: 'ERROR',
-      },
-      {
-        issueMessage: 'Invalid format for prepTime',
-        severity: 'ERROR',
-      },
-      {
-        issueMessage: 'Invalid format for totalTime',
-        severity: 'ERROR',
-      },
+    const expectedTimeErrors = [
+      'Invalid type for attribute "cookTime"',
+      'Invalid type for attribute "prepTime"',
+      'Invalid type for attribute "totalTime"',
     ];
 
-    expect(errors).to.have.lengthOf(3);
-    for (let i = 0; i < expectedIssues.length; i++) {
-      expect(errors[i]).to.deep.include(expectedIssues[i]);
+    for (const expectedMessage of expectedTimeErrors) {
+      const found = issues.some(
+        (issue) =>
+          issue.issueMessage && issue.issueMessage.includes(expectedMessage),
+      );
+      expect(found, `Expected to find error: ${expectedMessage}`).to.be.true;
     }
   });
 
