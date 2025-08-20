@@ -8,15 +8,20 @@
   "recipeInstructions": [
     {
       "@type": "HowToStep",
-      "name": "Prepare vegetables"
-    },
-    {
-      "@type": "HowToStep",
-      "image": "https://example.com/photos/step1.jpg"
-    },
-    {
-      "@type": "HowToStep",
-      "url": "https://example.com/recipe#step3"
+      "name": "Blend",
+      "text": "Blend 400ml of pineapple juice and 100ml cream of coconut until smooth.",
+      "url": "https://example.com/non-alcoholic-pina-colada#step1",
+      "image": "https://example.com/photos/non-alcoholic-pina-colada/step1.jpg",
+      "itemListElement": [
+        {
+          "@type": "HowToDirection",
+          "text": "Pour flour into a large bowl"
+        },
+        {
+          "@type": "HowToTip",
+          "text": "Sift the flour for better texture"
+        }
+      ]
     }
   ]
 }

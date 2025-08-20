@@ -51,6 +51,11 @@ export class Validator {
       SizeSpecification: [() => import('./types/SizeSpecification.js')],
       UnitPriceSpecification: [() => import('./types/PriceSpecification.js')],
       JobPosting: [() => import('./types/JobPosting.js')],
+      Recipe: [() => import('./types/Recipe.js')],
+      HowToStep: [() => import('./types/HowToStep.js')],
+      HowToSection: [() => import('./types/HowToSection.js')],
+      HowToDirection: [() => import('./types/HowToDirection.js')],
+      HowToTip: [() => import('./types/HowToTip.js')],
     };
   }
 

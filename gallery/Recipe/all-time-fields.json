@@ -1,0 +1,10 @@
+{
+  "@context": "https://schema.org/",
+  "@type": "Recipe",
+  "name": "Test Recipe",
+  "image": "https://example.com/image.jpg",
+  "recipeInstructions": ["Mix ingredients"],
+  "cookTime": "PT30M",
+  "prepTime": "PT15M",
+  "totalTime": "PT45M"
+}

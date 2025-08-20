@@ -11,30 +11,11 @@
  */
 import BaseValidator from './base.js';
 
-export default class VideoObjectValidator extends BaseValidator {
+export default class HowToSectionValidator extends BaseValidator {
   getConditions() {
     const conditions = [
+      this.required('itemListElement'),
       this.required('name', 'string'),
-      this.required('thumbnailUrl'),
-      this.required('uploadDate', 'date'),
-
-      this.recommended('description', 'string'),
-      this.recommended('duration', 'duration'),
-      this.recommended('expires', 'date'),
-      this.recommended('hasPart'),
-      this.recommended('publication'),
-      this.or(
-        this.recommended('contentUrl', 'url'),
-        this.recommended('embedUrl', 'url'),
-      ),
-      this.or(
-        this.recommended('ineligibleRegion'),
-        this.recommended('regionsAllowed'),
-      ),
-      this.or(
-        this.recommended('interactionStatistic'),
-        this.recommended('interactionCount'),
-      ),
     ];
     return conditions.map((c) => c.bind(this));
   }

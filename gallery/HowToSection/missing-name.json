@@ -1,0 +1,10 @@
+{
+  "@context": "https://schema.org/",
+  "@type": "HowToSection",
+  "itemListElement": [
+    {
+      "@type": "HowToStep",
+      "text": "Step without section name"
+    }
+  ]
+}

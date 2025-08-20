@@ -1,0 +1,54 @@
+/**
+ * Copyright 2025 Adobe. All rights reserved.
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
+import { expect } from 'chai';
+import { Validator } from '../../validator.js';
+import { loadTestData } from './utils.js';
+
+describe('HowToSectionValidator', () => {
+  let validator;
+  beforeEach(() => {
+    validator = new Validator();
+    validator.globalHandlers = [];
+  });
+
+  it('should validate valid HowToSection with all required fields', async () => {
+    const data = await loadTestData('HowToSection/valid1.json', 'jsonld');
+    const issues = await validator.validate(data);
+    const errors = issues.filter((issue) => issue.severity === 'ERROR');
+
+    expect(errors).to.have.lengthOf(0);
+  });
+
+  it('should error when HowToSection is missing both required fields', async () => {
+    const data = await loadTestData(
+      'HowToSection/missing-required.json',
+      'jsonld',
+    );
+    const issues = await validator.validate(data);
+    const errors = issues.filter((issue) => issue.severity === 'ERROR');
+    const expectedIssues = [
+      {
+        issueMessage: 'Required attribute "itemListElement" is missing',
+        severity: 'ERROR',
+      },
+      {
+        issueMessage: 'Required attribute "name" is missing',
+        severity: 'ERROR',
+      },
+    ];
+
+    expect(errors).to.have.lengthOf(expectedIssues.length);
+    for (let i = 0; i < expectedIssues.length; i++) {
+      expect(errors[i]).to.deep.include(expectedIssues[i]);
+    }
+  });
+});
