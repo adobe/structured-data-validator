@@ -14,7 +14,13 @@ import BaseValidator from './base.js';
 export default class PriceSpecificationValidator extends BaseValidator {
   getConditions() {
     const conditions = [];
-    if (this.path.length === 2 && this.path[0].type === 'Product') {
+    const offerIndex = this.path.findIndex(
+      (pathElement) => pathElement.type === 'Offer',
+    );
+    const productIsParent =
+      offerIndex > 0 ? this.path[offerIndex - 1].type === 'Product' : false;
+
+    if (productIsParent) {
       conditions.push(
         this.or(
           this.required('price', 'number'),
