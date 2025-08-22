@@ -286,7 +286,7 @@ describe('ProductValidator', () => {
 
     it('should ensure no errors for a stand alone Offer', async () => {
       const data = await loadTestData(
-        'Product/non_product_with_offer.json',
+        'Product/offer_with_no_parent.json',
         'jsonld',
       );
       const issues = await validator.validate(data);
