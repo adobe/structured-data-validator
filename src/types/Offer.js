@@ -13,17 +13,27 @@ import BaseValidator from './base.js';
 
 export default class PriceSpecificationValidator extends BaseValidator {
   getConditions() {
-    return [
-      this.or(
-        this.required('price', 'number'),
-        this.required('priceSpecification.price', 'number'),
-      ),
-      this.recommended('availability'),
-      this.or(
-        this.recommended('priceCurrency', 'currency'),
-        this.recommended('priceSpecification.priceCurrency', 'currency'),
-      ),
-      this.recommended('priceValidUntil', 'date'),
-    ].map((c) => c.bind(this));
+    const conditions = [];
+    const offerIndex = this.path.findIndex(
+      (pathElement) => pathElement.type === 'Offer',
+    );
+    const productIsParent =
+      offerIndex > 0 ? this.path[offerIndex - 1].type === 'Product' : false;
+
+    if (productIsParent) {
+      conditions.push(
+        this.or(
+          this.required('price', 'number'),
+          this.required('priceSpecification.price', 'number'),
+        ),
+        this.recommended('availability'),
+        this.or(
+          this.recommended('priceCurrency', 'currency'),
+          this.recommended('priceSpecification.priceCurrency', 'currency'),
+        ),
+        this.recommended('priceValidUntil', 'date'),
+      );
+    }
+    return conditions.map((c) => c.bind(this));
   }
 }

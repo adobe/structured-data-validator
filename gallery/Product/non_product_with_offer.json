@@ -1,0 +1,77 @@
+{
+  "@context": "http://schema.org/",
+  "@type": "Store",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "123 William St",
+    "addressLocality": "New York",
+    "addressRegion": "NY",
+    "postalCode": "10038",
+    "addressCountry": "US"
+  },
+  "@id": "https://www.example.com/",
+  "description": "Description of the store",
+  "telephone": "1234567",
+  "openingHoursSpecification": [
+    "Su 11:00-18:00",
+    "Mo 09:00-20:00",
+    "Tu 09:00-20:00",
+    "We 09:00-20:00",
+    "Th 09:00-20:00",
+    "Fr 09:00-20:00",
+    "Sa 09:00-20:00"
+  ],
+  "url": "https://www.example.com/",
+  "image": "https://www.example.com/this-is-an-image.jpg",
+  "location": {
+    "@type": "LocalBusiness",
+    "@id": "https://www.example.com/",
+    "name": "Some Name",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "123 William St",
+      "addressLocality": "New York",
+      "addressRegion": "NY",
+      "postalCode": "10038",
+      "addressCountry": "US"
+    }
+  },
+  "logo": ["https://www.example.com/this-is-a-logo.png"],
+  "name": "Some Name",
+  "branchCode": "12345678",
+  "review": [
+    {
+      "@type": "Review",
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": 4,
+        "bestRating": 5,
+        "worstRating": 1
+      },
+      "author": {
+        "@type": "Person",
+        "name": "Fred Benson"
+      },
+      "datePublished": "2024-03-31"
+    }
+  ],
+  "aggregateRating": [
+    {
+      "@type": "AggregateRating",
+      "ratingValue": "5.00",
+      "reviewCount": 1,
+      "bestRating": 5,
+      "worstRating": 1
+    }
+  ],
+  "makesOffer": [
+    {
+      "@type": "Offer",
+      "itemOffered": {
+        "@type": "Service",
+        "name": "Best offer ever",
+        "url": "https://www.example.com/best/offer/ever"
+      }
+    }
+  ]
+}

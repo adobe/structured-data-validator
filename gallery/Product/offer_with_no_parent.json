@@ -1,0 +1,9 @@
+{
+  "@context": "http://schema.org/",
+  "@type": "Offer",
+  "itemOffered": {
+    "@type": "Service",
+    "name": "Best offer ever",
+    "url": "https://www.example.com/best/offer/ever"
+  }
+}
