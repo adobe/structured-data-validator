@@ -33,6 +33,13 @@ export default class BaseValidator {
       }
     }
 
+    if (this.path.length === 1 && !data['@context']) {
+      issues.push({
+        issueMessage:
+          'The @context value is missing. It should be set to "https://schema.org/"',
+        severity: 'ERROR',
+      });
+    }
     return issues;
   }
 

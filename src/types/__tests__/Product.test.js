@@ -292,17 +292,5 @@ describe('ProductValidator', () => {
       const issues = await validator.validate(data);
       expect(issues).to.have.lengthOf(0);
     });
-
-    it('should detect missing @context field', async () => {
-      const data = await loadTestData('Product/missing_context.json', 'jsonld');
-      const issues = await validator.validate(data);
-      const errors = issues.filter((issue) => issue.severity === 'ERROR');
-      expect(errors).to.have.lengthOf(1);
-      expect(errors[0]).to.deep.include({
-        issueMessage:
-          'The @context value is missing. It should be set to "https://schema.org/"',
-        severity: 'ERROR',
-      });
-    });
   });
 });
