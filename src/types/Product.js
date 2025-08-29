@@ -17,14 +17,15 @@ export default class ProductValidator extends BaseValidator {
       this.required('name'),
       this.ratingReviewOrOffers,
       this.notesCount,
-      this.checkContext
+      this.checkContext,
     ].map((c) => c.bind(this));
   }
 
   checkContext(data) {
     if (!data['@context']) {
       return {
-        issueMessage: 'The @context value is missing. It should be set to "https://schema.org/"',
+        issueMessage:
+          'The @context value is missing. It should be set to "https://schema.org/"',
         severity: 'ERROR',
       };
     }
