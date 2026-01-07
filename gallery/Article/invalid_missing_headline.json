@@ -1,0 +1,9 @@
+{
+	"@context": "https://schema.org",
+	"@type": "Article",
+	"author": {
+		"@type": "Person",
+		"name": "Jane Doe"
+	},
+	"datePublished": "2025-01-07"
+}
