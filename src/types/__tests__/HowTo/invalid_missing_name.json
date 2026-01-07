@@ -1,0 +1,9 @@
+{
+	"@type": "HowTo",
+	"step": [
+		{
+			"@type": "HowToStep",
+			"text": "Do something"
+		}
+	]
+}

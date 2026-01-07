@@ -1,0 +1,36 @@
+{
+	"@context": "https://schema.org",
+	"@type": "LocalBusiness",
+	"name": "Dave's Steak House",
+	"address": {
+		"@type": "PostalAddress",
+		"streetAddress": "123 Main St",
+		"addressLocality": "New York",
+		"addressRegion": "NY",
+		"postalCode": "10001",
+		"addressCountry": "US"
+	},
+	"telephone": "+1-212-555-1234",
+	"url": "https://www.davessteakhouse.example.com",
+	"image": "https://www.davessteakhouse.example.com/image.jpg",
+	"priceRange": "$$",
+	"geo": {
+		"@type": "GeoCoordinates",
+		"latitude": "40.7128",
+		"longitude": "-74.0060"
+	},
+	"openingHoursSpecification": [
+		{
+			"@type": "OpeningHoursSpecification",
+			"dayOfWeek": [
+				"Monday",
+				"Tuesday",
+				"Wednesday",
+				"Thursday",
+				"Friday"
+			],
+			"opens": "11:00",
+			"closes": "22:00"
+		}
+	]
+}

@@ -1,0 +1,12 @@
+{
+	"@context": "https://schema.org",
+	"@type": "LocalBusiness",
+	"address": {
+		"@type": "PostalAddress",
+		"streetAddress": "123 Main St",
+		"addressLocality": "New York",
+		"addressRegion": "NY",
+		"postalCode": "10001",
+		"addressCountry": "US"
+	}
+}
