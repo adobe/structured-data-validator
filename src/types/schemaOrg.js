@@ -215,6 +215,7 @@ export default class SchemaOrgValidator {
               severity: 'WARNING',
               path: this.path,
               errorType: 'schemaOrg',
+              fieldName: propertyId,
             });
           }
         }),

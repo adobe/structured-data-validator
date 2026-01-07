@@ -58,6 +58,7 @@ export default class BaseValidator {
           issueMessage: `Required attribute "${name}" is missing`,
           severity: 'ERROR',
           path: this.path,
+          fieldName: name,
         };
       }
       if (type && !this.checkType(value, type, ...opts)) {
@@ -65,6 +66,7 @@ export default class BaseValidator {
           issueMessage: `Invalid type for attribute "${name}"`,
           severity: 'ERROR',
           path: this.path,
+          fieldName: name,
         };
       }
       return null;
@@ -89,6 +91,12 @@ export default class BaseValidator {
         return max;
       }, 'WARNING');
 
+      // Collect all field names from the conditions
+      const fieldNames = issues
+        .flat()
+        .filter((i) => i && i.fieldName)
+        .map((i) => i.fieldName);
+
       return {
         issueMessage: `One of the following conditions needs to be met: ${issues
           .flat()
@@ -96,6 +104,8 @@ export default class BaseValidator {
           .join(' or ')}`,
         severity,
         path: this.path,
+        fieldName: fieldNames[0] || null,
+        fieldNames: fieldNames.length > 0 ? fieldNames : undefined,
       };
     };
   }
@@ -108,6 +118,7 @@ export default class BaseValidator {
           issueMessage: `Missing field "${name}" (optional)`,
           severity: 'WARNING',
           path: this.path,
+          fieldName: name,
         };
       }
       if (type && !this.checkType(value, type, ...opts)) {
@@ -115,6 +126,7 @@ export default class BaseValidator {
           issueMessage: `Invalid type for attribute "${name}"`,
           severity: 'WARNING',
           path: this.path,
+          fieldName: name,
         };
       }
       return null;

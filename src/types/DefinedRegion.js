@@ -30,6 +30,8 @@ export default class DefinedRegionValidator extends BaseValidator {
         issueMessage: 'Only one of addressRegion or postalCode can be used',
         severity: 'WARNING',
         path: this.path,
+        fieldName: 'addressRegion',
+        fieldNames: ['addressRegion', 'postalCode'],
       };
     }
   }
