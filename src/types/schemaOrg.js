@@ -189,12 +189,33 @@ export default class SchemaOrgValidator {
     });
   }
 
+  async validateType(type) {
+    const schema = await this.#loadSchema();
+    return !!schema[type];
+  }
+
   async validate(data) {
     const issues = [];
 
     if (typeof data === 'object' && data !== null) {
       if (!this.type) {
         return [];
+      }
+
+      const typeId = this.#stripSchema(this.type);
+
+      // Check if type exists in schema.org
+      const typeExists = await this.validateType(typeId);
+      if (!typeExists) {
+        issues.push({
+          issueMessage: `Type "${typeId}" is not a valid schema.org type`,
+          severity: 'WARNING',
+          path: this.path,
+          errorType: 'schemaOrg',
+          fieldName: '@type',
+        });
+        // Skip property validation since type is invalid
+        return issues;
       }
 
       // Get list of properties, any other keys which do not start with @
@@ -206,7 +227,6 @@ export default class SchemaOrgValidator {
       await Promise.all(
         properties.map(async (property) => {
           const propertyId = this.#stripSchema(property);
-          const typeId = this.#stripSchema(this.type);
 
           const isValid = await this.validateProperty(typeId, propertyId);
           if (!isValid) {
@@ -215,6 +235,7 @@ export default class SchemaOrgValidator {
               severity: 'WARNING',
               path: this.path,
               errorType: 'schemaOrg',
+              fieldName: propertyId,
             });
           }
         }),

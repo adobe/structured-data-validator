@@ -45,6 +45,12 @@ describe('Schema.org Validator', () => {
       Brand: [MockValidator],
       Organization: [MockValidator],
       Offer: [MockValidator],
+      VideoObject: [MockValidator],
+      SeekToAction: [MockValidator],
+      Clip: [MockValidator],
+      BroadcastEvent: [MockValidator],
+      // Invalid type for testing - no type-specific handler, only global schemaOrg handler runs
+      BananaPhone: [MockValidator],
     };
   });
 
@@ -97,9 +103,9 @@ describe('Schema.org Validator', () => {
       'VideoObject/valid2.json',
       'VideoObject/valid3.json',
       'Clip/valid1.json',
-      'SeekToAction/valid1.json',
+      // SeekToAction/valid1.json excluded - contains Google-specific 'startOffset-input' property
       'BroadcastEvent/valid1.json',
-      'VideoObject/valid4.json',
+      // VideoObject/valid4.json excluded - contains nested SeekToAction with Google-specific property
     ];
 
     files.forEach((file) => {
@@ -154,6 +160,22 @@ describe('Schema.org Validator', () => {
           },
         ],
         errorType: 'schemaOrg',
+      });
+    });
+
+    it('should return an error if an invalid type was detected', async () => {
+      const data = await loadTestData('Product/invalid_type.json', 'jsonld');
+
+      const issues = await validator.validate(data);
+
+      expect(issues).to.have.lengthOf(1);
+      expect(issues[0]).to.deep.include({
+        rootType: 'BananaPhone',
+        issueMessage: 'Type "BananaPhone" is not a valid schema.org type',
+        severity: 'WARNING',
+        path: [{ type: 'BananaPhone', index: 0 }],
+        errorType: 'schemaOrg',
+        fieldName: '@type',
       });
     });
   });
