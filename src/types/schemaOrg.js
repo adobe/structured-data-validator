@@ -209,7 +209,7 @@ export default class SchemaOrgValidator {
       if (!typeExists) {
         issues.push({
           issueMessage: `Type "${typeId}" is not a valid schema.org type`,
-          severity: 'WARNING',
+          severity: 'ERROR',
           path: this.path,
           errorType: 'schemaOrg',
           fieldName: '@type',

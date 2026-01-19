@@ -172,7 +172,7 @@ describe('Schema.org Validator', () => {
       expect(issues[0]).to.deep.include({
         rootType: 'BananaPhone',
         issueMessage: 'Type "BananaPhone" is not a valid schema.org type',
-        severity: 'WARNING',
+        severity: 'ERROR',
         path: [{ type: 'BananaPhone', index: 0 }],
         errorType: 'schemaOrg',
         fieldName: '@type',
