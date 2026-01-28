@@ -5,6 +5,9 @@ on: [push]
 env:
   CI_BRANCH: ${{ github.ref_name }}
 
+permissions:
+  id-token: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -35,7 +38,6 @@ jobs:
         run: npm run semantic-release-dry
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
   release:
     runs-on: ubuntu-latest
@@ -58,4 +60,3 @@ jobs:
         run: npm run semantic-release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
