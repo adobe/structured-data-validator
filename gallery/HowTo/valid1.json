@@ -1,0 +1,46 @@
+{
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  "name": "How to Change a Tire",
+  "description": "A step-by-step guide to changing a flat tire.",
+  "totalTime": "PT30M",
+  "estimatedCost": {
+    "@type": "MonetaryAmount",
+    "currency": "USD",
+    "value": "0"
+  },
+  "supply": [
+    {
+      "@type": "HowToSupply",
+      "name": "Spare tire"
+    },
+    {
+      "@type": "HowToSupply",
+      "name": "Lug wrench"
+    }
+  ],
+  "tool": [
+    {
+      "@type": "HowToTool",
+      "name": "Jack"
+    }
+  ],
+  "step": [
+    {
+      "@type": "HowToStep",
+      "name": "Loosen the lug nuts",
+      "text": "Use the lug wrench to loosen the lug nuts on the flat tire."
+    },
+    {
+      "@type": "HowToStep",
+      "name": "Jack up the car",
+      "text": "Place the jack under the car frame and raise the car."
+    },
+    {
+      "@type": "HowToStep",
+      "name": "Remove the flat tire",
+      "text": "Remove the lug nuts and pull off the flat tire."
+    }
+  ],
+  "image": "https://example.com/tire-change.jpg"
+}

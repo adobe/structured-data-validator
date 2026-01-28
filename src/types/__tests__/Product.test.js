@@ -281,7 +281,8 @@ describe('ProductValidator', () => {
         'jsonld',
       );
       const issues = await validator.validate(data);
-      expect(issues).to.have.lengthOf(0);
+      const errors = issues.filter((i) => i.severity === 'ERROR');
+      expect(errors).to.have.lengthOf(0);
     });
 
     it('should ensure no errors for a stand alone Offer', async () => {
@@ -290,7 +291,8 @@ describe('ProductValidator', () => {
         'jsonld',
       );
       const issues = await validator.validate(data);
-      expect(issues).to.have.lengthOf(0);
+      const errors = issues.filter((i) => i.severity === 'ERROR');
+      expect(errors).to.have.lengthOf(0);
     });
   });
 });

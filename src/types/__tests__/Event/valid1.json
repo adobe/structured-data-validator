@@ -1,0 +1,35 @@
+{
+	"@type": "Event",
+	"name": "The Adventures of Kira and Morrison",
+	"startDate": "2025-07-21T19:00-05:00",
+	"endDate": "2025-07-21T23:00-05:00",
+	"location": {
+		"@type": "Place",
+		"name": "Snickerpark Stadium",
+		"address": {
+			"@type": "PostalAddress",
+			"streetAddress": "100 West Snickerpark Dr",
+			"addressLocality": "Snickertown",
+			"postalCode": "19019",
+			"addressRegion": "PA",
+			"addressCountry": "US"
+		}
+	},
+	"image": "https://example.com/event-image.jpg",
+	"description": "An amazing concert event",
+	"offers": {
+		"@type": "Offer",
+		"url": "https://example.com/tickets",
+		"price": "30",
+		"priceCurrency": "USD",
+		"availability": "https://schema.org/InStock"
+	},
+	"performer": {
+		"@type": "Person",
+		"name": "Kira Morrison"
+	},
+	"organizer": {
+		"@type": "Organization",
+		"name": "Concert Events Inc"
+	}
+}

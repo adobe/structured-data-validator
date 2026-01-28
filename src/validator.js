@@ -23,17 +23,25 @@ export class Validator {
       '3DModel': [() => import('./types/3DModel.js')],
       AggregateOffer: [() => import('./types/AggregateOffer.js')],
       AggregateRating: [() => import('./types/AggregateRating.js')],
+      Answer: [() => import('./types/Answer.js')],
+      Article: [() => import('./types/Article.js')],
+      BlogPosting: [() => import('./types/Article.js')],
       Brand: [() => import('./types/Brand.js')],
       BreadcrumbList: [() => import('./types/BreadcrumbList.js')],
       Certification: [() => import('./types/Certification.js')],
       DefinedRegion: [() => import('./types/DefinedRegion.js')],
+      Event: [() => import('./types/Event.js')],
+      FAQPage: [() => import('./types/FAQPage.js')],
+      HowTo: [() => import('./types/HowTo.js')],
       ImageObject: [() => import('./types/ImageObject.js')],
       VideoObject: [() => import('./types/VideoObject.js')],
       Clip: [() => import('./types/Clip.js')],
       BroadcastEvent: [() => import('./types/BroadcastEvent.js')],
       SeekToAction: [() => import('./types/SeekToAction.js')],
       ListItem: [() => import('./types/ListItem.js')],
+      LocalBusiness: [() => import('./types/LocalBusiness.js')],
       MerchantReturnPolicy: [() => import('./types/MerchantReturnPolicy.js')],
+      NewsArticle: [() => import('./types/Article.js')],
       Offer: [() => import('./types/Offer.js')],
       OfferShippingDetails: [() => import('./types/OfferShippingDetails.js')],
       Organization: [() => import('./types/Organization.js')],
@@ -45,6 +53,7 @@ export class Validator {
         () => import('./types/ProductMerchant.js'),
       ],
       QuantitativeValue: [() => import('./types/QuantitativeValue.js')],
+      Question: [() => import('./types/Question.js')],
       Rating: [() => import('./types/Rating.js')],
       Review: [() => import('./types/Review.js')],
       ShippingDeliveryTime: [() => import('./types/ShippingDeliveryTime.js')],
@@ -56,7 +65,71 @@ export class Validator {
       HowToSection: [() => import('./types/HowToSection.js')],
       HowToDirection: [() => import('./types/HowToDirection.js')],
       HowToTip: [() => import('./types/HowToTip.js')],
+      WebSite: [() => import('./types/WebSite.js')],
     };
+  }
+
+  // Get parent types from schema.org JSON-LD
+  #getParentTypes(type) {
+    if (!this.schemaOrgJson) return [];
+
+    const graph = this.schemaOrgJson['@graph'];
+    if (!graph) return [];
+
+    const typeEntry = graph.find(
+      (e) =>
+        e['@type'] === 'rdfs:Class' &&
+        (e['@id'] === type ||
+          e['@id'] === `schema:${type}` ||
+          e['@id'] === `https://schema.org/${type}`),
+    );
+
+    if (!typeEntry || !typeEntry['rdfs:subClassOf']) return [];
+
+    const parents = Array.isArray(typeEntry['rdfs:subClassOf'])
+      ? typeEntry['rdfs:subClassOf']
+      : [typeEntry['rdfs:subClassOf']];
+
+    return parents.map((p) => {
+      const id = p['@id'] || p;
+      return id
+        .replace('schema:', '')
+        .replace('https://schema.org/', '')
+        .replace('http://schema.org/', '');
+    });
+  }
+
+  // Get handlers for type, falling back to parent types if needed
+  async #getHandlersForType(type) {
+    // 1. Check direct mapping first (priority)
+    if (this.registeredHandlers[type]) {
+      return [...this.registeredHandlers[type]];
+    }
+
+    // 2. If schemaOrgJson available, check parent types
+    if (this.schemaOrgJson) {
+      const visited = new Set();
+      const queue = [type];
+
+      while (queue.length > 0) {
+        const current = queue.shift();
+        if (visited.has(current)) continue;
+        visited.add(current);
+
+        // Check if parent has handlers
+        if (current !== type && this.registeredHandlers[current]) {
+          this.debug &&
+            console.debug(`  Using ${current} handler for subtype ${type}`);
+          return [...this.registeredHandlers[current]];
+        }
+
+        // Add parent types to queue
+        const parents = this.#getParentTypes(current);
+        queue.push(...parents);
+      }
+    }
+
+    return [];
   }
 
   async #validateSubtree(data, rootData, dataFormat, path = []) {
@@ -103,8 +176,8 @@ export class Validator {
               JSON.stringify(path),
             );
 
-          // Find supported handlers
-          const handlers = [...(this.registeredHandlers[type] || [])];
+          // Find supported handlers (check direct mapping first, then parent types)
+          const handlers = await this.#getHandlersForType(type);
           if (!handlers || handlers.length === 0) {
             this.debug &&
               console.warn(
