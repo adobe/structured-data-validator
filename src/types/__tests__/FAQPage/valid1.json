@@ -1,0 +1,21 @@
+{
+	"@type": "FAQPage",
+	"mainEntity": [
+		{
+			"@type": "Question",
+			"name": "What is structured data?",
+			"acceptedAnswer": {
+				"@type": "Answer",
+				"text": "Structured data is a standardized format for providing information about a page and classifying the page content."
+			}
+		},
+		{
+			"@type": "Question",
+			"name": "Why is structured data important?",
+			"acceptedAnswer": {
+				"@type": "Answer",
+				"text": "Structured data helps search engines understand your content better and can enable rich results in search."
+			}
+		}
+	]
+}

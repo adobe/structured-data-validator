@@ -1,0 +1,19 @@
+{
+	"@type": "Article",
+	"headline": "How to Write Great Headlines",
+	"author": {
+		"@type": "Person",
+		"name": "Jane Doe"
+	},
+	"publisher": {
+		"@type": "Organization",
+		"name": "Example News",
+		"logo": {
+			"@type": "ImageObject",
+			"url": "https://example.com/logo.png"
+		}
+	},
+	"datePublished": "2025-01-07",
+	"dateModified": "2025-01-07",
+	"image": "https://example.com/article-image.jpg"
+}
