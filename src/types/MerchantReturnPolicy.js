@@ -84,6 +84,11 @@ export default class MerchantReturnPolicyValidator extends BaseValidator {
           'Either applicableCountry and returnPolicyCategory or merchantReturnLink must be present',
         severity: 'ERROR',
         path: this.path,
+        fieldNames: [
+          'applicableCountry',
+          'returnPolicyCategory',
+          'merchantReturnLink',
+        ],
       };
     }
   }

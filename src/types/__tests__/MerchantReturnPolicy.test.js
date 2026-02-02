@@ -74,6 +74,11 @@ describe('MerchantReturnPolicyValidator', () => {
             index: 0,
           },
         ],
+        fieldNames: [
+          'applicableCountry',
+          'returnPolicyCategory',
+          'merchantReturnLink',
+        ],
       });
     });
   });
