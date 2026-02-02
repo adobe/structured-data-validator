@@ -48,6 +48,30 @@ The validator expects the output format from `@marbec/web-auto-extractor`, which
 - Microdata
 - RDFa
 
+### Validation Results
+
+The validator returns an array of validation issues. Each issue object contains:
+
+- `issueMessage` - Human-readable error or warning message
+- `severity` - Either `'ERROR'` or `'WARNING'`
+- `path` - Array representing the location in the data structure where the issue occurred
+- `fieldNames` - Array of field paths that caused the validation issue (e.g., `['price']`, `['offers.price']`, or `['aggregateRating', 'offers', 'review']` for compound conditions)
+- `location` - Character position in the original source (if available)
+
+Example validation result:
+
+```javascript
+[
+  {
+    issueMessage: 'Required attribute "price" is missing',
+    severity: 'ERROR',
+    path: [{ type: 'Product', index: 0 }],
+    fieldNames: ['price'],
+    location: '35,100',
+  },
+];
+```
+
 ### Browser
 
 You can run the parser and validator directly in the browser on any website using the following commands:
