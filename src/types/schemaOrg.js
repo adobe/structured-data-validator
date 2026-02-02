@@ -178,15 +178,27 @@ export default class SchemaOrgValidator {
       return false;
     }
 
+    // Strip -input or -output suffix if present (schema.org Actions extension)
+    // See: https://schema.org/docs/actions.html#part-4
+    let propertyToCheck = property;
+    if (property.endsWith('-input') || property.endsWith('-output')) {
+      propertyToCheck = property.replace(/-(input|output)$/, '');
+    }
+
     // Check if property is directly supported
-    if (schema[type].properties.includes(property)) {
+    if (schema[type].properties.includes(propertyToCheck)) {
       return true;
     }
 
     // Check if property is supported through inheritance
     return Object.keys(schema[type].propertiesFromParent).some((parent) => {
-      return schema[type].propertiesFromParent[parent].includes(property);
+      return schema[type].propertiesFromParent[parent].includes(propertyToCheck);
     });
+  }
+
+  async validateType(type) {
+    const schema = await this.#loadSchema();
+    return !!schema[type];
   }
 
   async validate(data) {
@@ -195,6 +207,22 @@ export default class SchemaOrgValidator {
     if (typeof data === 'object' && data !== null) {
       if (!this.type) {
         return [];
+      }
+
+      const typeId = this.#stripSchema(this.type);
+
+      // Check if type exists in schema.org
+      const typeExists = await this.validateType(typeId);
+      if (!typeExists) {
+        issues.push({
+          issueMessage: `Type "${typeId}" is not a valid schema.org type`,
+          severity: 'ERROR',
+          path: this.path,
+          errorType: 'schemaOrg',
+          fieldName: '@type',
+        });
+        // Skip property validation since type is invalid
+        return issues;
       }
 
       // Get list of properties, any other keys which do not start with @
@@ -206,7 +234,6 @@ export default class SchemaOrgValidator {
       await Promise.all(
         properties.map(async (property) => {
           const propertyId = this.#stripSchema(property);
-          const typeId = this.#stripSchema(this.type);
 
           const isValid = await this.validateProperty(typeId, propertyId);
           if (!isValid) {
@@ -215,6 +242,7 @@ export default class SchemaOrgValidator {
               severity: 'WARNING',
               path: this.path,
               errorType: 'schemaOrg',
+              fieldName: propertyId,
             });
           }
         }),

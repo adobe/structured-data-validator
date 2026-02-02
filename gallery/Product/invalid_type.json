@@ -1,0 +1,5 @@
+{
+  "@context": "https://schema.org",
+  "@type": "BananaPhone",
+  "name": "Invalid Type Test"
+}
