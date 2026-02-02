@@ -32,7 +32,7 @@ export default class BreadcrumbListValidator extends BaseValidator {
         issueMessage: 'At least two ListItems are required',
         severity: 'WARNING',
         path: this.path,
-        fieldName: 'itemListElement',
+        fieldNames: ['itemListElement'],
       };
     }
     return null;
@@ -138,7 +138,7 @@ export default class BreadcrumbListValidator extends BaseValidator {
           issueMessage: e,
           severity: 'WARNING',
           path: newPath,
-          fieldName: urlPath || 'item',
+          fieldNames: [urlPath || 'item'],
         });
       }
     }

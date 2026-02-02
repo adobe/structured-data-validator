@@ -13,7 +13,7 @@ import { expect } from "chai";
 import BaseValidator from "../base.js";
 
 describe("BaseValidator", () => {
-	describe("fieldName property", () => {
+	describe("fieldNames property", () => {
 		let validator;
 		const testPath = [{ type: "TestType" }];
 
@@ -25,27 +25,27 @@ describe("BaseValidator", () => {
 		});
 
 		describe("required()", () => {
-			it("should include fieldName when required attribute is missing", () => {
+			it("should include fieldNames when required attribute is missing", () => {
 				const condition = validator.required("price");
 				const result = condition({});
 
 				expect(result).to.deep.include({
 					severity: "ERROR",
 					issueMessage: 'Required attribute "price" is missing',
-					fieldName: "price",
 				});
+				expect(result.fieldNames).to.deep.equal(["price"]);
 				expect(result.path).to.deep.equal(testPath);
 			});
 
-			it("should include fieldName when required attribute has invalid type", () => {
+			it("should include fieldNames when required attribute has invalid type", () => {
 				const condition = validator.required("price", "number");
 				const result = condition({ price: "not-a-number" });
 
 				expect(result).to.deep.include({
 					severity: "ERROR",
 					issueMessage: 'Invalid type for attribute "price"',
-					fieldName: "price",
 				});
+				expect(result.fieldNames).to.deep.equal(["price"]);
 			});
 
 			it("should return null when required attribute is valid", () => {
@@ -57,27 +57,27 @@ describe("BaseValidator", () => {
 		});
 
 		describe("recommended()", () => {
-			it("should include fieldName when recommended attribute is missing", () => {
+			it("should include fieldNames when recommended attribute is missing", () => {
 				const condition = validator.recommended("description");
 				const result = condition({});
 
 				expect(result).to.deep.include({
 					severity: "WARNING",
 					issueMessage: 'Missing field "description" (optional)',
-					fieldName: "description",
 				});
+				expect(result.fieldNames).to.deep.equal(["description"]);
 				expect(result.path).to.deep.equal(testPath);
 			});
 
-			it("should include fieldName when recommended attribute has invalid type", () => {
+			it("should include fieldNames when recommended attribute has invalid type", () => {
 				const condition = validator.recommended("image", "url");
 				const result = condition({ image: "data:invalid" });
 
 				expect(result).to.deep.include({
 					severity: "WARNING",
 					issueMessage: 'Invalid type for attribute "image"',
-					fieldName: "image",
 				});
+				expect(result.fieldNames).to.deep.equal(["image"]);
 			});
 
 			it("should return null when recommended attribute is valid", () => {
@@ -89,7 +89,7 @@ describe("BaseValidator", () => {
 		});
 
 		describe("or()", () => {
-			it("should include fieldName and fieldNames when or conditions fail", () => {
+			it("should include fieldNames when or conditions fail", () => {
 				const condition = validator.or(
 					validator.required("price"),
 					validator.required("priceSpecification.price")
@@ -97,7 +97,6 @@ describe("BaseValidator", () => {
 				const result = condition({});
 
 				expect(result.severity).to.equal("ERROR");
-				expect(result.fieldName).to.equal("price");
 				expect(result.fieldNames).to.deep.equal([
 					"price",
 					"priceSpecification.price",
@@ -121,20 +120,19 @@ describe("BaseValidator", () => {
 				);
 				const result = condition({});
 
-				expect(result.fieldName).to.equal("availability");
 				expect(result.fieldNames).to.deep.equal(["availability"]);
 			});
 		});
 
-		describe("nested path fieldName", () => {
-			it("should include fieldName for nested attributes", () => {
+		describe("nested path fieldNames", () => {
+			it("should include fieldNames for nested attributes", () => {
 				const condition = validator.required("offers.price");
 				const result = condition({ offers: {} });
 
 				expect(result).to.deep.include({
 					severity: "ERROR",
-					fieldName: "offers.price",
 				});
+				expect(result.fieldNames).to.deep.equal(["offers.price"]);
 			});
 		});
 	});

@@ -81,7 +81,6 @@ export default class ProductMerchantValidator extends BaseValidator {
       issueMessage: `Missing one of field ${gtinFields.map((a) => `"${a}"`).join(', ')} on either product or all offers`,
       severity: 'WARNING',
       path: this.path,
-      fieldName: 'gtin',
       fieldNames: gtinFields,
     };
   }
