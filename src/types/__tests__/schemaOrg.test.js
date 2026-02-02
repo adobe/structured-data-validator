@@ -103,9 +103,9 @@ describe('Schema.org Validator', () => {
       'VideoObject/valid2.json',
       'VideoObject/valid3.json',
       'Clip/valid1.json',
-      // SeekToAction/valid1.json excluded - contains Google-specific 'startOffset-input' property
+      'SeekToAction/valid1.json',
       'BroadcastEvent/valid1.json',
-      // VideoObject/valid4.json excluded - contains nested SeekToAction with Google-specific property
+      'VideoObject/valid4.json',
     ];
 
     files.forEach((file) => {

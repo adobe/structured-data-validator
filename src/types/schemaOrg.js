@@ -178,14 +178,21 @@ export default class SchemaOrgValidator {
       return false;
     }
 
+    // Strip -input or -output suffix if present (schema.org Actions extension)
+    // See: https://schema.org/docs/actions.html#part-4
+    let propertyToCheck = property;
+    if (property.endsWith('-input') || property.endsWith('-output')) {
+      propertyToCheck = property.replace(/-(input|output)$/, '');
+    }
+
     // Check if property is directly supported
-    if (schema[type].properties.includes(property)) {
+    if (schema[type].properties.includes(propertyToCheck)) {
       return true;
     }
 
     // Check if property is supported through inheritance
     return Object.keys(schema[type].propertiesFromParent).some((parent) => {
-      return schema[type].propertiesFromParent[parent].includes(property);
+      return schema[type].propertiesFromParent[parent].includes(propertyToCheck);
     });
   }
 
