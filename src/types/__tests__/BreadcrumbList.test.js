@@ -51,6 +51,7 @@ describe('BreadcrumbListValidator', () => {
         issueMessage: 'At least two ListItems are required',
         severity: 'WARNING',
         path: [{ type: 'BreadcrumbList', index: 0 }],
+        fieldNames: ['itemListElement'],
       });
     });
 
@@ -77,6 +78,7 @@ describe('BreadcrumbListValidator', () => {
             type: 'ListItem',
           },
         ],
+        fieldNames: ['item'],
       });
     });
 
@@ -215,6 +217,7 @@ describe('BreadcrumbListValidator', () => {
             type: 'ListItem',
           },
         ],
+        fieldNames: ['item'],
       });
     });
   });

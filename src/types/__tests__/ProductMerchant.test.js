@@ -84,6 +84,7 @@ describe('ProductMerchantListValidator', () => {
         location: '35,1236',
         severity: 'WARNING',
         path: [{ type: 'Product', index: 0 }],
+        fieldNames: ['gtin', 'gtin8', 'gtin12', 'gtin13', 'gtin14', 'isbn'],
       });
     });
   });
