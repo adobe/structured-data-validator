@@ -1,3 +1,10 @@
+# [1.7.0](https://github.com/adobe/structured-data-validator/compare/v1.6.0...v1.7.0) (2026-02-25)
+
+
+### Features
+
+* Add validation for invalid schema.org types ([#60](https://github.com/adobe/structured-data-validator/issues/60)) ([1e5fdb2](https://github.com/adobe/structured-data-validator/commit/1e5fdb2899103048341283c123a8b391ae9e71aa))
+
 # [1.6.0](https://github.com/adobe/structured-data-validator/compare/v1.5.0...v1.6.0) (2026-02-02)
 
 
