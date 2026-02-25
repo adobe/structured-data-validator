@@ -177,7 +177,7 @@ describe('Schema.org Validator', () => {
         severity: 'ERROR',
         path: [{ type: 'BananaPhone', index: 0 }],
         errorType: 'schemaOrg',
-        fieldName: '@type',
+        fieldNames: ['@type'],
       });
     });
   });

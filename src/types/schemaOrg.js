@@ -192,7 +192,9 @@ export default class SchemaOrgValidator {
 
     // Check if property is supported through inheritance
     return Object.keys(schema[type].propertiesFromParent).some((parent) => {
-      return schema[type].propertiesFromParent[parent].includes(propertyToCheck);
+      return schema[type].propertiesFromParent[parent].includes(
+        propertyToCheck,
+      );
     });
   }
 
@@ -219,7 +221,7 @@ export default class SchemaOrgValidator {
           severity: 'ERROR',
           path: this.path,
           errorType: 'schemaOrg',
-          fieldName: '@type',
+          fieldNames: ['@type'],
         });
         // Skip property validation since type is invalid
         return issues;
