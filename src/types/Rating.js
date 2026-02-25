@@ -46,6 +46,7 @@ export default class RatingValidator extends BaseValidator {
           issueMessage: `Rating is outside the specified or default range`,
           severity: 'ERROR',
           path: this.path,
+          fieldNames: ['ratingValue'],
         };
       }
     }

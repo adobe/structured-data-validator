@@ -1,3 +1,11 @@
+# [1.6.0](https://github.com/adobe/structured-data-validator/compare/v1.5.0...v1.6.0) (2026-02-02)
+
+
+### Features
+
+* add fieldName property to validation error objects ([#57](https://github.com/adobe/structured-data-validator/issues/57)) ([fd63c8b](https://github.com/adobe/structured-data-validator/commit/fd63c8bfe15f66de4949b5b81a831c194dbf91bf)), closes [#55](https://github.com/adobe/structured-data-validator/issues/55)
+* Adjust formatting and README for fieldNames ([bd5098e](https://github.com/adobe/structured-data-validator/commit/bd5098e0f6e0cb98423102dd7ed50846ec943bcd))
+
 # [1.5.0](https://github.com/adobe/structured-data-validator/compare/v1.4.1...v1.5.0) (2025-08-20)
 
 

@@ -92,6 +92,7 @@ describe('ProductValidator', () => {
           'One of the following attributes is required: "aggregateRating", "offers" or "review"',
         location: '35,350',
         severity: 'ERROR',
+        fieldNames: ['aggregateRating', 'offers', 'review'],
       });
     });
 
@@ -107,6 +108,7 @@ describe('ProductValidator', () => {
           'At least 2 notes, either positive or negative, are required',
         location: '35,1353',
         severity: 'WARNING',
+        fieldNames: ['review.positiveNotes', 'review.negativeNotes'],
       });
     });
 

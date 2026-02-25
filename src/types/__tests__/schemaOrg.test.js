@@ -132,6 +132,7 @@ describe('Schema.org Validator', () => {
         severity: 'WARNING',
         path: [{ type: 'Product', index: 0 }],
         errorType: 'schemaOrg',
+        fieldNames: ['my-custom-attribute'],
       });
     });
 
@@ -160,6 +161,7 @@ describe('Schema.org Validator', () => {
           },
         ],
         errorType: 'schemaOrg',
+        fieldNames: ['my-custom-attribute'],
       });
     });
 

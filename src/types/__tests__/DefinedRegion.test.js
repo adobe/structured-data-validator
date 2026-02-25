@@ -51,6 +51,7 @@ describe('DefinedRegionValidator', () => {
             index: 0,
           },
         ],
+        fieldNames: ['addressRegion', 'postalCode'],
       });
     });
   });
