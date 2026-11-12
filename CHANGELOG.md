@@ -1,3 +1,10 @@
+## [1.7.1](https://github.com/adobe/structured-data-validator/compare/v1.7.0...v1.7.1) (2026-11-12)
+
+
+### Bug Fixes
+
+* accept minPrice and maxPrice as a price range in PriceSpecification ([#80](https://github.com/adobe/structured-data-validator/issues/80)) ([7e86b4d](https://github.com/adobe/structured-data-validator/commit/7e86b4dada87beddddf2e364ee8b4647349f8fe4))
+
 # [1.7.0](https://github.com/adobe/structured-data-validator/compare/v1.6.0...v1.7.0) (2026-02-25)
 
 
