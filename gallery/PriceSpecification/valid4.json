@@ -1,0 +1,13 @@
+{
+  "@context": "https://schema.org",
+  "@type": "Offer",
+  "name": "Happy Hour Deals",
+  "url": "https://www.example.com/happy-hour",
+  "availability": "https://schema.org/InStock",
+  "priceSpecification": {
+    "@type": "PriceSpecification",
+    "minPrice": "4.00",
+    "maxPrice": "5.00",
+    "priceCurrency": "USD"
+  }
+}

@@ -11,10 +11,34 @@
  */
 import BaseValidator from './base.js';
 
+const isPresent = (value) =>
+  value !== undefined && value !== null && value !== '';
+
 export default class PriceSpecificationValidator extends BaseValidator {
+  /**
+   * A PriceSpecification needs a single `price`, or a price range expressed
+   * with both `minPrice` and `maxPrice` (schema.org: "The lowest price if the
+   * price is a range"). A range is only accepted when no `price` is given; an
+   * incomplete range still reports the usual missing "price" error.
+   */
+  priceOrRange() {
+    return (data) => {
+      if (!isPresent(data?.price) && isPresent(data?.minPrice)) {
+        if (isPresent(data?.maxPrice)) {
+          const issues = [
+            this.required('minPrice', 'number')(data),
+            this.required('maxPrice', 'number')(data),
+          ].filter(Boolean);
+          return issues.length > 0 ? issues : null;
+        }
+      }
+      return this.required('price', 'number')(data);
+    };
+  }
+
   getConditions() {
     return [
-      this.required('price', 'number'),
+      this.priceOrRange(),
       this.recommended('priceCurrency', 'currency'),
     ].map((c) => c.bind(this));
   }
