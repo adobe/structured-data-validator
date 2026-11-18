@@ -47,6 +47,7 @@ export default class ProductValidator extends BaseValidator {
           'At least 2 notes, either positive or negative, are required',
         severity: 'WARNING',
         path: this.path,
+        fieldNames: ['review.positiveNotes', 'review.negativeNotes'],
       });
     }
 
@@ -63,6 +64,7 @@ export default class ProductValidator extends BaseValidator {
           'One of the following attributes is required: "aggregateRating", "offers" or "review"',
         severity: 'ERROR',
         path: this.path,
+        fieldNames: ['aggregateRating', 'offers', 'review'],
       });
     }
 

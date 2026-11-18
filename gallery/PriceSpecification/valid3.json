@@ -1,0 +1,7 @@
+{
+  "@context": "https://schema.org",
+  "@type": "PriceSpecification",
+  "minPrice": "4.00",
+  "maxPrice": "5.00",
+  "priceCurrency": "USD"
+}

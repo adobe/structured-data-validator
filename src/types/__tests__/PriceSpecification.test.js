@@ -56,6 +56,54 @@ describe('PriceSpecificationValidator', () => {
       });
     });
 
+    it('should accept a price range (minPrice and maxPrice) in valid3.json', async () => {
+      const data = await loadTestData(
+        'PriceSpecification/valid3.json',
+        'jsonld',
+      );
+      const issues = await validator.validate(data);
+      expect(issues).to.have.lengthOf(0);
+    });
+
+    it('should accept an Offer whose priceSpecification is a price range in valid4.json', async () => {
+      const data = await loadTestData(
+        'PriceSpecification/valid4.json',
+        'jsonld',
+      );
+      const issues = await validator.validate(data);
+      expect(issues).to.have.lengthOf(0);
+    });
+
+    it('should still require price when only minPrice is given in invalid3.json', async () => {
+      const data = await loadTestData(
+        'PriceSpecification/invalid3.json',
+        'jsonld',
+      );
+      const issues = await validator.validate(data);
+
+      expect(issues).to.have.lengthOf(1);
+      expect(issues[0]).to.deep.include({
+        rootType: 'PriceSpecification',
+        issueMessage: 'Required attribute "price" is missing',
+        severity: 'ERROR',
+      });
+    });
+
+    it('should detect a non-numeric maxPrice in a price range in invalid4.json', async () => {
+      const data = await loadTestData(
+        'PriceSpecification/invalid4.json',
+        'jsonld',
+      );
+      const issues = await validator.validate(data);
+
+      expect(issues).to.have.lengthOf(1);
+      expect(issues[0]).to.deep.include({
+        rootType: 'PriceSpecification',
+        issueMessage: 'Invalid type for attribute "maxPrice"',
+        severity: 'ERROR',
+      });
+    });
+
     it('should detect invalid currency in invalid3.json', async () => {
       const data = await loadTestData(
         'PriceSpecification/invalid2.json',

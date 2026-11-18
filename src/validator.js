@@ -178,14 +178,17 @@ export class Validator {
 
           // Find supported handlers (check direct mapping first, then parent types)
           const handlers = await this.#getHandlersForType(type);
-          if (!handlers || handlers.length === 0) {
+          if (handlers.length === 0) {
             this.debug &&
               console.warn(
                 `${spacing}  WARN: No handlers registered for type: ${type}`,
               );
+          }
+          // Always run global handlers (e.g., schemaOrg) even if no type-specific handler exists
+          handlers.push(...(this.globalHandlers || []));
+          if (handlers.length === 0) {
             return [];
           }
-          handlers.push(...(this.globalHandlers || []));
 
           const handlerPromises = handlers.map(async (handler) => {
             const handlerClass = (await handler()).default;

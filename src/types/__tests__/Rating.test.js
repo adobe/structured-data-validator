@@ -28,5 +28,28 @@ describe('RatingValidator', () => {
       const issues = await validator.validate(data);
       expect(issues).to.deep.equal([]);
     });
+
+    it('should return error with fieldNames when rating is outside range', async () => {
+      const data = {
+        jsonld: {
+          Rating: [
+            {
+              '@type': 'Rating',
+              '@location': '1,100',
+              ratingValue: 10,
+              bestRating: 5,
+              worstRating: 0,
+            },
+          ],
+        },
+      };
+      const issues = await validator.validate(data);
+      expect(issues).to.have.lengthOf(1);
+      expect(issues[0]).to.deep.include({
+        issueMessage: 'Rating is outside the specified or default range',
+        severity: 'ERROR',
+        fieldNames: ['ratingValue'],
+      });
+    });
   });
 });
