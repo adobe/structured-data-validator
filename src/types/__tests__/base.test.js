@@ -134,4 +134,28 @@ describe('BaseValidator', () => {
       });
     });
   });
+
+  describe('checkType() url', () => {
+    let validator;
+
+    beforeEach(() => {
+      validator = new BaseValidator({
+        dataFormat: 'jsonld',
+        path: [{ type: 'TestType' }],
+      });
+    });
+
+    it('should accept a URL string and an array of URL strings', () => {
+      expect(validator.checkType('https://example.com/a.jpg', 'url')).to.be
+        .true;
+      expect(validator.checkType(['https://example.com/a.jpg'], 'url')).to.be
+        .true;
+    });
+
+    it('should reject an object instead of throwing', () => {
+      const image = { '@type': 'ImageObject', url: 'https://example.com/a' };
+      expect(validator.checkType(image, 'url')).to.be.false;
+      expect(validator.checkType([image], 'url')).to.be.false;
+    });
+  });
 });

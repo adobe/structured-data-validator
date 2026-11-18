@@ -158,7 +158,7 @@ export default class BaseValidator {
       // Absolute or relative URL, but no data: URLs
       let urlValues = Array.isArray(data) ? data : [data];
       for (const url of urlValues) {
-        if (url.startsWith('data:')) {
+        if (typeof url !== 'string' || url.startsWith('data:')) {
           return false;
         }
         try {
