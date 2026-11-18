@@ -13,6 +13,8 @@ import BaseValidator from './base.js';
 
 export default class FAQPageValidator extends BaseValidator {
   getConditions() {
-    return [this.required('mainEntity', 'arrayOrObject')].map((c) => c.bind(this));
+    return [this.required('mainEntity', 'arrayOrObject')].map((c) =>
+      c.bind(this),
+    );
   }
 }
