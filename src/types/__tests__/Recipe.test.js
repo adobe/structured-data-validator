@@ -203,4 +203,24 @@ describe('RecipeValidator', () => {
       expect(warnings[i]).to.deep.include(expected);
     }
   });
+
+  it('should accept an image array containing an ImageObject', async () => {
+    const data = await loadTestData('Recipe/image-object-array.json', 'jsonld');
+    const issues = await validator.validate(data);
+    const errors = issues.filter((issue) => issue.severity === 'ERROR');
+
+    expect(errors).to.have.lengthOf(0);
+  });
+
+  it('should report an invalid type instead of throwing for a non-string image in invalid6.json', async () => {
+    const data = await loadTestData('Recipe/invalid6.json', 'jsonld');
+    const issues = await validator.validate(data);
+    const errors = issues.filter((issue) => issue.severity === 'ERROR');
+
+    expect(errors).to.have.lengthOf(1);
+    expect(errors[0]).to.deep.include({
+      issueMessage: 'Invalid type for attribute "image"',
+      severity: 'ERROR',
+    });
+  });
 });

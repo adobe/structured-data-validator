@@ -158,7 +158,11 @@ export default class BaseValidator {
       // Absolute or relative URL, but no data: URLs
       let urlValues = Array.isArray(data) ? data : [data];
       for (const url of urlValues) {
-        if (url.startsWith('data:')) {
+        // Nested objects (e.g. ImageObject) are checked by their own type validator
+        if (isObject(url)) {
+          continue;
+        }
+        if (typeof url !== 'string' || url.startsWith('data:')) {
           return false;
         }
         try {
