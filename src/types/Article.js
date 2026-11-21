@@ -18,7 +18,7 @@ export default class ArticleValidator extends BaseValidator {
       this.recommended('dateModified', 'date'),
       this.recommended('datePublished', 'date'),
       this.recommended('headline'),
-      this.recommended('image', 'arrayOrObject'),
+      this.recommended('image'),
       this.recommended('publisher', 'object'),
     ].map((c) => c.bind(this));
   }

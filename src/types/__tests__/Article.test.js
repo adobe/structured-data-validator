@@ -30,6 +30,13 @@ describe('ArticleValidator', () => {
       expect(errors).to.have.lengthOf(0);
     });
 
+    it('should accept image as a URL string', async () => {
+      const data = await loadTestData('Article/valid1.json', 'jsonld');
+      const issues = await validator.validate(data);
+      const imageIssues = issues.filter((i) => i.fieldNames?.includes('image'));
+      expect(imageIssues).to.have.lengthOf(0);
+    });
+
     it('should warn when headline is missing', async () => {
       const data = await loadTestData(
         'Article/missing_headline.json',
