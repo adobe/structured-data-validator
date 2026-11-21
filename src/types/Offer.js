@@ -17,8 +17,9 @@ export default class PriceSpecificationValidator extends BaseValidator {
     const offerIndex = this.path.findIndex(
       (pathElement) => pathElement.type === 'Offer',
     );
-    const productIsParent =
-      offerIndex > 0 ? this.path[offerIndex - 1].type === 'Product' : false;
+    const parentType = offerIndex > 0 ? this.path[offerIndex - 1].type : null;
+    const productIsParent = parentType === 'Product';
+    const eventIsParent = parentType === 'Event';
 
     if (productIsParent) {
       conditions.push(
@@ -32,6 +33,16 @@ export default class PriceSpecificationValidator extends BaseValidator {
           this.recommended('priceSpecification.priceCurrency', 'currency'),
         ),
         this.recommended('priceValidUntil', 'date'),
+      );
+    }
+    // https://developers.google.com/search/docs/appearance/structured-data/event#structured-data-type-definitions
+    if (eventIsParent) {
+      conditions.push(
+        this.recommended('availability'),
+        this.recommended('price', 'number'),
+        this.recommended('priceCurrency', 'currency'),
+        this.recommended('validFrom', 'date'),
+        this.recommended('url', 'url'),
       );
     }
     return conditions.map((c) => c.bind(this));

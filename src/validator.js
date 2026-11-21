@@ -9,6 +9,8 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
+import { stripSchema } from './utils.js';
+
 export class Validator {
   constructor(schemaOrgJson) {
     this.schemaOrgJson = schemaOrgJson;
@@ -23,17 +25,22 @@ export class Validator {
       '3DModel': [() => import('./types/3DModel.js')],
       AggregateOffer: [() => import('./types/AggregateOffer.js')],
       AggregateRating: [() => import('./types/AggregateRating.js')],
+      Article: [() => import('./types/Article.js')],
+      BlogPosting: [() => import('./types/Article.js')],
       Brand: [() => import('./types/Brand.js')],
       BreadcrumbList: [() => import('./types/BreadcrumbList.js')],
       Certification: [() => import('./types/Certification.js')],
       DefinedRegion: [() => import('./types/DefinedRegion.js')],
+      Event: [() => import('./types/Event.js')],
       ImageObject: [() => import('./types/ImageObject.js')],
       VideoObject: [() => import('./types/VideoObject.js')],
       Clip: [() => import('./types/Clip.js')],
       BroadcastEvent: [() => import('./types/BroadcastEvent.js')],
       SeekToAction: [() => import('./types/SeekToAction.js')],
       ListItem: [() => import('./types/ListItem.js')],
+      LocalBusiness: [() => import('./types/LocalBusiness.js')],
       MerchantReturnPolicy: [() => import('./types/MerchantReturnPolicy.js')],
+      NewsArticle: [() => import('./types/Article.js')],
       Offer: [() => import('./types/Offer.js')],
       OfferShippingDetails: [() => import('./types/OfferShippingDetails.js')],
       Organization: [() => import('./types/Organization.js')],
@@ -44,6 +51,11 @@ export class Validator {
         () => import('./types/Product.js'),
         () => import('./types/ProductMerchant.js'),
       ],
+      // ProductGroup is a schema.org subtype of Product but has its own, much
+      // smaller set of rules (only name is required), so it must not fall back
+      // to the Product handlers:
+      // https://developers.google.com/search/docs/appearance/structured-data/product-variants
+      ProductGroup: [],
       QuantitativeValue: [() => import('./types/QuantitativeValue.js')],
       Rating: [() => import('./types/Rating.js')],
       Review: [() => import('./types/Review.js')],
@@ -56,7 +68,65 @@ export class Validator {
       HowToSection: [() => import('./types/HowToSection.js')],
       HowToDirection: [() => import('./types/HowToDirection.js')],
       HowToTip: [() => import('./types/HowToTip.js')],
+      WebSite: [() => import('./types/WebSite.js')],
     };
+  }
+
+  // Get parent types from schema.org JSON-LD
+  #getParentTypes(type) {
+    if (!this.schemaOrgJson) return [];
+
+    const graph = this.schemaOrgJson['@graph'];
+    if (!graph) return [];
+
+    const typeEntry = graph.find(
+      (e) =>
+        e['@type'] === 'rdfs:Class' &&
+        (e['@id'] === type ||
+          e['@id'] === `schema:${type}` ||
+          e['@id'] === `https://schema.org/${type}`),
+    );
+
+    if (!typeEntry || !typeEntry['rdfs:subClassOf']) return [];
+
+    const parents = Array.isArray(typeEntry['rdfs:subClassOf'])
+      ? typeEntry['rdfs:subClassOf']
+      : [typeEntry['rdfs:subClassOf']];
+
+    return parents.map((p) => stripSchema(p['@id']));
+  }
+
+  // Get handlers for type, falling back to parent types if needed
+  async #getHandlersForType(type) {
+    // 1. Check direct mapping first (priority)
+    if (this.registeredHandlers[type]) {
+      return [...this.registeredHandlers[type]];
+    }
+
+    // 2. If schemaOrgJson available, check parent types
+    if (this.schemaOrgJson) {
+      const visited = new Set();
+      const queue = [type];
+
+      while (queue.length > 0) {
+        const current = queue.shift();
+        if (visited.has(current)) continue;
+        visited.add(current);
+
+        // Check if parent has handlers
+        if (current !== type && this.registeredHandlers[current]) {
+          this.debug &&
+            console.debug(`  Using ${current} handler for subtype ${type}`);
+          return [...this.registeredHandlers[current]];
+        }
+
+        // Add parent types to queue
+        const parents = this.#getParentTypes(current);
+        queue.push(...parents);
+      }
+    }
+
+    return [];
   }
 
   async #validateSubtree(data, rootData, dataFormat, path = []) {
@@ -103,8 +173,8 @@ export class Validator {
               JSON.stringify(path),
             );
 
-          // Find supported handlers
-          const handlers = [...(this.registeredHandlers[type] || [])];
+          // Find supported handlers (check direct mapping first, then parent types)
+          const handlers = await this.#getHandlersForType(type);
           if (handlers.length === 0) {
             this.debug &&
               console.warn(

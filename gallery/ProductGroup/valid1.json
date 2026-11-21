@@ -1,0 +1,13 @@
+{
+  "@context": "https://schema.org",
+  "@type": "ProductGroup",
+  "name": "Wool winter coat",
+  "description": "Wool coat, new for the coming winter season",
+  "url": "https://www.example.com/coat",
+  "brand": {
+    "@type": "Brand",
+    "name": "Good brand"
+  },
+  "productGroupID": "44E01",
+  "variesBy": ["https://schema.org/size", "https://schema.org/color"]
+}

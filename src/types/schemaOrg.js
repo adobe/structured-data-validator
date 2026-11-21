@@ -9,6 +9,8 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
+import { stripSchema } from '../utils.js';
+
 export default class SchemaOrgValidator {
   // Cache schema globally to improve performance
   static schemaCache = null;
@@ -18,22 +20,6 @@ export default class SchemaOrgValidator {
     this.path = path;
     this.type = type;
     this.schemaOrgJson = schemaOrgJson;
-  }
-
-  #stripSchema(name) {
-    if (name.startsWith('schema:')) {
-      return name.replace('schema:', '');
-    }
-
-    if (name.startsWith('http://schema.org/')) {
-      return name.replace('http://schema.org/', '');
-    }
-
-    if (name.startsWith('https://schema.org/')) {
-      return name.replace('https://schema.org/', '');
-    }
-
-    return name;
   }
 
   async #loadSchema() {
@@ -49,18 +35,18 @@ export default class SchemaOrgValidator {
       entites
         .filter((entity) => entity['@type'] === 'rdfs:Class')
         .forEach((type) => {
-          const name = this.#stripSchema(type['@id']);
+          const name = stripSchema(type['@id']);
           schema[name] = {
             properties: [],
             propertiesFromParent: {},
           };
           if (Array.isArray(type['rdfs:subClassOf'])) {
             schema[name].parents = type['rdfs:subClassOf'].map((parent) =>
-              this.#stripSchema(parent['@id']),
+              stripSchema(parent['@id']),
             );
           } else if (type['rdfs:subClassOf']) {
             schema[name].parents = [
-              this.#stripSchema(type['rdfs:subClassOf']['@id']),
+              stripSchema(type['rdfs:subClassOf']['@id']),
             ];
           }
         });
@@ -71,13 +57,13 @@ export default class SchemaOrgValidator {
         .forEach((property) => {
           const domainIncludes = property['schema:domainIncludes'];
           const types = Array.isArray(domainIncludes)
-            ? domainIncludes.map((domain) => this.#stripSchema(domain['@id']))
+            ? domainIncludes.map((domain) => stripSchema(domain['@id']))
             : domainIncludes
-              ? [this.#stripSchema(domainIncludes['@id'])]
+              ? [stripSchema(domainIncludes['@id'])]
               : [];
           types.forEach((type) => {
             if (schema[type]) {
-              schema[type].properties.push(this.#stripSchema(property['@id']));
+              schema[type].properties.push(stripSchema(property['@id']));
             }
           });
         });
@@ -211,7 +197,7 @@ export default class SchemaOrgValidator {
         return [];
       }
 
-      const typeId = this.#stripSchema(this.type);
+      const typeId = stripSchema(this.type);
 
       // Check if type exists in schema.org
       const typeExists = await this.validateType(typeId);
@@ -235,7 +221,7 @@ export default class SchemaOrgValidator {
       // Check in schema.org schema if all properties are supported within the given type
       await Promise.all(
         properties.map(async (property) => {
-          const propertyId = this.#stripSchema(property);
+          const propertyId = stripSchema(property);
 
           const isValid = await this.validateProperty(typeId, propertyId);
           if (!isValid) {

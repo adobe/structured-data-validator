@@ -10,6 +10,8 @@
  * governing permissions and limitations under the License.
  */
 import { expect } from 'chai';
+import { join } from 'path';
+import { readFileSync } from 'fs';
 
 import { loadTestData, MockValidator } from './utils.js';
 import { Validator } from '../../validator.js';
@@ -283,7 +285,8 @@ describe('ProductValidator', () => {
         'jsonld',
       );
       const issues = await validator.validate(data);
-      expect(issues).to.have.lengthOf(0);
+      const errors = issues.filter((i) => i.severity === 'ERROR');
+      expect(errors).to.have.lengthOf(0);
     });
 
     it('should ensure no errors for a stand alone Offer', async () => {
@@ -291,6 +294,32 @@ describe('ProductValidator', () => {
         'Product/offer_with_no_parent.json',
         'jsonld',
       );
+      const issues = await validator.validate(data);
+      const errors = issues.filter((i) => i.severity === 'ERROR');
+      expect(errors).to.have.lengthOf(0);
+    });
+  });
+
+  describe('ProductGroup', () => {
+    const schemaOrgJson = JSON.parse(
+      readFileSync(
+        join(
+          process.cwd(),
+          'src',
+          'types',
+          '__tests__',
+          'schemaorg-current-https.jsonld',
+        ),
+        'utf8',
+      ),
+    );
+
+    it('should not apply the Product rules to a ProductGroup', async () => {
+      // With schema.org data, types without a handler fall back to their
+      // parent type's handler; ProductGroup must not fall back to Product.
+      const validator = new Validator(schemaOrgJson);
+      validator.globalHandlers = [];
+      const data = await loadTestData('ProductGroup/valid1.json', 'jsonld');
       const issues = await validator.validate(data);
       expect(issues).to.have.lengthOf(0);
     });
