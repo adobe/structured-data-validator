@@ -10,6 +10,7 @@
  * governing permissions and limitations under the License.
  */
 import BaseValidator from './base.js';
+import { stripSchema } from '../utils.js';
 
 export default class EventValidator extends BaseValidator {
   getConditions() {
@@ -57,10 +58,16 @@ export default class EventValidator extends BaseValidator {
 
   locationOrAttendanceMode(data) {
     const hasLocation = data.location !== undefined && data.location !== null;
-    const hasOnlineAttendanceMode =
-      data.eventAttendanceMode &&
-      (data.eventAttendanceMode.includes('OnlineEventAttendanceMode') ||
-        data.eventAttendanceMode.includes('MixedEventAttendanceMode'));
+    // eventAttendanceMode may be a single value or an array
+    const hasOnlineAttendanceMode = []
+      .concat(data.eventAttendanceMode)
+      .some(
+        (mode) =>
+          typeof mode === 'string' &&
+          ['OnlineEventAttendanceMode', 'MixedEventAttendanceMode'].includes(
+            stripSchema(mode),
+          ),
+      );
 
     if (!hasLocation && !hasOnlineAttendanceMode) {
       return {

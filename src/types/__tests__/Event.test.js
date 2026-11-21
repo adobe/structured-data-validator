@@ -90,6 +90,31 @@ describe('EventValidator', () => {
       expect(errors[0].fieldNames).to.deep.equal(['location.address']);
     });
 
+    it('should accept eventAttendanceMode as an array', async () => {
+      const data = await loadTestData(
+        'Event/valid_online_mode_array.json',
+        'jsonld',
+      );
+      const issues = await validator.validate(data);
+      const errors = issues.filter((i) => i.severity === 'ERROR');
+      expect(errors).to.have.lengthOf(0);
+    });
+
+    it('should not throw for a non-string eventAttendanceMode', async () => {
+      const data = await loadTestData(
+        'Event/invalid_missing_location.json',
+        'jsonld',
+      );
+      data.jsonld.Event[0].eventAttendanceMode = { '@type': 'Thing' };
+      const issues = await validator.validate(data);
+      const errors = issues.filter((i) => i.severity === 'ERROR');
+      expect(errors).to.have.lengthOf(1);
+      expect(errors[0].fieldNames).to.deep.equal([
+        'location',
+        'eventAttendanceMode',
+      ]);
+    });
+
     it('should fail when name is missing', async () => {
       const data = await loadTestData(
         'Event/invalid_missing_name.json',
