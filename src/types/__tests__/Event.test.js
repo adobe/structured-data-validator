@@ -37,6 +37,44 @@ describe('EventValidator', () => {
       expect(errors).to.have.lengthOf(0);
     });
 
+    it('should warn when location.name is missing', async () => {
+      const data = await loadTestData(
+        'Event/missing_location_name.json',
+        'jsonld',
+      );
+      const issues = await validator.validate(data);
+      const errors = issues.filter((i) => i.severity === 'ERROR');
+      expect(errors).to.have.lengthOf(0);
+      const locationName = issues.filter((i) =>
+        i.fieldNames?.includes('location.name'),
+      );
+      expect(locationName).to.have.lengthOf(1);
+      expect(locationName[0]).to.deep.include({
+        severity: 'WARNING',
+        issueMessage: 'Missing field "location.name" (optional)',
+      });
+    });
+
+    it('should not warn about location.name when it is present', async () => {
+      const data = await loadTestData('Event/valid1.json', 'jsonld');
+      const issues = await validator.validate(data);
+      const locationName = issues.filter((i) =>
+        i.fieldNames?.includes('location.name'),
+      );
+      expect(locationName).to.have.lengthOf(0);
+    });
+
+    it('should validate a mixed Event with a VirtualLocation and a Place', async () => {
+      const data = await loadTestData('Event/valid_mixed.json', 'jsonld');
+      const issues = await validator.validate(data);
+      const errors = issues.filter((i) => i.severity === 'ERROR');
+      expect(errors).to.have.lengthOf(0);
+      const locationIssues = issues.filter((i) =>
+        i.fieldNames?.some((f) => f.startsWith('location')),
+      );
+      expect(locationIssues).to.have.lengthOf(0);
+    });
+
     it('should fail when name is missing', async () => {
       const data = await loadTestData(
         'Event/invalid_missing_name.json',

@@ -17,6 +17,7 @@ export default class EventValidator extends BaseValidator {
       this.required('name'),
       this.required('startDate', 'date'),
       this.locationOrAttendanceMode,
+      this.validateLocation,
 
       this.recommended('description'),
       this.recommended('endDate', 'date'),
@@ -27,6 +28,28 @@ export default class EventValidator extends BaseValidator {
       this.recommended('organizer', 'object'),
       this.recommended('performer', 'arrayOrObject'),
     ].map((c) => c.bind(this));
+  }
+
+  // Physical locations of the event. A location can be a single value or an
+  // array (e.g. a VirtualLocation and a Place for a mixed event). A
+  // VirtualLocation has no venue name or address, and events without a
+  // location are handled by locationOrAttendanceMode.
+  physicalLocations(data) {
+    if (data.location === undefined || data.location === null) {
+      return [];
+    }
+    const locations = Array.isArray(data.location)
+      ? data.location
+      : [data.location];
+    return locations.filter(
+      (location) => ![].concat(location?.['@type']).includes('VirtualLocation'),
+    );
+  }
+
+  validateLocation(data) {
+    return this.physicalLocations(data)
+      .flatMap((location) => [this.recommended('location.name')({ location })])
+      .filter((issue) => issue !== null);
   }
 
   locationOrAttendanceMode(data) {
