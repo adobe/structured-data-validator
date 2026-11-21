@@ -51,6 +51,30 @@ describe('EventValidator', () => {
       expect(imageIssues).to.have.lengthOf(0);
     });
 
+    const offerIssues = (issues) =>
+      issues.filter((i) => i.path[i.path.length - 1].type === 'Offer');
+
+    it('should not warn for an Offer with all recommended properties', async () => {
+      const data = await loadTestData(
+        'Event/offer_all_recommended.json',
+        'jsonld',
+      );
+      expect(offerIssues(await validator.validate(data))).to.have.lengthOf(0);
+    });
+
+    it('should warn for missing recommended Offer properties', async () => {
+      const data = await loadTestData('Event/offer_empty.json', 'jsonld');
+      const issues = offerIssues(await validator.validate(data));
+      expect(issues.every((i) => i.severity === 'WARNING')).to.be.true;
+      expect(issues.flatMap((i) => i.fieldNames)).to.have.members([
+        'availability',
+        'price',
+        'priceCurrency',
+        'validFrom',
+        'url',
+      ]);
+    });
+
     it('should warn for an online-only Event without a location', async () => {
       const data = await loadTestData('Event/online_only.json', 'jsonld');
       expectOnlineOnlyWarning(await validator.validate(data));
