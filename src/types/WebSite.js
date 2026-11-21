@@ -11,13 +11,15 @@
  */
 import BaseValidator from './base.js';
 
+// WebSite is not part of the rich results gallery, but Google uses it for site
+// names: https://developers.google.com/search/docs/appearance/site-names
 export default class WebSiteValidator extends BaseValidator {
   getConditions() {
     return [
       this.required('name'),
       this.required('url', 'url'),
 
-      this.recommended('potentialAction', 'arrayOrObject'),
+      this.recommended('alternateName'),
     ].map((c) => c.bind(this));
   }
 }

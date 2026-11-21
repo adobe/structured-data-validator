@@ -26,8 +26,21 @@ describe('WebSiteValidator', () => {
     it('should validate a correct WebSite structure in valid1.json', async () => {
       const data = await loadTestData('WebSite/valid1.json', 'jsonld');
       const issues = await validator.validate(data);
-      const errors = issues.filter((i) => i.severity === 'ERROR');
-      expect(errors).to.have.lengthOf(0);
+      expect(issues).to.have.lengthOf(0);
+    });
+
+    it('should warn when alternateName is missing', async () => {
+      const data = await loadTestData(
+        'WebSite/missing_alternate_name.json',
+        'jsonld',
+      );
+      const issues = await validator.validate(data);
+      expect(issues).to.have.lengthOf(1);
+      expect(issues[0]).to.deep.include({
+        severity: 'WARNING',
+        issueMessage: 'Missing field "alternateName" (optional)',
+      });
+      expect(issues[0].fieldNames).to.deep.equal(['alternateName']);
     });
 
     it('should fail when name is missing', async () => {
