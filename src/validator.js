@@ -9,6 +9,8 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
+import { stripSchema } from './utils.js';
+
 export class Validator {
   constructor(schemaOrgJson) {
     this.schemaOrgJson = schemaOrgJson;
@@ -90,13 +92,7 @@ export class Validator {
       ? typeEntry['rdfs:subClassOf']
       : [typeEntry['rdfs:subClassOf']];
 
-    return parents.map((p) => {
-      const id = p['@id'] || p;
-      return id
-        .replace('schema:', '')
-        .replace('https://schema.org/', '')
-        .replace('http://schema.org/', '');
-    });
+    return parents.map((p) => stripSchema(p['@id']));
   }
 
   // Get handlers for type, falling back to parent types if needed

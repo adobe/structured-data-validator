@@ -13,3 +13,21 @@
 export function isObject(obj) {
   return obj !== null && typeof obj === 'object' && !Array.isArray(obj);
 }
+
+// Strip the schema.org prefix ("schema:", "http://schema.org/" or
+// "https://schema.org/") from a type or property id
+export function stripSchema(name) {
+  if (name.startsWith('schema:')) {
+    return name.replace('schema:', '');
+  }
+
+  if (name.startsWith('http://schema.org/')) {
+    return name.replace('http://schema.org/', '');
+  }
+
+  if (name.startsWith('https://schema.org/')) {
+    return name.replace('https://schema.org/', '');
+  }
+
+  return name;
+}
