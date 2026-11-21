@@ -14,11 +14,10 @@ import BaseValidator from './base.js';
 export default class ArticleValidator extends BaseValidator {
   getConditions() {
     return [
-      this.required('headline'),
-
       this.recommended('author', 'arrayOrObject'),
       this.recommended('dateModified', 'date'),
       this.recommended('datePublished', 'date'),
+      this.recommended('headline'),
       this.recommended('image', 'arrayOrObject'),
       this.recommended('publisher', 'object'),
     ].map((c) => c.bind(this));

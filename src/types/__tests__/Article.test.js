@@ -30,17 +30,19 @@ describe('ArticleValidator', () => {
       expect(errors).to.have.lengthOf(0);
     });
 
-    it('should fail when headline is missing', async () => {
+    it('should warn when headline is missing', async () => {
       const data = await loadTestData(
-        'Article/invalid_missing_headline.json',
+        'Article/missing_headline.json',
         'jsonld',
       );
       const issues = await validator.validate(data);
       const errors = issues.filter((i) => i.severity === 'ERROR');
-      expect(errors).to.have.lengthOf(1);
-      expect(errors[0]).to.deep.include({
-        severity: 'ERROR',
-        issueMessage: 'Required attribute "headline" is missing',
+      expect(errors).to.have.lengthOf(0);
+      const headline = issues.filter((i) => i.fieldNames?.includes('headline'));
+      expect(headline).to.have.lengthOf(1);
+      expect(headline[0]).to.deep.include({
+        severity: 'WARNING',
+        issueMessage: 'Missing field "headline" (optional)',
       });
     });
   });
