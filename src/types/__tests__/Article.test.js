@@ -37,6 +37,18 @@ describe('ArticleValidator', () => {
       expect(imageIssues).to.have.lengthOf(0);
     });
 
+    it('should not warn when publisher is missing', async () => {
+      const data = await loadTestData(
+        'Article/missing_headline.json',
+        'jsonld',
+      );
+      const issues = await validator.validate(data);
+      const publisher = issues.filter((i) =>
+        i.fieldNames?.includes('publisher'),
+      );
+      expect(publisher).to.have.lengthOf(0);
+    });
+
     it('should warn when headline is missing', async () => {
       const data = await loadTestData(
         'Article/missing_headline.json',
