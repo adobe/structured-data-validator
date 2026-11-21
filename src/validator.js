@@ -34,7 +34,6 @@ export class Validator {
       DefinedRegion: [() => import('./types/DefinedRegion.js')],
       Event: [() => import('./types/Event.js')],
       FAQPage: [() => import('./types/FAQPage.js')],
-      HowTo: [() => import('./types/HowTo.js')],
       ImageObject: [() => import('./types/ImageObject.js')],
       VideoObject: [() => import('./types/VideoObject.js')],
       Clip: [() => import('./types/Clip.js')],
