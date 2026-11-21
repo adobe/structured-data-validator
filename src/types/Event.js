@@ -48,7 +48,10 @@ export default class EventValidator extends BaseValidator {
 
   validateLocation(data) {
     return this.physicalLocations(data)
-      .flatMap((location) => [this.recommended('location.name')({ location })])
+      .flatMap((location) => [
+        this.required('location.address')({ location }),
+        this.recommended('location.name')({ location }),
+      ])
       .filter((issue) => issue !== null);
   }
 
