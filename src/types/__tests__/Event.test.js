@@ -30,11 +30,31 @@ describe('EventValidator', () => {
       expect(errors).to.have.lengthOf(0);
     });
 
-    it('should validate an online Event in valid_online.json', async () => {
-      const data = await loadTestData('Event/valid_online.json', 'jsonld');
-      const issues = await validator.validate(data);
+    const expectOnlineOnlyWarning = (issues) => {
       const errors = issues.filter((i) => i.severity === 'ERROR');
       expect(errors).to.have.lengthOf(0);
+      const locationIssues = issues.filter((i) =>
+        i.fieldNames?.includes('location'),
+      );
+      expect(locationIssues).to.have.lengthOf(1);
+      expect(locationIssues[0]).to.deep.include({
+        severity: 'WARNING',
+        issueMessage:
+          'Online-only events are not eligible for Google event rich results, a physical "location" is required',
+      });
+    };
+
+    it('should warn for an online-only Event without a location', async () => {
+      const data = await loadTestData('Event/online_only.json', 'jsonld');
+      expectOnlineOnlyWarning(await validator.validate(data));
+    });
+
+    it('should warn for an online-only Event with a VirtualLocation', async () => {
+      const data = await loadTestData(
+        'Event/online_only_virtual_location.json',
+        'jsonld',
+      );
+      expectOnlineOnlyWarning(await validator.validate(data));
     });
 
     it('should warn when location.name is missing', async () => {
@@ -92,12 +112,10 @@ describe('EventValidator', () => {
 
     it('should accept eventAttendanceMode as an array', async () => {
       const data = await loadTestData(
-        'Event/valid_online_mode_array.json',
+        'Event/online_only_mode_array.json',
         'jsonld',
       );
-      const issues = await validator.validate(data);
-      const errors = issues.filter((i) => i.severity === 'ERROR');
-      expect(errors).to.have.lengthOf(0);
+      expectOnlineOnlyWarning(await validator.validate(data));
     });
 
     it('should not throw for a non-string eventAttendanceMode', async () => {
@@ -109,10 +127,7 @@ describe('EventValidator', () => {
       const issues = await validator.validate(data);
       const errors = issues.filter((i) => i.severity === 'ERROR');
       expect(errors).to.have.lengthOf(1);
-      expect(errors[0].fieldNames).to.deep.equal([
-        'location',
-        'eventAttendanceMode',
-      ]);
+      expect(errors[0].fieldNames).to.deep.equal(['location']);
     });
 
     it('should fail when name is missing', async () => {
@@ -129,7 +144,7 @@ describe('EventValidator', () => {
       });
     });
 
-    it('should fail when location is missing for physical event', async () => {
+    it('should fail when location is missing and the event is not online', async () => {
       const data = await loadTestData(
         'Event/invalid_missing_location.json',
         'jsonld',
@@ -139,9 +154,9 @@ describe('EventValidator', () => {
       expect(errors).to.have.lengthOf(1);
       expect(errors[0]).to.deep.include({
         severity: 'ERROR',
-        issueMessage:
-          'Either "location" or online "eventAttendanceMode" is required',
+        issueMessage: 'Required attribute "location" is missing',
       });
+      expect(errors[0].fieldNames).to.deep.equal(['location']);
     });
   });
 });

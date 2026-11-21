@@ -17,7 +17,6 @@ export default class EventValidator extends BaseValidator {
     return [
       this.required('name'),
       this.required('startDate', 'date'),
-      this.locationOrAttendanceMode,
       this.validateLocation,
 
       this.recommended('description'),
@@ -31,34 +30,22 @@ export default class EventValidator extends BaseValidator {
     ].map((c) => c.bind(this));
   }
 
-  // Physical locations of the event. A location can be a single value or an
-  // array (e.g. a VirtualLocation and a Place for a mixed event). A
-  // VirtualLocation has no venue name or address, and events without a
-  // location are handled by locationOrAttendanceMode.
-  physicalLocations(data) {
+  // Locations of the event. A location can be a single value or an array
+  // (e.g. a VirtualLocation and a Place for a mixed event).
+  locations(data) {
     if (data.location === undefined || data.location === null) {
       return [];
     }
-    const locations = Array.isArray(data.location)
-      ? data.location
-      : [data.location];
-    return locations.filter(
-      (location) => ![].concat(location?.['@type']).includes('VirtualLocation'),
-    );
+    return Array.isArray(data.location) ? data.location : [data.location];
   }
 
-  validateLocation(data) {
-    return this.physicalLocations(data)
-      .flatMap((location) => [
-        this.required('location.address')({ location }),
-        this.recommended('location.name')({ location }),
-      ])
-      .filter((issue) => issue !== null);
+  isVirtualLocation(location) {
+    return [].concat(location?.['@type']).includes('VirtualLocation');
   }
 
-  locationOrAttendanceMode(data) {
-    const hasLocation = data.location !== undefined && data.location !== null;
-    // eventAttendanceMode may be a single value or an array
+  // Online or mixed eventAttendanceMode (a single value or an array), or a
+  // VirtualLocation
+  isOnline(data) {
     const hasOnlineAttendanceMode = []
       .concat(data.eventAttendanceMode)
       .some(
@@ -68,17 +55,38 @@ export default class EventValidator extends BaseValidator {
             stripSchema(mode),
           ),
       );
+    return (
+      hasOnlineAttendanceMode ||
+      this.locations(data).some((location) => this.isVirtualLocation(location))
+    );
+  }
 
-    if (!hasLocation && !hasOnlineAttendanceMode) {
-      return {
-        issueMessage:
-          'Either "location" or online "eventAttendanceMode" is required',
-        severity: 'ERROR',
-        path: this.path,
-        fieldName: 'location',
-        fieldNames: ['location', 'eventAttendanceMode'],
-      };
+  // Google only supports events that take place at a physical location, so
+  // online-only events are valid schema.org but not eligible for event rich
+  // results.
+  validateLocation(data) {
+    const physicalLocations = this.locations(data).filter(
+      (location) => !this.isVirtualLocation(location),
+    );
+
+    if (physicalLocations.length === 0) {
+      if (this.isOnline(data)) {
+        return {
+          issueMessage:
+            'Online-only events are not eligible for Google event rich results, a physical "location" is required',
+          severity: 'WARNING',
+          path: this.path,
+          fieldNames: ['location'],
+        };
+      }
+      return this.required('location')({});
     }
-    return null;
+
+    return physicalLocations
+      .flatMap((location) => [
+        this.required('location.address')({ location }),
+        this.recommended('location.name')({ location }),
+      ])
+      .filter((issue) => issue !== null);
   }
 }
