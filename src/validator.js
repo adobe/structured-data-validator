@@ -51,6 +51,11 @@ export class Validator {
         () => import('./types/Product.js'),
         () => import('./types/ProductMerchant.js'),
       ],
+      // ProductGroup is a schema.org subtype of Product but has its own, much
+      // smaller set of rules (only name is required), so it must not fall back
+      // to the Product handlers:
+      // https://developers.google.com/search/docs/appearance/structured-data/product-variants
+      ProductGroup: [],
       QuantitativeValue: [() => import('./types/QuantitativeValue.js')],
       Rating: [() => import('./types/Rating.js')],
       Review: [() => import('./types/Review.js')],
