@@ -19,7 +19,6 @@ export default class LocalBusinessValidator extends BaseValidator {
 
       this.recommended('aggregateRating', 'object'),
       this.recommended('geo', 'object'),
-      this.recommended('image', 'url'),
       this.recommended('openingHoursSpecification', 'arrayOrObject'),
       this.recommended('priceRange'),
       this.recommended('review', 'arrayOrObject'),

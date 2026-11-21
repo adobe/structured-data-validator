@@ -30,6 +30,18 @@ describe('LocalBusinessValidator', () => {
       expect(errors).to.have.lengthOf(0);
     });
 
+    it('should accept image as an array of ImageObject', async () => {
+      const data = await loadTestData(
+        'LocalBusiness/valid_image_object.json',
+        'jsonld',
+      );
+      const issues = await validator.validate(data);
+      const errors = issues.filter((i) => i.severity === 'ERROR');
+      expect(errors).to.have.lengthOf(0);
+      const imageIssues = issues.filter((i) => i.fieldNames?.includes('image'));
+      expect(imageIssues).to.have.lengthOf(0);
+    });
+
     it('should fail when name is missing', async () => {
       const data = await loadTestData(
         'LocalBusiness/invalid_missing_name.json',
