@@ -44,6 +44,18 @@ describe('EventValidator', () => {
       });
     };
 
+    it('should not warn when eventAttendanceMode is missing', async () => {
+      const data = await loadTestData(
+        'Event/offer_all_recommended.json',
+        'jsonld',
+      );
+      const issues = await validator.validate(data);
+      const mode = issues.filter((i) =>
+        i.fieldNames?.includes('eventAttendanceMode'),
+      );
+      expect(mode).to.have.lengthOf(0);
+    });
+
     it('should accept image as a URL string', async () => {
       const data = await loadTestData('Event/valid1.json', 'jsonld');
       const issues = await validator.validate(data);

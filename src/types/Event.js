@@ -21,7 +21,6 @@ export default class EventValidator extends BaseValidator {
 
       this.recommended('description'),
       this.recommended('endDate', 'date'),
-      this.recommended('eventAttendanceMode'),
       this.recommended('eventStatus'),
       this.recommended('image'),
       this.recommended('offers', 'arrayOrObject'),
